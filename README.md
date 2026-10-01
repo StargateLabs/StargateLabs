@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/logo.png" alt="Stargate Labs" width="560">
+  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/logo.png" alt="Stargate Labs" width="560" height="364">
 </p>
 
 <p align="center">
