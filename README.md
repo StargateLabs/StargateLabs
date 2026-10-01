@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/logo.png?v=2" alt="Stargate Labs" width="560" height="364">
+  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=1" alt="Stargate Labs: laboratorio con impianto a liquido, postazione di sviluppo e monitoraggio" width="620" height="401">
 </p>
 
 <p align="center">
@@ -7,7 +7,21 @@
   <a href="mailto:info@shipexpress.it"><img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-light.svg" alt="info@shipexpress.it" height="28"></a>
 </p>
 
-Laboratorio privato. Sviluppo software, hardware custom e sicurezza, con la stessa curiosità tecnica su ogni strato: dal ciclo di refrigerazione di un rig al ciclo di richiesta di un'API.
+Laboratorio privato. Progetto software, impianti hardware e strumenti di sicurezza, con la stessa curiosità tecnica su ogni strato: dal ciclo di refrigerazione di un rig al ciclo di richiesta di un'API.
+
+---
+
+## I miei lavori
+
+**ARGUS, piattaforma di security testing continuo.** Orchestratore che esegue ricognizione, DAST, SAST, analisi delle dipendenze, scansione dei segreti e fuzzing su target autorizzati. Code con BullMQ, dashboard Next.js, integrazione con DefectDojo e alert su Telegram. Aggiornato fino alla v0.2.0: TLS verify-full su Postgres e Redis, backup cifrati AES-256-GCM con ripristino verificato, rotazione e controllo dei certificati, logrotate con retention configurabile.
+
+**ShipExpress, gestionale operativo per spedizioni.** Piattaforma multi-tenant in produzione: 36 corrieri integrati, magazzino, ordini, DDT e fatturazione elettronica, con code BullMQ e RAG per la ricerca interna. Il dettaglio è nella sezione dedicata qui sotto.
+
+**TechDash, monitoraggio dell'hardware del rig.** Dashboard single-page con backend Python che legge i sensori della macchina: temperature CPU e GPU, carico, ventole, pompe e stato dei dischi, con avvisi su condensazione e gestione termica. Pensata per un impianto che gira sotto carico costante, quindi priorizza la lettura rapida e gli allarmi.
+
+**Plugin SignalRGB e bridge LSC Battletron.** Integrazione per il controllo dell'illuminazione RGB con hardware LSC, con bridge verso il controller e configurazione automatica dei dispositivi.
+
+**Setup criogenici su Intel Cryo.** Studio e messa a punto del raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione della condensazione, curve di avvio sicuro e monitoraggio. Lo stato del progetto, le scelte tecniche e i riferimenti sono documentati nel repository TechDash.
 
 ---
 
@@ -19,7 +33,7 @@ Laboratorio privato. Sviluppo software, hardware custom e sicurezza, con la stes
 
 **Hardware custom e cryocooling.** Progetto impianti di liquid cooling per PC, circuiti ad acqua, tubazioni, pompe, radiatori e monitoring. Il raffreddamento criogenico è l'estremo del percorso: portare una CPU sotto zero e tenerla stabile lì, con protezioni, curve di avvio sicuro e gestione della condensazione. Mi interessa la parte che nessuno vede ma che deve funzionare.
 
-**Appassionato di tech e cyber.** Mi interessa tutto ciò che passa fra hardware e sicurezza: firmware, protocolli, reverse engineering, Linux, reti. Nessuna delle due cose (il software e l'hardware) è un hobby separato dall'altra, sono lo stesso modo di ragionare applicato a cose diverse.
+**Appassionato di tech e cyber.** Mi interessa tutto ciò che sta fra hardware e sicurezza: firmware, protocolli, reverse engineering, Linux, reti. L'hardware e il software non sono due hobby separati, sono lo stesso metodo di ragionamento applicato a cose diverse.
 
 ---
 
