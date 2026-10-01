@@ -16,10 +16,15 @@
 
 ## Stargate Labs
 
-Costruisco software che gira per gente vera, cerco difetti per mestiere, e
-raffreddando macchine sotto carico.
+Sono un IT Manager: infrastruttura, sistemi, sicurezza.
 
-È la stessa disciplina ripetuta: capire cosa deve sopravvivere, metterci un
+La stessa curiosità la metto nei componenti. Loop ad acqua su misura, impianti
+criogenici su CPU Intel, temperature che non dovrebbero esistere.
+
+E costruisco il software per farlo: gestionali che reggono il carico reale,
+strumenti che cercano i difetti, dashboard che leggono ogni sensore.
+
+La disciplina è la stessa in tutto. Capire cosa deve sopravvivere, metterci un
 test o un allarme, e non dare per scontato che un numero letto sia giusto.
 
 <table>
