@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <a href="https://stargatelabs.github.io/StargateLabs/">Presentazione</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://stargatelabs.github.io/StargateLabs/index-en.html">Presentation (EN)</a>
+  &nbsp;&middot;&nbsp;
   <a href="https://shipexpress.it">
     <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="420">
   </a>
