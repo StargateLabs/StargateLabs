@@ -117,6 +117,52 @@ scrittura e i limiti verificati.
 
 </details>
 
+<details>
+<summary><b>StargateCryo: controller Gen 1 modificato su TEC Gen 2</b></summary>
+<br>
+
+Il software è nato su un controller Gen 1 modificato, potenziato, che gira su
+una TEC Gen 2. Non è un supporto "Gen 1 e Gen 2" generico: le soglie sono
+specifiche di quell'hardware, e il codice lo dice in chiaro.
+
+<p align="left">
+
+<b>Il tetto che mancava</b>
+
+Il firmware accetta una percentuale, non dei watt, e il 100% su questo
+controller vale circa 230 W. Ma il Gen 1 porta 200 W. Con la percentuale al
+massimo si chiedevano circa 230 W, il 115% del tetto: il modulo segnalava OCP,
+il firmware tagliava, e quei watt erano sprecati perché il freddo non arrivava.
+
+Nel codice non c'era nessun tetto in watt, solo la percentuale che non sa
+nulla dell'hardware. Ora c'è: 200 W dichiarati come costante, con la radice del
+difetto scritta accanto.
+
+<b>La finestra di cinque gradi</b>
+
+Il controller a regime sta a 30 °C. Fino a 35 °C è normale. A 40 °C si sciolgono
+le guaine dei fili, e quelle sono già state sostituite una volta.
+
+<table>
+<tr><th>Range</th><th>Lettura</th><th>Comportamento</th></tr>
+<tr><td>fino a 35 °C</td><td>regime normale</td><td>verde</td></tr>
+<tr><td>36 - 37 °C</td><td>allarme</td><td>giallo</td></tr>
+<tr><td>da 38 °C</td><td>rischio di danno</td><td>rosso, riduzione fino a zero</td></tr>
+<tr><td>40 °C</td><td>guaine sciolte</td><td>cut-off</td></tr>
+</table>
+
+La guardia non è un interruttore che aspetta i 38 °C per reagire, perché
+lascierebbe 35-37 °C senza protezione, e sono esattamente i gradi in cui il
+danno inizia.
+
+<b>Cambiare hardware</b>
+
+Se il controller cambia, cambiano i numeri: potenza massima, watt al 100% della
+percentuale, soglie della guardia. Sono costanti dichiarate in `running.rs`, con
+il motivo per cui esistono scritto accanto, perché il bug torna se non le vedi.
+
+</details>
+
 ## ShipExpress
 
 <p align="center">
