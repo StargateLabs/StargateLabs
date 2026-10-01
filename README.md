@@ -169,7 +169,7 @@ un rischio, non un esperimento. Quindi si parte da sensori, soglie, avvio
 sicuro e condensazione gestita. L'ottimizzazione arriva dopo.
 
 Nessun segnale è attendibile. Più sensori indipendenti e validazione a monte:
-un valore fuori scala è quasi sempre un problema di acquisizione, not della
+un valore fuori scala è quasi sempre un problema di acquisizione, non della
 macchina.
 
 Il freddo è un sistema. Peltier, CPU, RAM, GPU, alimentatore e scheda madre
