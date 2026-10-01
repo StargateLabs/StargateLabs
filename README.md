@@ -30,7 +30,7 @@ Niente si dà per scontato. Ogni numero lo misuro, ogni difetto diventa un test.
 
 **ShipExpress** · gestionale, in produzione
 
-ShipExpress 2026.2.5. 1.462 endpoint API, 357 modelli su Prisma, 67 dipendenze di produzione. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
+ShipExpress 2026.2.5. 1.462 endpoint API, 357 modelli su Prisma, 42 corrieri, 8.896 test, 67 dipendenze di produzione. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
 
 Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la differenza fra peso reale e volumetrico, che è l'errore che l'azienda scopre solo quando legge la fattura.
 
@@ -188,10 +188,11 @@ utenti con permessi per ruolo.
 | Documenti | DDT e fatturazione elettronica |
 | Integrazioni | Corrieri, marketplace e gestionali esterni |
 
-I 36 corrieri sono 13 provider nativi con adapter dedicato (BRT, DHL, DPD, GLS,
-UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro,
-SpedisciOnline) e 24 adapter REST generici per gli altri. Il tracciamento usa i
-webhook quando il corriere li espone, e polling periodico per chi non li ha.
+**42 corrieri, 74 servizi.** I principali hanno un adapter dedicato (BRT, DHL
+Express, DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, Aramex, CEVA,
+DB Schenker, Pony Express e altri), gli altri passano da API REST. Il
+tracciamento usa i webhook quando il corriere li espone, e polling periodico per
+chi non li ha.
 
 La ricerca interna usa RAG: i documenti vengono indicizzati e interrogati in
 linguaggio naturale, non per parole chiave. Serve perché nessuno ricorda in
@@ -214,9 +215,10 @@ parametrizzate. Transazioni quando un'operazione tocca più tabelle.
 Root ha due fattori, le operazioni critiche lasciano traccia, e ci sono rate
 limit, rilevamento brute-force e blacklist sessioni su Redis.
 
-Il ciclo non cambia mai: trovo il difetto, e il difetto diventa un test. Test
-di sicurezza dedicati (isolamento tenant, hardening OAuth, proxy fail-closed,
-certificazione root), audit end-to-end di ogni API, accessibilità in automatico.
+**8.896 test** raccolti da vitest, su 1.059 file. Il ciclo non cambia mai: trovo
+il difetto, e il difetto diventa un test. Test di sicurezza dedicati (isolamento
+tenant, hardening OAuth, proxy fail-closed, certificazione root), audit
+end-to-end di ogni API, accessibilità in automatico.
 
 ## Sull'hardware
 
