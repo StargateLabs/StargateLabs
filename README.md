@@ -14,15 +14,15 @@
 
 ## Stargate Labs
 
-Faccio infrastruttura, sistemi e sicurezza. La stessa curiosità la metto nei
-componenti: loop ad acqua su misura, impianti criogenici su CPU Intel,
-temperature che non dovrebbero esistere.
+Infrastruttura, sicurezza, sistemi. La stessa mania la metto nei componenti: loop
+ad acqua su misura, impianti criogenici su CPU Intel, temperature che non
+dovrebbero esistere.
 
-E costruisco il software per farlo. Gestionali che reggono il carico reale,
-strumenti che cercano i difetti, dashboard che leggono ogni sensore.
+Costruisco il software che li fa girare. Gestionali in produzione, strumenti di
+security testing, dashboard che leggono ogni sensore. E un motore di ricerca con
+RAG, perché la documentazione che nessuno legge non serve a nessuno.
 
-La disciplina è la stessa in tutto. Capire cosa deve sopravvivere, metterci un
-test o un allarme, e non dare per scontato che un numero letto sia giusto.
+Niente si dà per scontato. Ogni numero lo misuro, ogni difetto diventa un test.
 
 <table>
 <tr>
@@ -30,7 +30,7 @@ test o un allarme, e non dare per scontato che un numero letto sia giusto.
 
 **ShipExpress** · gestionale, in produzione
 
-Il gestionale che uso con aziende che spediscono ogni giorno. Il dettaglio è nella sua sezione più in basso. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
+Il gestionale che uso con aziende che spediscono ogni giorno. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
 
 Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la differenza fra peso reale e volumetrico, che è l'errore che l'azienda scopre solo quando legge la fattura.
 
@@ -39,29 +39,29 @@ Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la
 
 **ARGUS** · security testing, v0.2.0
 
-Orchestratore di security testing continuo: ricognizione, DAST, SAST, analisi delle dipendenze, scansione dei segreti, fuzzing, sempre su target autorizzati.
+17 scanner orchestrati: 6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API, 1 fuzz. Ogni tool con Docker image pinned, ogni scan su target autorizzati.
 
-BullMQ per le code, Next.js per la dashboard, DefectDojo per i finding, Telegram per gli alert. Ho chiuso la parte che spesso si salta: TLS verify-full su Postgres e Redis, backup AES-256-GCM con ripristino provato e non solo scritto, certificati che ruotano, logrotate con retention.
+14.071 righe di TypeScript, 42 file di test, 71 endpoint API, 11 tabelle. Agent AI che esegue missioni autonome con due modelli: uno per pianificare, uno per eseguire.
 
 </td>
 </tr>
 <tr>
 <td valign="top">
 
-**TechDash** · hardware del rig
+**ARA** · assistente vocale
 
-Dashboard con backend Python che legge i sensori della macchina: CPU, GPU, carico, ventole, pompe, dischi.
+29.537 righe di Python. Whisper per la voce in ingresso, Kokoro per quella in uscita, e un router che distingue task da conversazione in meno di 5 millisecondi.
 
-Allarmi su condensazione, che su un impianto sotto carico costante è la variabile che uccide.
+7 azioni distruttive richiedono conferma umana. La memoria è un vault RAG in TF-IDF, tutto in locale, zero API esterne.
 
 </td>
 <td valign="top">
 
-**Setup criogenici** · Intel Cryo
+**StargateCryo** · controller criogenico
 
-Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione della condensazione, curve di avvio sicuro e monitoraggio.
+23.286 righe di Rust. Legge i sensori da HWiNFO64 e AIDA64, controlla il TEC via seriale con PID, e rileva la condensa dal margine rugiada.
 
-Stato del progetto, scelte tecniche e riferimenti sono nel repository TechDash.
+6 canali di allarme, 5 regole di default, 3 profili PID. Se la pompa si ferma, il TEC si riduce da solo al 50%.
 
 </td>
 </tr>
@@ -142,14 +142,18 @@ UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro,
 SpedisciOnline) e 24 adapter REST generici per gli altri. Il tracciamento usa i
 webhook quando il corriere li espone, e polling periodico per chi non li ha.
 
+La ricerca interna usa RAG: i documenti vengono indicizzati e interrogati in
+linguaggio naturale, non per parole chiave. Serve perché nessuno ricorda in
+quale ticket ha già visto quel problema.
+
 ## Sul codice
 
 L'isolamento multi-tenant è verificato, non dichiarato. Routing per dominio,
 middleware di risoluzione, e un fallback che chiude se il tenant non è
-risolvibile. Un tenant non è una colonna, è un muro.
+risolvibile. Un tenant è un confine, non una colonna.
 
 Tutto l'input esterno passa da Zod. `unknown` invece di `any`. Query
-parametrizzate. Transazioni quando l'operazione tocca più tabelle.
+parametrizzate. Transazioni quando un'operazione tocca più tabelle.
 
 Root ha due fattori, le operazioni critiche lasciano traccia, e ci sono rate
 limit, rilevamento brute-force e blacklist sessioni su Redis.
@@ -161,11 +165,11 @@ certificazione root), audit end-to-end di ogni API, accessibilità in automatico
 ## Sull'hardware
 
 Prima le protezioni, poi le prestazioni. Un impianto criogenico senza allarmi è
-un rischio, non un esperimento. Quindi si parte da sensori, soglie, avvio
+un rischio, not an esperimento. Quindi si parte da sensori, soglie, avvio
 sicuro e condensazione gestita. L'ottimizzazione arriva dopo.
 
 Nessun segnale è attendibile. Più sensori indipendenti e validazione a monte:
-un valore fuori scala è quasi sempre un problema di acquisizione, non della
+un valore fuori scala è quasi sempre un problema di acquisizione, not della
 macchina.
 
 Il freddo è un sistema. Peltier, CPU, RAM, GPU, alimentatore e scheda madre
