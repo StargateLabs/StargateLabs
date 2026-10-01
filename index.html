@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stargate Labs — presentazione</title>
+<style>
+  :root{
+    --bg:#080b0e; --bg2:#0d1117; --panel:#11161c; --line:#1e262f;
+    --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px}
+
+  header{padding:96px 0 64px;border-bottom:1px solid var(--line)}
+  .kicker{
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
+  }
+  h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:0 0 20px;letter-spacing:-.02em}
+  h1 span{color:var(--green)}
+  .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  h2{
+    font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 32px
+  }
+  h3{font-size:21px;margin:0 0 10px}
+  p{margin:0 0 16px}
+  .muted{color:var(--dim)}
+
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* l'ultima card non resta isolata: l'ultima occupa tutta la riga */
+  .card:last-child:nth-child(odd){grid-column:1/-1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
+  .card h3{font-size:18px}
+  .card p{font-size:15px;color:var(--dim);margin:0}
+
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:26px 20px}
+  .stat b{display:block;font:700 32px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--green);letter-spacing:-.02em}
+  .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  td:first-child{color:var(--ink);font-weight:600;width:34%}
+
+  ol,ul{margin:0 0 16px;padding-left:22px}
+  li{margin:0 0 10px}
+  li::marker{color:var(--green)}
+
+  code{
+    font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg2);
+    border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--amber)
+  }
+  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .links a{
+    color:var(--cyan);text-decoration:none;border:1px solid var(--line);
+    border-radius:6px;padding:10px 16px;font-size:14px
+  }
+  .links a:hover{border-color:var(--cyan)}
+
+  .tag{
+    display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
+    border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
+  }
+  footer{padding:56px 0 0;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">Laboratorio privato</p>
+  <h1>Stargate <span>Labs</span></h1>
+  <p class="lede">
+    Software di gestione in produzione, impianti hardware su misura e strumenti
+    di sicurezza. La stessa curiosità tecnica su ogni strato: dal ciclo di
+    refrigerazione di un rig al ciclo di richiesta di un'API.
+  </p>
+</header>
+
+<section>
+  <h2>Numeri</h2>
+  <div class="stats">
+    <div class="stat"><b>36</b><span>Corrieri integrati</span></div>
+    <div class="stat"><b>1.234</b><span>Test automatici</span></div>
+    <div class="stat"><b>67</b><span>Dipendenze di produzione</span></div>
+    <div class="stat"><b>13</b><span>Provider nativi</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Progetti</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>ShipExpress</h3>
+      <p>Gestionale operativo per spedizioni, multi-tenant, in produzione.
+         Ogni cliente ha dominio proprio, database separato e gerarchia di
+         permessi per ruolo.</p>
+    </div>
+    <div class="card">
+      <h3>ARGUS</h3>
+      <p>Orchestratore di security testing continuo: ricognizione, DAST, SAST,
+         analisi delle dipendenze, scansione dei segreti e fuzzing su target
+         autorizzati. <code>v0.2.0</code>.</p>
+    </div>
+    <div class="card">
+      <h3>TechDash</h3>
+      <p>Monitoraggio hardware del rig: temperature CPU e GPU, carico, ventole,
+         pompe e dischi, con allarmi su condensazione e gestione termica.</p>
+    </div>
+    <div class="card">
+      <h3>Setup criogenici</h3>
+      <p>Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione
+         della condensazione, curve di avvio sicuro e monitoraggio.</p>
+    </div>
+    <div class="card">
+      <h3>SignalRGB e LSC Battletron</h3>
+      <p>Plugin di illuminazione RGB con bridge verso il controller e
+         configurazione automatica dei dispositivi.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>ShipExpress — dettaglio</h2>
+  <table>
+    <tr><th>Area</th><th>Cosa fa</th></tr>
+    <tr><td>Spedizioni</td><td>Confronto tariffe tra corrieri, creazione, tracciamento, contrassegno, consegna con foto e firma</td></tr>
+    <tr><td>Magazzino</td><td>Prodotti, categorie, giacenze, ubicazioni, movimenti, conteggi, imballaggi</td></tr>
+    <tr><td>Ordini</td><td>Ordini cliente, flusso di stato, picklist con lettura dei codici a barre</td></tr>
+    <tr><td>Documenti</td><td>DDT e fatturazione elettronica</td></tr>
+    <tr><td>Integrazioni</td><td>Corrieri, marketplace e gestionali esterni</td></tr>
+  </table>
+  <p class="muted">
+    13 provider nativi con adapter dedicato — BRT, DHL, DPD, GLS, UPS, FedEx,
+    TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline —
+    e 24 adapter REST generici. Il tracciamento usa i webhook quando il corriere
+    li espone e polling periodico per gli altri.
+  </p>
+</section>
+
+<section>
+  <h2>Stack</h2>
+  <p>
+    <span class="tag">Next.js 16</span><span class="tag">React 19</span
+    ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
+    ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
+    ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
+    ><span class="tag">Zod 4</span><span class="tag">Vitest</span
+    ><span class="tag">Playwright</span><span class="tag">Python</span>
+  </p>
+</section>
+
+<section>
+  <h2>Come lavoro</h2>
+  <ol>
+    <li><b>Validazione ai bordi.</b> Zod su tutto l'input esterno,
+        <code>unknown</code> al posto di <code>any</code>, query parametrizzate,
+        transazioni quando un'operazione tocca più tabelle.</li>
+    <li><b>Isolamento multi-tenant verificato.</b> Routing per dominio,
+        middleware di risoluzione e fallback esplicito a chiusura. Il tenant
+        non è un campo su una tabella: è un confine.</li>
+    <li><b>Ogni finding diventa un test.</b> Il difetto non torna.</li>
+    <li><b>Sicurezza operativa.</b> Due fattori sull'account root, audit delle
+        operazioni critiche, rate limit, rilevamento brute-force e blacklist
+        sessioni su Redis.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Hardware</h2>
+  <ul>
+    <li><b>Protezioni prima delle prestazioni.</b> Un impianto criogenico senza
+        allarmi è un rischio, non un esperimento.</li>
+    <li><b>Nessun segnale è attendibile.</b> Più sensori indipendenti,
+        validazione a monte: un valore fuori scala è spesso un problema di
+        acquisizione, non della macchina.</li>
+    <li><b>Il freddo è un sistema.</b> Peltier, CPU, RAM, GPU e alimentatore
+        hanno limiti termici diversi.</li>
+    <li><b>Documentazione dal giorno zero.</b> Schema, componenti, curve di
+        avvio e valori misurati.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Contatti</h2>
+  <p>Il codice di ShipExpress è privato. Per una demo, per un'integrazione
+     o per parlare di un progetto hardware:</p>
+  <div class="links">
+    <a href="https://shipexpress.it">shipexpress.it</a>
+    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+  </div>
+</section>
+
+<footer>
+  Stargate Labs — laboratorio privato.
+</footer>
+
+</div>
+</body>
+</html>
