@@ -14,12 +14,11 @@
 
 ## Stargate Labs
 
-Sono un IT Manager: infrastruttura, sistemi, sicurezza.
+Faccio infrastruttura, sistemi e sicurezza. La stessa curiosità la metto nei
+componenti: loop ad acqua su misura, impianti criogenici su CPU Intel,
+temperature che non dovrebbero esistere.
 
-La stessa curiosità la metto nei componenti. Loop ad acqua su misura, impianti
-criogenici su CPU Intel, temperature che non dovrebbero esistere.
-
-E costruisco il software per farlo: gestionali che reggono il carico reale,
+E costruisco il software per farlo. Gestionali che reggono il carico reale,
 strumenti che cercano i difetti, dashboard che leggono ogni sensore.
 
 La disciplina è la stessa in tutto. Capire cosa deve sopravvivere, metterci un
