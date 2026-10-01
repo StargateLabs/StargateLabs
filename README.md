@@ -1,7 +1,6 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=4" alt="Stargate Labs" width="760">
 <br><br>
-<br><br>
 <a href="https://stargatelabs.github.io/StargateLabs/"><b>Presentazione</b></a>
 &nbsp;&nbsp;·&nbsp;&nbsp;
 <a href="https://stargatelabs.github.io/StargateLabs/index-en.html">Presentation (EN)</a>
