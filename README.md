@@ -3,8 +3,18 @@
 </p>
 
 <p align="center">
-  <a href="https://shipexpress.it"><img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-site-light.svg" alt="shipexpress.it" height="28"></a>
-  <a href="mailto:info@shipexpress.it"><img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-light.svg" alt="info@shipexpress.it" height="28"></a>
+  <a href="https://shipexpress.it">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-site-dark.svg">
+      <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-site-light.svg" alt="shipexpress.it" height="28">
+    </picture>
+  </a>
+  <a href="mailto:info@shipexpress.it">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-dark.svg">
+      <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-light.svg" alt="info@shipexpress.it" height="28">
+    </picture>
+  </a>
 </p>
 
 Laboratorio privato. Progetto software, impianti hardware e strumenti di sicurezza, con la stessa curiosità tecnica su ogni strato: dal ciclo di refrigerazione di un rig al ciclo di richiesta di un'API.
@@ -57,6 +67,25 @@ Il listino tariffe è configurabile per tenant, con regole su zona, peso e suppl
 
 ---
 
+## Stack
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/stack-dark.svg">
+    <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/stack-light.svg" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Zod, Python" width="760">
+  </picture>
+</p>
+
+| Livello | Tecnologie |
+|---|---|
+| Applicazione | Next.js 16, React 19, TypeScript strict |
+| Dati | PostgreSQL 17, Prisma 6 |
+| Code e job | Redis 8, BullMQ |
+| Interfaccia | Tailwind CSS 4 |
+| Validazione | Zod 4 |
+| Test | Vitest, Playwright |
+| Hardware e sensori | Python |
+
 ## Come lavoro sul codice
 
 **1.234 test automatici.** Unitari, di integrazione ed end-to-end con Playwright, eseguiti a ogni modifica. Il typecheck è separato dal build, così un errore di tipi blocca la pipeline senza mascherare i problemi di build.
@@ -67,18 +96,15 @@ Il listino tariffe è configurabile per tenant, con regole su zona, peso e suppl
 
 **Sicurezza operativa.** Autenticazione a due fattori sull'account root, audit delle operazioni critiche, rate limit, rilevamento brute-force e blacklist sessioni su Redis.
 
----
+## Come lavoro sull'hardware
 
-## Stack
+**Protezioni prima delle prestazioni.** Un impianto criogenico che non ha allarmi è un rischio, non un esperimento. Ogni progetto parte da sensori, soglie, avvio sicuro e gestione della condensazione, poi si ottimizza.
 
-| Livello | Tecnologie |
-|---|---|
-| Applicazione | Next.js 16, React 19, TypeScript |
-| Dati | PostgreSQL, Prisma 6 |
-| Code e job | Redis, BullMQ |
-| Interfaccia | Tailwind CSS 4 |
-| Validazione | Zod 4 |
-| Test | Vitest, Playwright |
+**Nessun segnale è attendibile.** Le misure vengono lette da più sensori indipendenti e validate a monte, perché un valore fuori scala spesso è un problema di acquisizione, non della macchina.
+
+**Il freddo è un sistema, non un componente.** Peltier, CPU, RAM, GPU, alimentatore e scheda madre hanno limiti termici diversi. Portare sotto zero solo la CPU e ignorare il resto sposta il danno, non lo evita.
+
+**Documentazione dal giorno zero.** Ogni impianto lascia uno schema, l'elenco dei componenti, le curve di avvio e i valori misurati. Un laboratorio serve anche a se stesso fra sei mesi.
 
 | Metrica | Valore |
 |---|---|
