@@ -1,39 +1,28 @@
-<div align="center">
-
-<h1>Stargate Labs</h1>
-
-<p>Laboratorio privato. Progetto software, impianti hardware e strumenti di sicurezza.</p>
-
+<p align="center">
 <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=4" alt="Stargate Labs" width="760">
-
-<br>
-
-<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="260">
-
-<br>
-
-[Presentazione](https://stargatelabs.github.io/StargateLabs/)
-&nbsp;·&nbsp;
-[Presentation (EN)](https://stargatelabs.github.io/StargateLabs/index-en.html)
-
-[shipexpress.it](https://shipexpress.it)
-&nbsp;·&nbsp;
-[info@shipexpress.it](mailto:info@shipexpress.it)
-
-</div>
+<br><br>
+<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="280">
+<br><br>
+<a href="https://stargatelabs.github.io/StargateLabs/"><b>Presentazione</b></a>
+&nbsp;&nbsp;·&nbsp;&nbsp;
+<a href="https://stargatelabs.github.io/StargateLabs/index-en.html">Presentation (EN)</a>
+&nbsp;&nbsp;·&nbsp;&nbsp;
+<a href="https://shipexpress.it">shipexpress.it</a>
+&nbsp;&nbsp;·&nbsp;&nbsp;
+<a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+</p>
 
 ---
 
+## Stargate Labs
+
 Costruisco software che gira per gente vera, cerco difetti per mestiere, e
-raffreddando macchine sotto carico. È la stessa disciplina ripetuta: capire
-cosa deve sopravvivere, metterci un test o un allarme, e non dare per scontato
-che un numero letto sia giusto.
+raffreddando macchine sotto carico. **36 corrieri integrati** nel gestionale in
+produzione, **1.234 test automatici** che girano a ogni modifica, **13 provider
+nativi** con adapter dedicato e altri 24 via API REST.
 
-| | | | |
-|:---|:---|:---|:---|
-| **36**<br>corrieri integrati | **1.234**<br>test automatici | **13**<br>provider nativi | **24**<br>adapter REST |
-
-## Cosa c'è dentro
+È la stessa disciplina ripetuta: capire cosa deve sopravvivere, metterci un
+test o un allarme, e non dare per scontato che un numero letto sia giusto.
 
 <table>
 <tr>
@@ -72,11 +61,19 @@ Allarmi su condensazione, che su un impianto sotto carico costante è la variabi
 
 Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione della condensazione, curve di avvio sicuro e monitoraggio.
 
-Stato del progetto, scelte tecniche e riferimenti sono nel repository TechDash. Il plugin SignalRGB con bridge LSC Battletron copre invece l'illuminazione RGB su hardware LSC.
+Stato del progetto, scelte tecniche e riferimenti sono nel repository TechDash.
 
 </td>
 </tr>
 </table>
+
+<details>
+<summary><b>SignalRGB e LSC Battletron</b></summary>
+<br>
+Plugin per il controllo dell'illuminazione RGB su hardware LSC, con bridge verso
+il controller e configurazione automatica dei dispositivi. Il codice è nel repo
+<a href="https://github.com/StargateLabs/signalrgb-razer-stream-controller-x">signalrgb-razer-stream-controller-x</a>.
+</details>
 
 ## ShipExpress
 
@@ -94,16 +91,12 @@ con permessi per ruolo.
 | Documenti | DDT e fatturazione elettronica |
 | Integrazioni | Corrieri, marketplace e gestionali esterni |
 
-**36 corrieri integrati.** 13 provider nativi con adapter dedicato (BRT, DHL,
-DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel,
-SpediamoPro, SpedisciOnline) e 24 adapter REST generici per gli altri. Il
-tracciamento usa i webhook quando il corriere li espone, e polling periodico
-per chi non li ha.
+I 36 corrieri sono 13 provider nativi con adapter dedicato (BRT, DHL, DPD, GLS,
+UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro,
+SpedisciOnline) e 24 adapter REST generici per gli altri. Il tracciamento usa i
+webhook quando il corriere li espone, e polling periodico per chi non li ha.
 
 ## Sul codice
-
-**1.234 test automatici.** Non è un numero da mettere in scheda: è la rete che
-tiene quando cambio qualcosa alle 23.
 
 L'isolamento multi-tenant è verificato, non dichiarato. Routing per dominio,
 middleware di risoluzione, e un fallback che chiude se il tenant non è
@@ -139,23 +132,27 @@ fra sei mesi non lo capisco da solo, ho sbagliato il progetto.
 ## Stack
 
 <table>
-<tr><td align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/stack-dark.svg">
-    <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/stack-light.svg" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Zod, Python" width="760">
-  </picture>
-</td></tr>
+<tr>
+<td align="center" width="33%"><b>Next.js 16</b><br>React 19<br>TypeScript strict</td>
+<td align="center"><b>PostgreSQL 17</b><br>Prisma 6<br>Redis 8 · BullMQ</td>
+<td align="center"><b>Zod 4</b><br>Tailwind CSS 4<br>Vitest · Playwright</td>
+</tr>
 </table>
 
-| Livello | Tecnologie |
-|---|---|
-| Applicazione | Next.js 16, React 19, TypeScript strict |
-| Dati | PostgreSQL 17, Prisma 6 |
-| Code e job | Redis 8, BullMQ |
-| Interfaccia | Tailwind CSS 4 |
-| Validazione | Zod 4 |
-| Test | Vitest, Playwright |
-| Hardware e sensori | Python |
+<details>
+<summary><b>Dettaglio dello stack</b></summary>
+<br>
+<table>
+<tr><th>Livello</th><th>Tecnologie</th></tr>
+<tr><td>Applicazione</td><td>Next.js 16, React 19, TypeScript strict</td></tr>
+<tr><td>Dati</td><td>PostgreSQL 17, Prisma 6</td></tr>
+<tr><td>Code e job</td><td>Redis 8, BullMQ</td></tr>
+<tr><td>Interfaccia</td><td>Tailwind CSS 4</td></tr>
+<tr><td>Validazione</td><td>Zod 4</td></tr>
+<tr><td>Test</td><td>Vitest, Playwright</td></tr>
+<tr><td>Hardware e sensori</td><td>Python</td></tr>
+</table>
+</details>
 
 ## Contatti
 
