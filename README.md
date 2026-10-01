@@ -57,11 +57,13 @@ Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la
 </td>
 <td valign="top">
 
-**StargateCryo** · controller criogenico
+**StargateCryo** · controller TEC per cryocooling
 
-23.286 righe di Rust. Legge i sensori da HWiNFO64 e AIDA64, controlla il TEC via seriale con PID, e rileva la condensa dal margine rugiada.
+23.286 righe di Rust. Legge i sensori da HWiNFO64 e AIDA64, controlla il TEC via seriale con PID, e misura il margine di condensa.
 
-6 canali di allarme, 5 regole di default, 3 profili PID. Se la pompa si ferma, il TEC si riduce da solo al 50%.
+Lavora sul controller, non sul processore: nessun socket, nessun chipset, nessun modello di CPU nel codice. Quindi va su Intel, su AMD, e su qualsiasi CPU montabile che il controller riesca a pilotare.
+
+6 canali di allarme, 5 regole di default, 3 profili PID con setpoint e potenza propria. Se la pompa si ferma, il TEC si riduce da solo al 50%.
 
 </td>
 </tr>
