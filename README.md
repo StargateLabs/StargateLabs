@@ -1,44 +1,82 @@
-<div align="center">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/logo.png" alt="Stargate Labs" width="560">
+</p>
 
-# 🚀 Stargate Lab
+<p align="center">
+  <a href="https://shipexpress.it"><img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-site-light.svg" alt="shipexpress.it" height="28"></a>
+  <a href="mailto:info@shipexpress.it"><img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-light.svg" alt="info@shipexpress.it" height="28"></a>
+</p>
 
-**Enterprise Software Engineering | Cloud & Logistics Solutions**
-
-[![ShipExpress](https://img.shields.io/badge/ShipExpress-Enterprise%20Shipping-2563eb?style=flat-square)](https://shipexpress.vercel.app)
-[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql)](https://www.postgresql.org)
-
-</div>
+Laboratorio privato. Sviluppo software, hardware custom e sicurezza, con la stessa curiosità tecnica su ogni strato: dal ciclo di refrigerazione di un rig al ciclo di richiesta di un'API.
 
 ---
 
-## 📦 About
+## Cosa faccio
 
-**Stargate Lab** builds enterprise logistics platforms. Our flagship **ShipExpress** is a multi-tenant shipping management system with domain-aware routing, real-time tracking, and ERP integrations.
+**Sviluppo software indipendente.** Progetto e mantengo piattaforme gestionali complete, dal modello dati all'interfaccia. Il prodotto principale è in produzione e serve aziende che spediscono ogni giorno. Se una funzione non regge il carico reale, non viene rilasciata.
 
-### 🔧 Stack
+**Bug hunting.** Cerco difetti in modo sistematico, non a caso. Il laboratorio applica la stessa disciplina del codice al software: test di sicurezza dedicati (isolamento tenant, hardening OAuth, proxy fail-closed, certificazione root), audit end-to-end di ogni API e controlli di accessibilità automatici. Ogni finding viene trasformato in test, così il difetto non torna.
 
-Next.js 16 · React 19 · Tailwind CSS 4 · TypeScript · Prisma · PostgreSQL · Vercel
+**Hardware custom e cryocooling.** Progetto impianti di liquid cooling per PC, circuiti ad acqua, tubazioni, pompe, radiatori e monitoring. Il raffreddamento criogenico è l'estremo del percorso: portare una CPU sotto zero e tenerla stabile lì, con protezioni, curve di avvio sicuro e gestione della condensazione. Mi interessa la parte che nessuno vede ma che deve funzionare.
 
-### 🏗️ Key Features
-
-- Multi-tenant N-level hierarchy with custom domains
-- Real-time tracking via SSE push
-- Barcode scanning & picklist management
-- Digital DDT with auto-PDF generation
-- SMS & multi-provider notifications
-- Import engine (CSV/JSON/XML/XLSX) with wizard
-- Social bacheca aziendale
-- Advanced audit logging with anomaly detection
+**Appassionato di tech e cyber.** Mi interessa tutto ciò che passa fra hardware e sicurezza: firmware, protocolli, reverse engineering, Linux, reti. Nessuna delle due cose (il software e l'hardware) è un hobby separato dall'altra, sono lo stesso modo di ragionare applicato a cose diverse.
 
 ---
 
-## 🤝 Connect
+## ShipExpress
 
-[![ShipExpress](https://img.shields.io/badge/ShipExpress-2563eb?style=for-the-badge)](https://shipexpress.vercel.app)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge)](mailto:stargatelabs@gmail.com)
+**[shipexpress.it](https://shipexpress.it)**
+
+Piattaforma multi-tenant per la gestione operativa delle spedizioni. Ogni cliente ha un dominio proprio, un database separato e una gerarchia di utenti con permessi per ruolo.
+
+| Area | Cosa fa |
+|---|---|
+| Spedizioni | Confronto tariffe tra corrieri, creazione, tracciamento, contrassegno, consegna con foto e firma |
+| Magazzino | Prodotti, categorie, giacenze, ubicazioni, movimenti, conteggi, imballaggi |
+| Ordini | Ordini cliente, flusso di stato, picklist con lettura dei codici a barre |
+| Documenti | DDT e fatturazione elettronica |
+| Integrazioni | Corrieri, marketplace e gestionali esterni |
+
+Il listino tariffe è configurabile per tenant, con regole su zona, peso e supplementi. Il confronto tra corrieri ordina i costi dal più basso e segnala quando il peso volumetrico supera quello reale.
+
+**36 corrieri integrati.** 13 provider nativi con adapter dedicato (BRT, DHL, DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline) e 24 adapter REST generici che coprono gli altri operatori. Il tracciamento usa i webhook quando il corriere li espone e polling periodico per gli altri.
 
 ---
 
-*Building the future of logistics, one shipment at a time.*
+## Come lavoro sul codice
+
+**1.234 test automatici.** Unitari, di integrazione ed end-to-end con Playwright, eseguiti a ogni modifica. Il typecheck è separato dal build, così un errore di tipi blocca la pipeline senza mascherare i problemi di build.
+
+**Isolamento multi-tenant verificato.** Ogni tenant ha routing dedicato per dominio, middleware di risoluzione e fallback esplicito a chiusura quando il tenant non è risolvibile. Il tenant non è un campo su una tabella: è un confine.
+
+**Validazione ai bordi.** Zod su tutto l'input esterno, `unknown` al posto di `any`, query parametrizzate, transazioni quando un'operazione tocca più tabelle.
+
+**Sicurezza operativa.** Autenticazione a due fattori sull'account root, audit delle operazioni critiche, rate limit, rilevamento brute-force e blacklist sessioni su Redis.
+
+---
+
+## Stack
+
+| Livello | Tecnologie |
+|---|---|
+| Applicazione | Next.js 16, React 19, TypeScript |
+| Dati | PostgreSQL, Prisma 6 |
+| Code e job | Redis, BullMQ |
+| Interfaccia | Tailwind CSS 4 |
+| Validazione | Zod 4 |
+| Test | Vitest, Playwright |
+
+| Metrica | Valore |
+|---|---|
+| Corrieri integrati | 36 |
+| Test automatici | 1.234 |
+| Dipendenze di produzione | 67 |
+
+---
+
+## Contatti
+
+Il codice di ShipExpress è privato. Per una demo, per un'integrazione o per parlare di un progetto hardware:
+
+- Sito: [shipexpress.it](https://shipexpress.it)
+- Email: [info@shipexpress.it](mailto:info@shipexpress.it)
