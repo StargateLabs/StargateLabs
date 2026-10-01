@@ -1,22 +1,28 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=3" alt="Stargate Labs: laboratorio con impianto a liquido, postazione di sviluppo e monitoraggio" width="760" height="424">
-</p>
+<div align="center">
 
-<p align="center">
-  <a href="https://stargatelabs.github.io/StargateLabs/">Presentazione</a>
-  &nbsp;&middot;&nbsp;
-  <a href="https://stargatelabs.github.io/StargateLabs/index-en.html">Presentation (EN)</a>
-  &nbsp;&middot;&nbsp;
-  <a href="https://shipexpress.it">
-    <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="420">
-  </a>
-</p>
+<h1>Stargate Labs</h1>
 
-<p align="center">
-  <a href="https://shipexpress.it">shipexpress.it</a>
-  &nbsp;&middot;&nbsp;
-  <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
-</p>
+<p><em>Laboratorio privato: software di gestione in produzione, impianti hardware e strumenti di sicurezza.</em></p>
+
+<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="360">
+
+<br><br>
+
+<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=3" alt="Stargate Labs" width="760">
+
+<br><br>
+
+<a href="https://stargatelabs.github.io/StargateLabs/">Presentazione</a>
+&nbsp;&middot;&nbsp;
+<a href="https://stargatelabs.github.io/StargateLabs/index-en.html">Presentation (EN)</a>
+&nbsp;&middot;&nbsp;
+<a href="https://shipexpress.it">shipexpress.it</a>
+&nbsp;&middot;&nbsp;
+<a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+
+</div>
+
+<hr>
 
 Laboratorio privato. Progetto software, impianti hardware e strumenti di sicurezza, con la stessa curiosità tecnica su ogni strato: dal ciclo di refrigerazione di un rig al ciclo di richiesta di un'API.
 
