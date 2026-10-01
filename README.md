@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=1" alt="Stargate Labs: laboratorio con impianto a liquido, postazione di sviluppo e monitoraggio" width="620" height="401">
+  <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=2" alt="Stargate Labs: laboratorio con impianto a liquido, postazione di sviluppo e monitoraggio" width="620" height="401">
 </p>
 
 <p align="center">
