@@ -17,9 +17,7 @@
 ## Stargate Labs
 
 Costruisco software che gira per gente vera, cerco difetti per mestiere, e
-raffreddando macchine sotto carico. **36 corrieri integrati** nel gestionale in
-produzione, **1.234 test automatici** che girano a ogni modifica, **13 provider
-nativi** con adapter dedicato e altri 24 via API REST.
+raffreddando macchine sotto carico.
 
 È la stessa disciplina ripetuta: capire cosa deve sopravvivere, metterci un
 test o un allarme, e non dare per scontato che un numero letto sia giusto.
