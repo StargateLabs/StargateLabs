@@ -165,7 +165,7 @@ certificazione root), audit end-to-end di ogni API, accessibilità in automatico
 ## Sull'hardware
 
 Prima le protezioni, poi le prestazioni. Un impianto criogenico senza allarmi è
-un rischio, not an esperimento. Quindi si parte da sensori, soglie, avvio
+un rischio, non un esperimento. Quindi si parte da sensori, soglie, avvio
 sicuro e condensazione gestita. L'ottimizzazione arriva dopo.
 
 Nessun segnale è attendibile. Più sensori indipendenti e validazione a monte:
