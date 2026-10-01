@@ -24,37 +24,67 @@
 
 ---
 
-## I miei lavori
+Costruisco software che gira per gente vera, cerco difetti per mestiere, e
+raffreddando macchine sotto carico. È la stessa disciplina ripetuta: capire
+cosa deve sopravvivere, metterci un test o un allarme, e non dare per scontato
+che un numero letto sia giusto.
 
-**ARGUS, piattaforma di security testing continuo.** Orchestratore che esegue ricognizione, DAST, SAST, analisi delle dipendenze, scansione dei segreti e fuzzing su target autorizzati. Code con BullMQ, dashboard Next.js, integrazione con DefectDojo e alert su Telegram. Aggiornato fino alla v0.2.0: TLS verify-full su Postgres e Redis, backup cifrati AES-256-GCM con ripristino verificato, rotazione e controllo dei certificati, logrotate con retention configurabile.
+| | | | |
+|:---|:---|:---|:---|
+| **36**<br>corrieri integrati | **1.234**<br>test automatici | **13**<br>provider nativi | **24**<br>adapter REST |
 
-**ShipExpress, gestionale operativo per spedizioni.** Piattaforma multi-tenant in produzione: 36 corrieri integrati, magazzino, ordini, DDT e fatturazione elettronica, con code BullMQ e RAG per la ricerca interna. Il dettaglio è nella sezione dedicata qui sotto.
+## Cosa c'è dentro
 
-**TechDash, monitoraggio dell'hardware del rig.** Dashboard single-page con backend Python che legge i sensori della macchina: temperature CPU e GPU, carico, ventole, pompe e stato dei dischi, con avvisi su condensazione e gestione termica. Pensata per un impianto che gira sotto carico costante, quindi priorizza la lettura rapida e gli allarmi.
+<table>
+<tr>
+<td width="50%" valign="top">
 
-**Plugin SignalRGB e bridge LSC Battletron.** Integrazione per il controllo dell'illuminazione RGB con hardware LSC, con bridge verso il controller e configurazione automatica dei dispositivi.
+**ShipExpress** · gestionale, in produzione
 
-**Setup criogenici su Intel Cryo.** Studio e messa a punto del raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione della condensazione, curve di avvio sicuro e monitoraggio. Lo stato del progetto, le scelte tecniche e i riferimenti sono documentati nel repository TechDash.
+Il gestionale che uso con aziende che spediscono ogni giorno. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
 
----
+Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la differenza fra peso reale e volumetrico, che è l'errore che l'azienda scopre solo quando legge la fattura.
 
-## Cosa faccio
+</td>
+<td width="50%" valign="top">
 
-**Sviluppo software indipendente.** Progetto e mantengo piattaforme gestionali complete, dal modello dati all'interfaccia. Il prodotto principale è in produzione e serve aziende che spediscono ogni giorno. Se una funzione non regge il carico reale, non viene rilasciata.
+**ARGUS** · security testing, v0.2.0
 
-**Bug hunting.** Cerco difetti in modo sistematico, non a caso. Il laboratorio applica la stessa disciplina del codice al software: test di sicurezza dedicati (isolamento tenant, hardening OAuth, proxy fail-closed, certificazione root), audit end-to-end di ogni API e controlli di accessibilità automatici. Ogni finding viene trasformato in test, così il difetto non torna.
+Orchestratore di security testing continuo: ricognizione, DAST, SAST, analisi delle dipendenze, scansione dei segreti, fuzzing, sempre su target autorizzati.
 
-**Hardware custom e cryocooling.** Progetto impianti di liquid cooling per PC, circuiti ad acqua, tubazioni, pompe, radiatori e monitoring. Il raffreddamento criogenico è l'estremo del percorso: portare una CPU sotto zero e tenerla stabile lì, con protezioni, curve di avvio sicuro e gestione della condensazione. Mi interessa la parte che nessuno vede ma che deve funzionare.
+BullMQ per le code, Next.js per la dashboard, DefectDojo per i finding, Telegram per gli alert. Ho chiuso la parte che spesso si salta: TLS verify-full su Postgres e Redis, backup AES-256-GCM con ripristino provato e non solo scritto, certificati che ruotano, logrotate con retention.
 
-**Appassionato di tech e cyber.** Mi interessa tutto ciò che sta fra hardware e sicurezza: firmware, protocolli, reverse engineering, Linux, reti. L'hardware e il software non sono due hobby separati, sono lo stesso metodo di ragionamento applicato a cose diverse.
+</td>
+</tr>
+<tr>
+<td valign="top">
 
----
+**TechDash** · hardware del rig
+
+Dashboard con backend Python che legge i sensori della macchina: CPU, GPU, carico, ventole, pompe, dischi.
+
+Allarmi su condensazione, che su un impianto sotto carico costante è la variabile che uccide.
+
+</td>
+<td valign="top">
+
+**Setup criogenici** · Intel Cryo
+
+Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione della condensazione, curve di avvio sicuro e monitoraggio.
+
+Stato del progetto, scelte tecniche e riferimenti sono nel repository TechDash. Il plugin SignalRGB con bridge LSC Battletron copre invece l'illuminazione RGB su hardware LSC.
+
+</td>
+</tr>
+</table>
 
 ## ShipExpress
 
 **[shipexpress.it](https://shipexpress.it)**
 
-Piattaforma multi-tenant per la gestione operativa delle spedizioni. Ogni cliente ha un dominio proprio, un database separato e una gerarchia di utenti con permessi per ruolo.
+Piattaforma multi-tenant per la gestione operativa delle spedizioni. Ogni
+cliente ha un dominio proprio, un database separato e una gerarchia di utenti
+con permessi per ruolo.
 
 | Area | Cosa fa |
 |---|---|
@@ -64,20 +94,58 @@ Piattaforma multi-tenant per la gestione operativa delle spedizioni. Ogni client
 | Documenti | DDT e fatturazione elettronica |
 | Integrazioni | Corrieri, marketplace e gestionali esterni |
 
-Il listino tariffe è configurabile per tenant, con regole su zona, peso e supplementi. Il confronto tra corrieri ordina i costi dal più basso e segnala quando il peso volumetrico supera quello reale.
+**36 corrieri integrati.** 13 provider nativi con adapter dedicato (BRT, DHL,
+DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel,
+SpediamoPro, SpedisciOnline) e 24 adapter REST generici per gli altri. Il
+tracciamento usa i webhook quando il corriere li espone, e polling periodico
+per chi non li ha.
 
-**36 corrieri integrati.** 13 provider nativi con adapter dedicato (BRT, DHL, DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline) e 24 adapter REST generici che coprono gli altri operatori. Il tracciamento usa i webhook quando il corriere li espone e polling periodico per gli altri.
+## Sul codice
 
----
+**1.234 test automatici.** Non è un numero da mettere in scheda: è la rete che
+tiene quando cambio qualcosa alle 23.
+
+L'isolamento multi-tenant è verificato, non dichiarato. Routing per dominio,
+middleware di risoluzione, e un fallback che chiude se il tenant non è
+risolvibile. Un tenant non è una colonna, è un muro.
+
+Tutto l'input esterno passa da Zod. `unknown` invece di `any`. Query
+parametrizzate. Transazioni quando l'operazione tocca più tabelle.
+
+Root ha due fattori, le operazioni critiche lasciano traccia, e ci sono rate
+limit, rilevamento brute-force e blacklist sessioni su Redis.
+
+Il ciclo non cambia mai: trovo il difetto, e il difetto diventa un test. Test
+di sicurezza dedicati (isolamento tenant, hardening OAuth, proxy fail-closed,
+certificazione root), audit end-to-end di ogni API, accessibilità in automatico.
+
+## Sull'hardware
+
+Prima le protezioni, poi le prestazioni. Un impianto criogenico senza allarmi è
+un rischio, non un esperimento. Quindi si parte da sensori, soglie, avvio
+sicuro e condensazione gestita. L'ottimizzazione arriva dopo.
+
+Nessun segnale è attendibile. Più sensori indipendenti e validazione a monte:
+un valore fuori scala è quasi sempre un problema di acquisizione, non della
+macchina.
+
+Il freddo è un sistema. Peltier, CPU, RAM, GPU, alimentatore e scheda madre
+hanno limiti termici diversi, e raffreddare solo la CPU sposta il danno invece
+di evitarlo.
+
+Ogni impianto lascia schema, componenti, curve di avvio e valori misurati. Se
+fra sei mesi non lo capisco da solo, ho sbagliato il progetto.
 
 ## Stack
 
-<p align="center">
+<table>
+<tr><td align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/stack-dark.svg">
     <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/stack-light.svg" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Zod, Python" width="760">
   </picture>
-</p>
+</td></tr>
+</table>
 
 | Livello | Tecnologie |
 |---|---|
@@ -89,37 +157,10 @@ Il listino tariffe è configurabile per tenant, con regole su zona, peso e suppl
 | Test | Vitest, Playwright |
 | Hardware e sensori | Python |
 
-## Come lavoro sul codice
-
-**1.234 test automatici.** Unitari, di integrazione ed end-to-end con Playwright, eseguiti a ogni modifica. Il typecheck è separato dal build, così un errore di tipi blocca la pipeline senza mascherare i problemi di build.
-
-**Isolamento multi-tenant verificato.** Ogni tenant ha routing dedicato per dominio, middleware di risoluzione e fallback esplicito a chiusura quando il tenant non è risolvibile. Il tenant non è un campo su una tabella: è un confine.
-
-**Validazione ai bordi.** Zod su tutto l'input esterno, `unknown` al posto di `any`, query parametrizzate, transazioni quando un'operazione tocca più tabelle.
-
-**Sicurezza operativa.** Autenticazione a due fattori sull'account root, audit delle operazioni critiche, rate limit, rilevamento brute-force e blacklist sessioni su Redis.
-
-## Come lavoro sull'hardware
-
-**Protezioni prima delle prestazioni.** Un impianto criogenico che non ha allarmi è un rischio, non un esperimento. Ogni progetto parte da sensori, soglie, avvio sicuro e gestione della condensazione, poi si ottimizza.
-
-**Nessun segnale è attendibile.** Le misure vengono lette da più sensori indipendenti e validate a monte, perché un valore fuori scala spesso è un problema di acquisizione, non della macchina.
-
-**Il freddo è un sistema, non un componente.** Peltier, CPU, RAM, GPU, alimentatore e scheda madre hanno limiti termici diversi. Portare sotto zero solo la CPU e ignorare il resto sposta il danno, non lo evita.
-
-**Documentazione dal giorno zero.** Ogni impianto lascia uno schema, l'elenco dei componenti, le curve di avvio e i valori misurati. Un laboratorio serve anche a se stesso fra sei mesi.
-
-| Metrica | Valore |
-|---|---|
-| Corrieri integrati | 36 |
-| Test automatici | 1.234 |
-| Dipendenze di produzione | 67 |
-
----
-
 ## Contatti
 
-Il codice di ShipExpress è privato. Per una demo, per un'integrazione o per parlare di un progetto hardware:
+Il codice di ShipExpress è privato. Per una demo, per un'integrazione o per
+parlare di un progetto hardware:
 
 - Sito: [shipexpress.it](https://shipexpress.it)
 - Email: [info@shipexpress.it](mailto:info@shipexpress.it)
