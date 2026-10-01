@@ -4,17 +4,14 @@
 
 <p align="center">
   <a href="https://shipexpress.it">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-site-dark.svg">
-      <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-site-light.svg" alt="shipexpress.it" height="28">
-    </picture>
+    <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="420">
   </a>
-  <a href="mailto:info@shipexpress.it">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-dark.svg">
-      <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/badge-mail-light.svg" alt="info@shipexpress.it" height="28">
-    </picture>
-  </a>
+</p>
+
+<p align="center">
+  <a href="https://shipexpress.it">shipexpress.it</a>
+  &nbsp;&middot;&nbsp;
+  <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
 </p>
 
 Laboratorio privato. Progetto software, impianti hardware e strumenti di sicurezza, con la stessa curiosità tecnica su ogni strato: dal ciclo di refrigerazione di un rig al ciclo di richiesta di un'API.
