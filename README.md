@@ -68,11 +68,53 @@ Stato del progetto, scelte tecniche e riferimenti sono nel repository TechDash.
 </table>
 
 <details>
-<summary><b>SignalRGB e LSC Battletron</b></summary>
+<summary><b>Plugin SignalRGB e bridge LSC Battletron</b></summary>
 <br>
-Plugin per il controllo dell'illuminazione RGB su hardware LSC, con bridge verso
-il controller e configurazione automatica dei dispositivi. Il codice è nel repo
-<a href="https://github.com/StargateLabs/signalrgb-razer-stream-controller-x">signalrgb-razer-stream-controller-x</a>.
+
+Plugin per l'illuminazione RGB su hardware LSC, con bridge verso il controller e
+configurazione automatica dei dispositivi. Include anche un plugin per il Razer
+Stream Controller X, dove il lavoro vero è stato reverse engineering del
+protocollo.
+
+<p align="center">
+<a href="https://github.com/StargateLabs/signalrgb-razer-stream-controller-x">
+<img src="https://raw.githubusercontent.com/StargateLabs/signalrgb-razer-stream-controller-x/main/assets/product.png" alt="Razer Stream Controller X" width="300">
+<br>
+<b>signalrgb-razer-stream-controller-x</b>
+</a>
+</p>
+
+Il deck ha uno schermo 480 × 288 dietro a 15 tasti, e il plugin standard di
+SignalRGB per display non lo regge: passa dall'overlay composited e ci mette il
+logo al centro. Il percorso riscritto legge il canvas dell'effetto e scrive
+pixel per pixel in RGB565, quindi l'immagine arriva pulita.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+**Il protocollo**
+
+Protocollo Loupedeck, WebSocket su seriale, handshake `HTTP/1.1 101`. I comandi che servono sono quattro: `FRAMEBUFF` per i pixel di un rettangolo, `DRAW` per mostrarlo, `VERSION`, `SERIAL`.
+
+Un tasto da 96 × 96 costa 18.459 byte, quindi il deck intero sono 277 KB.
+
+</td>
+<td width="50%" valign="top">
+
+**Le misure**
+
+Il ciclo di refresh del device è fisso a circa 420 ms e non scala con i byte, ma il device accoda: 8 frame in coda danno 12,8 fps contro i 2,3 di un frame alla volta.
+
+Il limite è a monte. SignalRGB scrive a 2,3-2,5 MB/s, pyserial sugli stessi byte sullo stesso cavo arriva a 11,5 MB/s. Per questo il plugin ottiene 3,6-4,6 fps e non di più.
+
+</td>
+</tr>
+</table>
+
+Documentazione in italiano e inglese nel repo, con la curva di costo per
+scrittura e i limiti verificati.
+
 </details>
 
 ## ShipExpress
