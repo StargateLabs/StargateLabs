@@ -1,7 +1,6 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=4" alt="Stargate Labs" width="760">
 <br><br>
-<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="280">
 <br><br>
 <a href="https://stargatelabs.github.io/StargateLabs/"><b>Presentazione</b></a>
 &nbsp;&nbsp;·&nbsp;&nbsp;
@@ -33,7 +32,7 @@ test o un allarme, e non dare per scontato che un numero letto sia giusto.
 
 **ShipExpress** · gestionale, in produzione
 
-Il gestionale che uso con aziende che spediscono ogni giorno. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
+Il gestionale che uso con aziende che spediscono ogni giorno. Il dettaglio è nella sua sezione più in basso. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
 
 Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la differenza fra peso reale e volumetrico, che è l'errore che l'azienda scopre solo quando legge la fattura.
 
@@ -80,7 +79,11 @@ il controller e configurazione automatica dei dispositivi. Il codice è nel repo
 
 ## ShipExpress
 
-**[shipexpress.it](https://shipexpress.it)**
+<p align="center">
+<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=2" alt="ShipExpress Enterprise" width="340">
+<br>
+<a href="https://shipexpress.it"><b>shipexpress.it</b></a>
+</p>
 
 Piattaforma multi-tenant per la gestione operativa delle spedizioni. Ogni
 cliente ha un dominio proprio, un database separato e una gerarchia di utenti
