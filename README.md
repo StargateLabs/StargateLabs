@@ -30,7 +30,7 @@ Niente si dà per scontato. Ogni numero lo misuro, ogni difetto diventa un test.
 
 **ShipExpress** · gestionale, in produzione
 
-Il gestionale che uso con aziende che spediscono ogni giorno. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
+ShipExpress 2026.2.5. 1.462 endpoint API, 357 modelli su Prisma, 67 dipendenze di produzione. Multi-tenant: ogni cliente ha dominio suo, database suo, ruoli suoi.
 
 Il pezzo dove si litiga è il listino. Prezzi per zona, peso e supplementi, e la differenza fra peso reale e volumetrico, che è l'errore che l'azienda scopre solo quando legge la fattura.
 
@@ -173,9 +173,12 @@ il motivo per cui esistono scritto accanto, perché il bug torna se non le vedi.
 <a href="https://shipexpress.it"><b>shipexpress.it</b></a>
 </p>
 
-Piattaforma multi-tenant per la gestione operativa delle spedizioni. Ogni
-cliente ha un dominio proprio, un database separato e una gerarchia di utenti
-con permessi per ruolo.
+Versione 2026.2.5. Il router espone 1.462 endpoint e il modello dati ha 357
+entità, che coprono spedizioni, magazzino, fatturazione, CRM e ciclo di vita del
+cliente.
+
+Ogni cliente ha un dominio proprio, un database separato e una gerarchia di
+utenti con permessi per ruolo.
 
 | Area | Cosa fa |
 |---|---|
@@ -193,6 +196,11 @@ webhook quando il corriere li espone, e polling periodico per chi non li ha.
 La ricerca interna usa RAG: i documenti vengono indicizzati e interrogati in
 linguaggio naturale, non per parole chiave. Serve perché nessuno ricorda in
 quale ticket ha già visto quel problema.
+
+La parte AI è più larga del RAG. Nel codice ci sono route per hybrid search,
+query RAG, apprendimento, e un sistema di agent skills con playbook, valutazione
+e verifica, eseguito anche in schedulazione. C'è anche il pacchetto `ai` nelle
+dipendenze.
 
 ## Sul codice
 
