@@ -6,17 +6,19 @@
 
 <img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/lab.png?v=4" alt="Stargate Labs" width="760">
 
-</div>
+<br>
 
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="300">
+<img src="https://raw.githubusercontent.com/StargateLabs/StargateLabs/main/assets/shipexpress-logo.png?v=1" alt="ShipExpress Enterprise" width="260">
 
 <br>
 
-[Presentazione](https://stargatelabs.github.io/StargateLabs/) · [Presentation (EN)](https://stargatelabs.github.io/StargateLabs/index-en.html)
+[Presentazione](https://stargatelabs.github.io/StargateLabs/)
+&nbsp;·&nbsp;
+[Presentation (EN)](https://stargatelabs.github.io/StargateLabs/index-en.html)
 
-[shipexpress.it](https://shipexpress.it) · [info@shipexpress.it](mailto:info@shipexpress.it)
+[shipexpress.it](https://shipexpress.it)
+&nbsp;·&nbsp;
+[info@shipexpress.it](mailto:info@shipexpress.it)
 
 </div>
 
