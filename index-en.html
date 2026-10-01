@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stargate Labs — presentation</title>
+<style>
+  :root{
+    --bg:#080b0e; --bg2:#0d1117; --panel:#11161c; --line:#1e262f;
+    --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px}
+
+  header{padding:96px 0 64px;border-bottom:1px solid var(--line)}
+  .kicker{
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
+  }
+  h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:0 0 20px;letter-spacing:-.02em}
+  h1 span{color:var(--green)}
+  .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  h2{
+    font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 32px
+  }
+  h3{font-size:21px;margin:0 0 10px}
+  p{margin:0 0 16px}
+  .muted{color:var(--dim)}
+
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* l'ultima card non resta isolata: l'ultima occupa tutta la riga */
+  .card:last-child:nth-child(odd){grid-column:1/-1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
+  .card h3{font-size:18px}
+  .card p{font-size:15px;color:var(--dim);margin:0}
+
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:26px 20px}
+  .stat b{display:block;font:700 32px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--green);letter-spacing:-.02em}
+  .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  td:first-child{color:var(--ink);font-weight:600;width:34%}
+
+  ol,ul{margin:0 0 16px;padding-left:22px}
+  li{margin:0 0 10px}
+  li::marker{color:var(--green)}
+
+  code{
+    font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg2);
+    border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--amber)
+  }
+  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .links a{
+    color:var(--cyan);text-decoration:none;border:1px solid var(--line);
+    border-radius:6px;padding:10px 16px;font-size:14px
+  }
+  .links a:hover{border-color:var(--cyan)}
+
+  .tag{
+    display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
+    border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
+  }
+  footer{padding:56px 0 0;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">Private lab</p>
+  <h1>Stargate <span>Labs</span></h1>
+  <p class="lede">
+    Production operations software, custom hardware builds and security tooling.
+    The same technical curiosity on every layer: from a rig's refrigeration
+    cycle to an API request cycle.
+  </p>
+</header>
+
+<section>
+  <h2>Numbers</h2>
+  <div class="stats">
+    <div class="stat"><b>36</b><span>Carriers integrated</span></div>
+    <div class="stat"><b>1.234</b><span>Automated tests</span></div>
+    <div class="stat"><b>67</b><span>Production dependencies</span></div>
+    <div class="stat"><b>13</b><span>Native providers</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>ShipExpress</h3>
+      <p>Production multi-tenant shipment management platform. Each customer gets
+         its own domain, its own database and a role-based permission tree.</p>
+    </div>
+    <div class="card">
+      <h3>ARGUS</h3>
+      <p>Continuous security testing orchestrator: reconnaissance, DAST, SAST,
+         dependency analysis, secret scanning and fuzzing on authorised targets. <code>v0.2.0</code>.</p>
+    </div>
+    <div class="card">
+      <h3>TechDash</h3>
+      <p>Rig hardware monitoring: CPU and GPU temperatures, load, fans, pumps and
+         disks, with condensation alerts and thermal management.</p>
+    </div>
+    <div class="card">
+      <h3>Setup criogenici</h3>
+      <p>TEC cooling on 10th and 13th generation Intel CPUs, with condensation
+         handling, safe boot curves and monitoring.</p>
+    </div>
+    <div class="card">
+      <h3>SignalRGB e LSC Battletron</h3>
+      <p>RGB lighting plugin with a bridge to the controller and automatic device
+         configuration.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>ShipExpress — detail</h2>
+  <table>
+    <tr><th>Area</th><th>What it does</th></tr>
+    <tr><td>Shipments</td><td>Rate comparison across carriers, creation, tracking, cash on delivery,
+             delivery with photo and signature</td></tr>
+    <tr><td>Warehouse</td><td>Products, categories, stock, locations, movements, counts, packaging</td></tr>
+    <tr><td>Orders</td><td>Customer orders, status flow, picklists with barcode scanning</td></tr>
+    <tr><td>Documents</td><td>DDT and electronic invoicing</td></tr>
+    <tr><td>Integrations</td><td>Carriers, marketplaces and external ERPs</td></tr>
+  </table>
+  <p class="muted">
+    13 native providers with dedicated adapters — BRT, DHL, DPD, GLS, UPS, FedEx,
+    TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline —
+    plus 24 generic REST adapters. Tracking uses webhooks where the carrier exposes
+    them, and periodic polling for the rest.
+  </p>
+</section>
+
+<section>
+  <h2>Stack</h2>
+  <p>
+    <span class="tag">Next.js 16</span><span class="tag">React 19</span
+    ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
+    ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
+    ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
+    ><span class="tag">Zod 4</span><span class="tag">Vitest</span
+    ><span class="tag">Playwright</span><span class="tag">Python</span>
+  </p>
+</section>
+
+<section>
+  <h2>How I work</h2>
+  <ol>
+    <li><b>Validation at the edges.</b> Zod on all external input,
+        <code>unknown</code> instead of <code>any</code>, parameterised queries,
+        transactions when an operation touches multiple tables.</li>
+    <li><b>Verified multi-tenant isolation.</b> Per-domain routing, resolution middleware and an explicit fail-closed
+        fallback. A tenant is not a column: it is a boundary.</li>
+    <li><b>Every finding becomes a test.</b> The bug does not come back.</li>
+    <li><b>Operational security.</b> Two-factor on the root account, audit trail for critical operations, rate
+        limiting, brute-force detection and session blacklisting on Redis.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Hardware</h2>
+  <ul>
+    <li><b>Protections before performance.</b> A cryogenic rig without alarms is a
+        risk, not an experiment.</li>
+    <li><b>No signal is trusted.</b> Multiple independent sensors with upstream
+        validation: an out-of-range value is usually an acquisition problem,
+        not a machine problem.</li>
+    <li><b>Cold is a system.</b> Peltier, CPU, RAM, GPU and PSU have different thermal
+        limits.</li>
+    <li><b>Documentation from day one.</b> Schematics, components, boot curves and
+        measured values.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Contact</h2>
+  <p>ShipExpress source code is private. For a demo, an integration, or to
+     discuss a hardware project:</p>
+  <div class="links">
+    <a href="https://shipexpress.it">shipexpress.it</a>
+    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+  </div>
+</section>
+
+<footer>
+  Stargate Labs — private lab.
+</footer>
+
+</div>
+</body>
+</html>
