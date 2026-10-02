@@ -70,13 +70,13 @@ Lavora sul controller, non sul processore: nessun socket, nessun chipset, nessun
 </table>
 
 <details>
-<summary><b>Plugin SignalRGB e bridge LSC Battletron</b></summary>
+<summary><b>Plugin SignalRGB per Razer Stream Controller X</b></summary>
 <br>
 
-Plugin per l'illuminazione RGB su hardware LSC, con bridge verso il controller e
-configurazione automatica dei dispositivi. Include anche un plugin per il Razer
-Stream Controller X, dove il lavoro vero è stato reverse engineering del
-protocollo.
+Il plugin standard di SignalRGB per display non regge lo schermo di questo
+deck: passa dall'overlay composited e ci mette il logo al centro. Il percorlo
+riscritto legge il canvas dell'effetto e scrive pixel per pixel in RGB565,
+quindi l'immagine arriva pulita a 480 × 288.
 
 <p align="center">
 <a href="https://github.com/StargateLabs/signalrgb-razer-stream-controller-x">
@@ -85,11 +85,6 @@ protocollo.
 <b>signalrgb-razer-stream-controller-x</b>
 </a>
 </p>
-
-Il deck ha uno schermo 480 × 288 dietro a 15 tasti, e il plugin standard di
-SignalRGB per display non lo regge: passa dall'overlay composited e ci mette il
-logo al centro. Il percorso riscritto legge il canvas dell'effetto e scrive
-pixel per pixel in RGB565, quindi l'immagine arriva pulita.
 
 <table>
 <tr>
@@ -118,6 +113,7 @@ Documentazione in italiano e inglese nel repo, con la curva di costo per
 scrittura e i limiti verificati.
 
 </details>
+
 
 <details>
 <summary><b>StargateCryo: controller Gen 1 modificato su TEC Gen 2</b></summary>
