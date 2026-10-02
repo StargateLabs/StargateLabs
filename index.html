@@ -3,311 +3,207 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stargate Labs: software in produzione, hardware su misura, security testing</title>
-<meta name="description" content="Laboratorio privato: gestionale logistico ShipExpress in produzione, orchestratore di security testing ARGUS, assistente vocale ARA, controller TEC StargateCryo. Dati reali, nessun numero inventato.">
-<meta property="og:title" content="Stargate Labs">
-<meta property="og:description" content="Software in produzione, impianti criogenici su misura, strumenti di security testing.">
-<meta property="og:image" content="https://stargatelabs.github.io/StargateLabs/assets/logo.png">
-<meta name="theme-color" content="#0a0e12">
-<link rel="icon" href="assets/logo.png">
+<title>Stargate Labs — presentazione</title>
 <style>
   :root{
-    --bg:#0a0e12; --panel:#0f151b; --line:#1c2631;
-    --ink:#e8eef4; --dim:#93a1b0; --faint:#5d6b7a;
-    --go:#35e08a;      /* core 1: segnale / stato ok */
-    --data:#4cc9f0;    /* core 2: dati / link */
-    --heat:#f5a623;    /* accento: temperatura / tecnico */
-    --radius:10px;
-    --maxw:940px;
+    --bg:#080b0e; --bg2:#0d1117; --panel:#11161c; --line:#1e262f;
+    --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
   body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.7 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
-  a{color:var(--data);text-decoration:none}
-  a:hover{text-decoration:underline}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--go);outline-offset:3px;border-radius:4px}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  .skip{position:absolute;left:-999px;top:0;background:var(--go);color:#04120b;padding:10px 14px;z-index:9}
-  .skip:focus{left:12px;top:12px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px}
 
-  /* pulse: motivo identita, una traccia di segnale come separatore */
-  .pulse{height:1px;background:linear-gradient(90deg,var(--go),transparent 55%);border:0;margin:0;opacity:.55}
-
-  header.site{
-    position:sticky;top:0;z-index:5;background:rgba(10,14,18,.86);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  header{padding:96px 0 64px;border-bottom:1px solid var(--line)}
+  .kicker{
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
   }
-  header.site .wrap{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
-  .brand img{width:28px;height:28px;object-fit:contain;display:block}
-  nav.top{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
-  nav.top a{color:var(--dim)}
-  nav.top a:hover{color:var(--ink)}
+  h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:0 0 20px;letter-spacing:-.02em}
+  h1 span{color:var(--green)}
+  .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
 
-  header.hero{padding:88px 0 64px}
-  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--go);margin:0 0 18px}
-  h1{font-size:clamp(34px,6vw,58px);line-height:1.06;margin:0 0 22px;letter-spacing:-.025em}
-  h1 em{font-style:normal;color:var(--go)}
-  .lede{font-size:19px;color:var(--dim);max-width:64ch;margin:0}
-  .hero-actions{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-block;padding:11px 18px;border-radius:8px;border:1px solid var(--line);color:var(--ink);font-size:14px}
-  .btn.primary{background:var(--go);color:#04120b;border-color:transparent;font-weight:600}
-  .btn.primary:hover{text-decoration:none;filter:brightness(1.06)}
-  .btn:hover{text-decoration:none;border-color:var(--data)}
-
-  section{padding:56px 0;border-top:1px solid var(--line)}
-  h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--data);margin:0 0 26px}
-  h3{font-size:20px;margin:0 0 10px;letter-spacing:-.01em}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  h2{
+    font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 32px
+  }
+  h3{font-size:21px;margin:0 0 10px}
   p{margin:0 0 16px}
   .muted{color:var(--dim)}
-  .small{font-size:14px}
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  .stat{background:var(--panel);padding:24px 20px}
-  .stat b{display:block;font-size:30px;line-height:1;color:var(--go);letter-spacing:-.02em}
-  .stat span{display:block;margin-top:10px;font-size:13px;color:var(--dim)}
-  .stat .src{display:block;margin-top:4px;font-size:11px;color:var(--faint)}
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* l'ultima card non resta isolata: l'ultima occupa tutta la riga */
+  .card:last-child:nth-child(odd){grid-column:1/-1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
+  .card h3{font-size:18px}
+  .card p{font-size:15px;color:var(--dim);margin:0}
 
-  .project{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
-  .project.flagship{padding:30px}
-  .project h3{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .project h3 .ver{font-size:12px;color:var(--heat)}
-  .project p{color:var(--dim);margin:0}
-  .project .facts{margin:16px 0 0;display:flex;gap:8px;flex-wrap:wrap}
-  .chip{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:5px 10px}
-  .grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:18px}
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:26px 20px}
+  .stat b{display:block;font:700 32px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--green);letter-spacing:-.02em}
+  .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
 
-  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 14px}
-  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-  td:first-child{font-weight:600;width:30%}
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  td:first-child{color:var(--ink);font-weight:600;width:34%}
 
-  ul.clean{list-style:none;padding:0;margin:0}
-  ul.clean li{padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
-  ul.clean li:last-child{border-bottom:0}
-  ul.clean b{color:var(--ink)}
-  ul.clean span{color:var(--dim)}
+  ol,ul{margin:0 0 16px;padding-left:22px}
+  li{margin:0 0 10px}
+  li::marker{color:var(--green)}
 
-  .tags{display:flex;flex-wrap:wrap;gap:8px}
-  .tag{font-size:13px;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:6px 11px}
+  code{
+    font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg2);
+    border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--amber)
+  }
+  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .links a{
+    color:var(--cyan);text-decoration:none;border:1px solid var(--line);
+    border-radius:6px;padding:10px 16px;font-size:14px
+  }
+  .links a:hover{border-color:var(--cyan)}
 
-  .contact{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
-  footer{padding:40px 0 60px;color:var(--faint);font-size:13px;border-top:1px solid var(--line)}
-  footer a{color:var(--dim)}
+  .tag{
+    display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
+    border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
+  }
+  footer{padding:56px 0 0;color:var(--dim);font-size:14px}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Vai al contenuto</a>
-
-<header class="site">
-  <div class="wrap">
-    <span class="brand"><img src="assets/logo.png" alt="">Stargate Labs</span>
-    <nav class="top" aria-label="Sezioni">
-      <a href="#progetti">Progetti</a>
-      <a href="#shipexpress">ShipExpress</a>
-      <a href="#stack">Stack</a>
-      <a href="#metodo">Metodo</a>
-      <a href="#hardware">Hardware</a>
-      <a href="#contatti">Contatti</a>
-    </nav>
-  </div>
-</header>
-
-<main id="main">
 <div class="wrap">
 
-  <header class="hero">
-    <p class="eyebrow">Laboratorio privato</p>
-    <h1>Software in produzione.<br>Freddo <em>misurato</em>.</h1>
-    <p class="lede">
-      Gestionale logistico multi-tenant, orchestratore di security testing, assistente
-      vocale e controller per raffreddamento a TEC. Ogni numero qui sotto viene da una
-      build reale, non da una slide.
-    </p>
-    <div class="hero-actions">
-      <a class="btn primary" href="#progetti">Guarda i quattro progetti</a>
-      <a class="btn" href="https://shipexpress.it">shipexpress.it</a>
+<header>
+  <p class="kicker">Laboratorio privato</p>
+  <h1>Stargate <span>Labs</span></h1>
+  <p class="lede">
+    Software di gestione in produzione, impianti hardware su misura e strumenti
+    di sicurezza. La stessa curiosità tecnica su ogni strato: dal ciclo di
+    refrigerazione di un rig al ciclo di richiesta di un'API.
+  </p>
+</header>
+
+<section>
+  <h2>Numeri</h2>
+  <div class="stats">
+    <div class="stat"><b>36</b><span>Corrieri integrati</span></div>
+    <div class="stat"><b>1.234</b><span>Test automatici</span></div>
+    <div class="stat"><b>67</b><span>Dipendenze di produzione</span></div>
+    <div class="stat"><b>13</b><span>Provider nativi</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Progetti</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>ShipExpress</h3>
+      <p>Gestionale operativo per spedizioni, multi-tenant, in produzione.
+         Ogni cliente ha dominio proprio, database separato e gerarchia di
+         permessi per ruolo.</p>
     </div>
-  </header>
-
-  <hr class="pulse">
-
-  <section aria-labelledby="t-numeri">
-    <h2 id="t-numeri">Numeri</h2>
-    <div class="stats">
-      <div class="stat"><b>1.462</b><span>Endpoint API</span><span class="src">ShipExpress 2026.2.5</span></div>
-      <div class="stat"><b>357</b><span>Modelli Prisma</span><span class="src">ShipExpress</span></div>
-      <div class="stat"><b>42</b><span>Corrieri integrati</span><span class="src">ShipExpress</span></div>
-      <div class="stat"><b>8.896</b><span>Test automatici</span><span class="src">ShipExpress, Vitest</span></div>
+    <div class="card">
+      <h3>ARGUS</h3>
+      <p>Orchestratore di security testing continuo: ricognizione, DAST, SAST,
+         analisi delle dipendenze, scansione dei segreti e fuzzing su target
+         autorizzati. <code>v0.2.0</code>.</p>
     </div>
-  </section>
-
-  <section id="progetti" aria-labelledby="t-progetti">
-    <h2 id="t-progetti">Progetti</h2>
-
-    <article class="project flagship">
-      <h3>ShipExpress <span class="ver mono">2026.2.5</span></h3>
-      <p>
-        Gestionale operativo per spedizioni, magazzino, ordini e fatturazione, multi-tenant
-        e in produzione. Ogni cliente ha dominio proprio, database separato e una gerarchia
-        di permessi per ruolo.
-      </p>
-      <div class="facts">
-        <span class="chip">1.462 endpoint</span>
-        <span class="chip">357 modelli</span>
-        <span class="chip">42 corrieri</span>
-        <span class="chip">8.896 test</span>
-      </div>
-    </article>
-
-    <div class="grid2">
-      <article class="project">
-        <h3>ARGUS <span class="ver mono">v0.2.0</span></h3>
-        <p>
-          Orchestratore di security testing continuo: ricognizione, DAST, SAST, analisi
-          delle dipendenze, scansione dei segreti e fuzzing, su target autorizzati.
-          Ogni tool gira in un'immagine Docker con versione fissata.
-        </p>
-        <div class="facts">
-          <span class="chip">17 scanner</span>
-          <span class="chip">14.071 righe TS</span>
-          <span class="chip">71 endpoint</span>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>ARA</h3>
-        <p>
-          Assistente vocale locale: Whisper in ingresso, Kokoro in uscita, un router che
-          separa task e conversazione in meno di 5 ms. La memoria e' un vault RAG in
-          TF-IDF, senza API esterne.
-        </p>
-        <div class="facts">
-          <span class="chip">29.537 righe Python</span>
-          <span class="chip">7 azioni con conferma</span>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>StargateCryo</h3>
-        <p>
-          Controller TEC per cryocooling. Legge i sensori da HWiNFO64 e AIDA64, pilota il
-          TEC via seriale con PID e calcola il margine di condensa. Lavora sul controller,
-          non sul processore: nessun socket o chipset nel codice.
-        </p>
-        <div class="facts">
-          <span class="chip">23.286 righe Rust</span>
-          <span class="chip">6 canali di allarme</span>
-          <span class="chip">3 profili PID</span>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>Dashboard cryo Intel</h3>
-        <p>
-          Monitoraggio dell'impianto: temperature CPU e GPU, carico, ventole, pompe e
-          dischi, con allarmi su condensa e gestione termica.
-        </p>
-        <div class="facts">
-          <a class="chip" href="https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology">Repo pubblico</a>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>Plugin SignalRGB</h3>
-        <p>
-          Plugin per il Razer Stream Controller X. Legge il canvas dell'effetto e scrive
-          i pixel in RGB565, cosi' il display da 480 x 288 arriva pulito invece di passare
-          dall'overlay composited.
-        </p>
-        <div class="facts">
-          <a class="chip" href="https://github.com/StargateLabs/signalrgb-razer-stream-controller-x">Repo pubblico</a>
-        </div>
-      </article>
+    <div class="card">
+      <h3>TechDash</h3>
+      <p>Monitoraggio hardware del rig: temperature CPU e GPU, carico, ventole,
+         pompe e dischi, con allarmi su condensazione e gestione termica.</p>
     </div>
-  </section>
-
-  <section id="shipexpress" aria-labelledby="t-se">
-    <h2 id="t-se">ShipExpress, nel dettaglio</h2>
-    <table>
-      <thead><tr><th>Area</th><th>Cosa fa</th></tr></thead>
-      <tbody>
-        <tr><td>Spedizioni</td><td>Confronto tariffe tra corrieri, creazione, tracciamento, contrassegno, consegna con foto e firma</td></tr>
-        <tr><td>Magazzino</td><td>Prodotti, categorie, giacenze, ubicazioni, movimenti, conteggi, imballaggi</td></tr>
-        <tr><td>Ordini</td><td>Ordini cliente, flusso di stato, picklist con lettura dei codici a barre</td></tr>
-        <tr><td>Documenti</td><td>DDT e fatturazione elettronica</td></tr>
-        <tr><td>Integrazioni</td><td>Corrieri, marketplace e gestionali esterni</td></tr>
-      </tbody>
-    </table>
-    <p class="muted small">
-      42 corrieri, 74 servizi. I principali hanno un adapter dedicato (BRT, DHL Express,
-      DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, Aramex, CEVA, DB Schenker,
-      Pony Express e altri), gli altri passano da API REST. Il tracciamento usa i webhook
-      quando il corriere li espone, polling periodico per gli altri. La ricerca interna
-      usa un RAG sui documenti, non le parole chiave.
-    </p>
-  </section>
-
-  <section id="stack" aria-labelledby="t-stack">
-    <h2 id="t-stack">Stack</h2>
-    <div class="tags">
-      <span class="tag">Next.js 16</span><span class="tag">React 19</span>
-      <span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span>
-      <span class="tag">Prisma 6</span><span class="tag">Redis 8</span>
-      <span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span>
-      <span class="tag">Zod 4</span><span class="tag">Vitest</span>
-      <span class="tag">Playwright</span><span class="tag">Python</span>
-      <span class="tag">Rust</span>
+    <div class="card">
+      <h3>Setup criogenici</h3>
+      <p>Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione
+         della condensazione, curve di avvio sicuro e monitoraggio.</p>
     </div>
-  </section>
-
-  <section id="metodo" aria-labelledby="t-metodo">
-    <h2 id="t-metodo">Metodo</h2>
-    <ul class="clean">
-      <li><span><b>Validazione ai bordi.</b> Zod su tutto l'input esterno, unknown al posto di any, query parametrizzate, transazioni quando un'operazione tocca piu' tabelle.</span></li>
-      <li><span><b>Isolamento multi-tenant verificato.</b> Routing per dominio, middleware di risoluzione, fallback esplicito a chiusura. Il tenant e' un confine, non una colonna.</span></li>
-      <li><span><b>Ogni difetto diventa un test.</b> Il bug non torna due volte.</span></li>
-      <li><span><b>Sicurezza operativa.</b> Due fattori sull'account root, audit delle operazioni critiche, rate limit, rilevamento brute-force e blacklist sessioni su Redis.</span></li>
-    </ul>
-  </section>
-
-  <section id="hardware" aria-labelledby="t-hw">
-    <h2 id="t-hw">Hardware</h2>
-    <ul class="clean">
-      <li><span><b>Prima le protezioni, poi le prestazioni.</b> Un impianto criogenico senza allarmi e' un rischio, non un esperimento.</span></li>
-      <li><span><b>Nessun segnale e' attendibile.</b> Piu' sensori indipendenti e validazione a monte: un valore fuori scala e' quasi sempre un problema di acquisizione, non della macchina.</span></li>
-      <li><span><b>Il freddo e' un sistema.</b> Peltier, CPU, RAM, GPU e alimentatore hanno limiti termici diversi; raffreddare solo la CPU sposta il danno.</span></li>
-      <li><span><b>Documentazione dal giorno zero.</b> Schema, componenti, curve di avvio e valori misurati.</span></li>
-    </ul>
-  </section>
-
-  <section id="contatti" aria-labelledby="t-contatti">
-    <h2 id="t-contatti">Contatti</h2>
-    <p class="muted">
-      Il codice di ShipExpress e' privato. Per una demo, per un'integrazione o per parlare
-      di un progetto hardware:
-    </p>
-    <div class="contact">
-      <a class="btn" href="https://shipexpress.it">shipexpress.it</a>
-      <a class="btn" href="mailto:info@shipexpress.it">info@shipexpress.it</a>
-      <a class="btn" href="https://github.com/StargateLabs">github.com/StargateLabs</a>
+    <div class="card">
+      <h3>SignalRGB e LSC Battletron</h3>
+      <p>Plugin di illuminazione RGB con bridge verso il controller e
+         configurazione automatica dei dispositivi.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
-</main>
+<section>
+  <h2>ShipExpress — dettaglio</h2>
+  <table>
+    <tr><th>Area</th><th>Cosa fa</th></tr>
+    <tr><td>Spedizioni</td><td>Confronto tariffe tra corrieri, creazione, tracciamento, contrassegno, consegna con foto e firma</td></tr>
+    <tr><td>Magazzino</td><td>Prodotti, categorie, giacenze, ubicazioni, movimenti, conteggi, imballaggi</td></tr>
+    <tr><td>Ordini</td><td>Ordini cliente, flusso di stato, picklist con lettura dei codici a barre</td></tr>
+    <tr><td>Documenti</td><td>DDT e fatturazione elettronica</td></tr>
+    <tr><td>Integrazioni</td><td>Corrieri, marketplace e gestionali esterni</td></tr>
+  </table>
+  <p class="muted">
+    13 provider nativi con adapter dedicato — BRT, DHL, DPD, GLS, UPS, FedEx,
+    TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline —
+    e 24 adapter REST generici. Il tracciamento usa i webhook quando il corriere
+    li espone e polling periodico per gli altri.
+  </p>
+</section>
+
+<section>
+  <h2>Stack</h2>
+  <p>
+    <span class="tag">Next.js 16</span><span class="tag">React 19</span
+    ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
+    ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
+    ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
+    ><span class="tag">Zod 4</span><span class="tag">Vitest</span
+    ><span class="tag">Playwright</span><span class="tag">Python</span>
+  </p>
+</section>
+
+<section>
+  <h2>Come lavoro</h2>
+  <ol>
+    <li><b>Validazione ai bordi.</b> Zod su tutto l'input esterno,
+        <code>unknown</code> al posto di <code>any</code>, query parametrizzate,
+        transazioni quando un'operazione tocca più tabelle.</li>
+    <li><b>Isolamento multi-tenant verificato.</b> Routing per dominio,
+        middleware di risoluzione e fallback esplicito a chiusura. Il tenant
+        non è un campo su una tabella: è un confine.</li>
+    <li><b>Ogni finding diventa un test.</b> Il difetto non torna.</li>
+    <li><b>Sicurezza operativa.</b> Due fattori sull'account root, audit delle
+        operazioni critiche, rate limit, rilevamento brute-force e blacklist
+        sessioni su Redis.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Hardware</h2>
+  <ul>
+    <li><b>Protezioni prima delle prestazioni.</b> Un impianto criogenico senza
+        allarmi è un rischio, non un esperimento.</li>
+    <li><b>Nessun segnale è attendibile.</b> Più sensori indipendenti,
+        validazione a monte: un valore fuori scala è spesso un problema di
+        acquisizione, non della macchina.</li>
+    <li><b>Il freddo è un sistema.</b> Peltier, CPU, RAM, GPU e alimentatore
+        hanno limiti termici diversi.</li>
+    <li><b>Documentazione dal giorno zero.</b> Schema, componenti, curve di
+        avvio e valori misurati.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Contatti</h2>
+  <p>Il codice di ShipExpress è privato. Per una demo, per un'integrazione
+     o per parlare di un progetto hardware:</p>
+  <div class="links">
+    <a href="https://shipexpress.it">shipexpress.it</a>
+    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+  </div>
+</section>
 
 <footer>
-  <div class="wrap">
-    Stargate Labs, laboratorio privato. Numeri dai repository dei progetti.
-    <a href="#main">Torna su</a>
-  </div>
+  Stargate Labs — laboratorio privato.
 </footer>
+
+</div>
 </body>
 </html>

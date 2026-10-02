@@ -3,292 +3,204 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stargate Labs: production software, custom hardware, security testing</title>
-<meta name="description" content="Private lab: ShipExpress logistics platform in production, ARGUS security testing orchestrator, ARA voice assistant, StargateCryo TEC controller. Real numbers, none invented.">
-<meta property="og:title" content="Stargate Labs">
-<meta property="og:description" content="Production software, custom cryogenic rigs, security testing tooling.">
-<meta property="og:image" content="https://stargatelabs.github.io/StargateLabs/assets/logo.png">
-<meta name="theme-color" content="#0a0e12">
-<link rel="icon" href="assets/logo.png">
+<title>Stargate Labs — presentation</title>
 <style>
   :root{
-    --bg:#0a0e12; --panel:#0f151b; --line:#1c2631;
-    --ink:#e8eef4; --dim:#93a1b0; --faint:#5d6b7a;
-    --go:#35e08a; --data:#4cc9f0; --heat:#f5a623;
-    --radius:10px; --maxw:940px;
+    --bg:#080b0e; --bg2:#0d1117; --panel:#11161c; --line:#1e262f;
+    --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.7 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased}
-  a{color:var(--data);text-decoration:none}
-  a:hover{text-decoration:underline}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--go);outline-offset:3px;border-radius:4px}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  .skip{position:absolute;left:-999px;top:0;background:var(--go);color:#04120b;padding:10px 14px;z-index:9}
-  .skip:focus{left:12px;top:12px}
-  .pulse{height:1px;background:linear-gradient(90deg,var(--go),transparent 55%);border:0;margin:0;opacity:.55}
-  header.site{position:sticky;top:0;z-index:5;background:rgba(10,14,18,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  header.site .wrap{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
-  .brand img{width:28px;height:28px;object-fit:contain;display:block}
-  nav.top{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
-  nav.top a{color:var(--dim)}
-  nav.top a:hover{color:var(--ink)}
-  header.hero{padding:88px 0 64px}
-  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--go);margin:0 0 18px}
-  h1{font-size:clamp(34px,6vw,58px);line-height:1.06;margin:0 0 22px;letter-spacing:-.025em}
-  h1 em{font-style:normal;color:var(--go)}
-  .lede{font-size:19px;color:var(--dim);max-width:64ch;margin:0}
-  .hero-actions{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-block;padding:11px 18px;border-radius:8px;border:1px solid var(--line);color:var(--ink);font-size:14px}
-  .btn.primary{background:var(--go);color:#04120b;border-color:transparent;font-weight:600}
-  .btn.primary:hover{text-decoration:none;filter:brightness(1.06)}
-  .btn:hover{text-decoration:none;border-color:var(--data)}
-  section{padding:56px 0;border-top:1px solid var(--line)}
-  h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--data);margin:0 0 26px}
-  h3{font-size:20px;margin:0 0 10px;letter-spacing:-.01em}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px}
+
+  header{padding:96px 0 64px;border-bottom:1px solid var(--line)}
+  .kicker{
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
+  }
+  h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:0 0 20px;letter-spacing:-.02em}
+  h1 span{color:var(--green)}
+  .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  h2{
+    font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 32px
+  }
+  h3{font-size:21px;margin:0 0 10px}
   p{margin:0 0 16px}
   .muted{color:var(--dim)}
-  .small{font-size:14px}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  .stat{background:var(--panel);padding:24px 20px}
-  .stat b{display:block;font-size:30px;line-height:1;color:var(--go);letter-spacing:-.02em}
-  .stat span{display:block;margin-top:10px;font-size:13px;color:var(--dim)}
-  .stat .src{display:block;margin-top:4px;font-size:11px;color:var(--faint)}
-  .project{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
-  .project.flagship{padding:30px}
-  .project h3{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .project h3 .ver{font-size:12px;color:var(--heat)}
-  .project p{color:var(--dim);margin:0}
-  .project .facts{margin:16px 0 0;display:flex;gap:8px;flex-wrap:wrap}
-  .chip{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:5px 10px}
-  .grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:18px}
-  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 14px}
-  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-  td:first-child{font-weight:600;width:30%}
-  ul.clean{list-style:none;padding:0;margin:0}
-  ul.clean li{padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
-  ul.clean li:last-child{border-bottom:0}
-  ul.clean b{color:var(--ink)}
-  ul.clean span{color:var(--dim)}
-  .tags{display:flex;flex-wrap:wrap;gap:8px}
-  .tag{font-size:13px;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:6px 11px}
-  .contact{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
-  footer{padding:40px 0 60px;color:var(--faint);font-size:13px;border-top:1px solid var(--line)}
-  footer a{color:var(--dim)}
+
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  /* l'ultima card non resta isolata: l'ultima occupa tutta la riga */
+  .card:last-child:nth-child(odd){grid-column:1/-1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
+  .card h3{font-size:18px}
+  .card p{font-size:15px;color:var(--dim);margin:0}
+
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:26px 20px}
+  .stat b{display:block;font:700 32px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--green);letter-spacing:-.02em}
+  .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  td:first-child{color:var(--ink);font-weight:600;width:34%}
+
+  ol,ul{margin:0 0 16px;padding-left:22px}
+  li{margin:0 0 10px}
+  li::marker{color:var(--green)}
+
+  code{
+    font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg2);
+    border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--amber)
+  }
+  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .links a{
+    color:var(--cyan);text-decoration:none;border:1px solid var(--line);
+    border-radius:6px;padding:10px 16px;font-size:14px
+  }
+  .links a:hover{border-color:var(--cyan)}
+
+  .tag{
+    display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
+    border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
+  }
+  footer{padding:56px 0 0;color:var(--dim);font-size:14px}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-
-<header class="site">
-  <div class="wrap">
-    <span class="brand"><img src="assets/logo.png" alt="">Stargate Labs</span>
-    <nav class="top" aria-label="Sections">
-      <a href="#projects">Projects</a>
-      <a href="#shipexpress">ShipExpress</a>
-      <a href="#stack">Stack</a>
-      <a href="#method">Method</a>
-      <a href="#hardware">Hardware</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<main id="main">
 <div class="wrap">
 
-  <header class="hero">
-    <p class="eyebrow">Private lab</p>
-    <h1>Software in production.<br>Cold, <em>measured</em>.</h1>
-    <p class="lede">
-      A multi-tenant logistics platform, a security testing orchestrator, a voice
-      assistant and a TEC cooling controller. Every number below comes from a real
-      build, not a slide.
-    </p>
-    <div class="hero-actions">
-      <a class="btn primary" href="#projects">See the four projects</a>
-      <a class="btn" href="https://shipexpress.it">shipexpress.it</a>
+<header>
+  <p class="kicker">Private lab</p>
+  <h1>Stargate <span>Labs</span></h1>
+  <p class="lede">
+    Production operations software, custom hardware builds and security tooling.
+    The same technical curiosity on every layer: from a rig's refrigeration
+    cycle to an API request cycle.
+  </p>
+</header>
+
+<section>
+  <h2>Numbers</h2>
+  <div class="stats">
+    <div class="stat"><b>36</b><span>Carriers integrated</span></div>
+    <div class="stat"><b>1.234</b><span>Automated tests</span></div>
+    <div class="stat"><b>67</b><span>Production dependencies</span></div>
+    <div class="stat"><b>13</b><span>Native providers</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>ShipExpress</h3>
+      <p>Production multi-tenant shipment management platform. Each customer gets
+         its own domain, its own database and a role-based permission tree.</p>
     </div>
-  </header>
-
-  <hr class="pulse">
-
-  <section aria-labelledby="t-numbers">
-    <h2 id="t-numbers">Numbers</h2>
-    <div class="stats">
-      <div class="stat"><b>1,462</b><span>API endpoints</span><span class="src">ShipExpress 2026.2.5</span></div>
-      <div class="stat"><b>357</b><span>Prisma models</span><span class="src">ShipExpress</span></div>
-      <div class="stat"><b>42</b><span>Carriers integrated</span><span class="src">ShipExpress</span></div>
-      <div class="stat"><b>8,896</b><span>Automated tests</span><span class="src">ShipExpress, Vitest</span></div>
+    <div class="card">
+      <h3>ARGUS</h3>
+      <p>Continuous security testing orchestrator: reconnaissance, DAST, SAST,
+         dependency analysis, secret scanning and fuzzing on authorised targets. <code>v0.2.0</code>.</p>
     </div>
-  </section>
-
-  <section id="projects" aria-labelledby="t-projects">
-    <h2 id="t-projects">Projects</h2>
-
-    <article class="project flagship">
-      <h3>ShipExpress <span class="ver mono">2026.2.5</span></h3>
-      <p>
-        Operations platform for shipping, warehouse, orders and invoicing. Multi-tenant
-        and in production. Every client has its own domain, a separate database and a
-        role-based permission hierarchy.
-      </p>
-      <div class="facts">
-        <span class="chip">1,462 endpoints</span>
-        <span class="chip">357 models</span>
-        <span class="chip">42 carriers</span>
-        <span class="chip">8,896 tests</span>
-      </div>
-    </article>
-
-    <div class="grid2">
-      <article class="project">
-        <h3>ARGUS <span class="ver mono">v0.2.0</span></h3>
-        <p>
-          Continuous security testing orchestrator: recon, DAST, SAST, dependency
-          analysis, secret scanning and fuzzing, on authorized targets only. Every tool
-          runs in a version-pinned Docker image.
-        </p>
-        <div class="facts">
-          <span class="chip">17 scanners</span>
-          <span class="chip">14,071 lines TS</span>
-          <span class="chip">71 endpoints</span>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>ARA</h3>
-        <p>
-          Local voice assistant: Whisper on input, Kokoro on output, a router that
-          separates task from conversation in under 5 ms. Memory is a local TF-IDF RAG
-          vault, with no external APIs.
-        </p>
-        <div class="facts">
-          <span class="chip">29,537 lines Python</span>
-          <span class="chip">7 confirm-gated actions</span>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>StargateCryo</h3>
-        <p>
-          TEC controller for cryocooling. Reads sensors from HWiNFO64 and AIDA64, drives
-          the TEC over serial with PID and computes the condensation margin. It targets
-          the controller, not the processor: no socket or chipset in the code.
-        </p>
-        <div class="facts">
-          <span class="chip">23,286 lines Rust</span>
-          <span class="chip">6 alarm channels</span>
-          <span class="chip">3 PID profiles</span>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>Intel cryo dashboard</h3>
-        <p>
-          Rig monitoring: CPU and GPU temperatures, load, fans, pumps and disks, with
-          condensation alarms and thermal management.
-        </p>
-        <div class="facts">
-          <a class="chip" href="https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology">Public repo</a>
-        </div>
-      </article>
-
-      <article class="project">
-        <h3>SignalRGB plugin</h3>
-        <p>
-          Plugin for the Razer Stream Controller X. It reads the effect canvas and writes
-          pixels in RGB565, so the 480 x 288 display arrives clean instead of going
-          through the composited overlay.
-        </p>
-        <div class="facts">
-          <a class="chip" href="https://github.com/StargateLabs/signalrgb-razer-stream-controller-x">Public repo</a>
-        </div>
-      </article>
+    <div class="card">
+      <h3>TechDash</h3>
+      <p>Rig hardware monitoring: CPU and GPU temperatures, load, fans, pumps and
+         disks, with condensation alerts and thermal management.</p>
     </div>
-  </section>
-
-  <section id="shipexpress" aria-labelledby="t-se">
-    <h2 id="t-se">ShipExpress, in detail</h2>
-    <table>
-      <thead><tr><th>Area</th><th>What it does</th></tr></thead>
-      <tbody>
-        <tr><td>Shipping</td><td>Carrier rate comparison, creation, tracking, cash on delivery, delivery with photo and signature</td></tr>
-        <tr><td>Warehouse</td><td>Products, categories, stock, locations, movements, counts, packaging</td></tr>
-        <tr><td>Orders</td><td>Customer orders, status flow, barcode-scanned picklists</td></tr>
-        <tr><td>Documents</td><td>Transport documents and electronic invoicing</td></tr>
-        <tr><td>Integrations</td><td>Carriers, marketplaces and external ERPs</td></tr>
-      </tbody>
-    </table>
-    <p class="muted small">
-      42 carriers, 74 services. The main ones have a dedicated adapter (BRT, DHL Express,
-      DPD, GLS, UPS, FedEx, TNT, SDA, Poste Italiane, InPost, Aramex, CEVA, DB Schenker,
-      Pony Express and others), the rest go through REST APIs. Tracking uses webhooks
-      when the carrier exposes them, periodic polling when it does not. Internal search
-      runs a document RAG, not keyword matching.
-    </p>
-  </section>
-
-  <section id="stack" aria-labelledby="t-stack">
-    <h2 id="t-stack">Stack</h2>
-    <div class="tags">
-      <span class="tag">Next.js 16</span><span class="tag">React 19</span>
-      <span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span>
-      <span class="tag">Prisma 6</span><span class="tag">Redis 8</span>
-      <span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span>
-      <span class="tag">Zod 4</span><span class="tag">Vitest</span>
-      <span class="tag">Playwright</span><span class="tag">Python</span>
-      <span class="tag">Rust</span>
+    <div class="card">
+      <h3>Setup criogenici</h3>
+      <p>TEC cooling on 10th and 13th generation Intel CPUs, with condensation
+         handling, safe boot curves and monitoring.</p>
     </div>
-  </section>
-
-  <section id="method" aria-labelledby="t-method">
-    <h2 id="t-method">Method</h2>
-    <ul class="clean">
-      <li><span><b>Validate at the edges.</b> Zod on all external input, unknown instead of any, parameterized queries, transactions when an operation touches more than one table.</span></li>
-      <li><span><b>Multi-tenant isolation, verified.</b> Domain routing, a resolution middleware, an explicit fail-closed fallback. A tenant is a boundary, not a column.</span></li>
-      <li><span><b>Every defect becomes a test.</b> The bug does not come back twice.</span></li>
-      <li><span><b>Operational security.</b> Two-factor on the root account, audit of critical operations, rate limits, brute-force detection and session blacklist on Redis.</span></li>
-    </ul>
-  </section>
-
-  <section id="hardware" aria-labelledby="t-hw">
-    <h2 id="t-hw">Hardware</h2>
-    <ul class="clean">
-      <li><span><b>Protections before performance.</b> A cryogenic rig without alarms is a risk, not an experiment.</span></li>
-      <li><span><b>No signal is trustworthy.</b> Multiple independent sensors and upstream validation: an out-of-range value is almost always an acquisition problem, not the machine.</span></li>
-      <li><span><b>Cold is a system.</b> Peltier, CPU, RAM, GPU and PSU have different thermal limits; cooling only the CPU moves the damage instead of avoiding it.</span></li>
-      <li><span><b>Documentation from day zero.</b> Diagram, components, startup curves and measured values.</span></li>
-    </ul>
-  </section>
-
-  <section id="contact" aria-labelledby="t-contact">
-    <h2 id="t-contact">Contact</h2>
-    <p class="muted">
-      The ShipExpress codebase is private. For a demo, an integration or to talk about a
-      hardware project:
-    </p>
-    <div class="contact">
-      <a class="btn" href="https://shipexpress.it">shipexpress.it</a>
-      <a class="btn" href="mailto:info@shipexpress.it">info@shipexpress.it</a>
-      <a class="btn" href="https://github.com/StargateLabs">github.com/StargateLabs</a>
+    <div class="card">
+      <h3>SignalRGB e LSC Battletron</h3>
+      <p>RGB lighting plugin with a bridge to the controller and automatic device
+         configuration.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
-</main>
+<section>
+  <h2>ShipExpress — detail</h2>
+  <table>
+    <tr><th>Area</th><th>What it does</th></tr>
+    <tr><td>Shipments</td><td>Rate comparison across carriers, creation, tracking, cash on delivery,
+             delivery with photo and signature</td></tr>
+    <tr><td>Warehouse</td><td>Products, categories, stock, locations, movements, counts, packaging</td></tr>
+    <tr><td>Orders</td><td>Customer orders, status flow, picklists with barcode scanning</td></tr>
+    <tr><td>Documents</td><td>DDT and electronic invoicing</td></tr>
+    <tr><td>Integrations</td><td>Carriers, marketplaces and external ERPs</td></tr>
+  </table>
+  <p class="muted">
+    13 native providers with dedicated adapters — BRT, DHL, DPD, GLS, UPS, FedEx,
+    TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline —
+    plus 24 generic REST adapters. Tracking uses webhooks where the carrier exposes
+    them, and periodic polling for the rest.
+  </p>
+</section>
+
+<section>
+  <h2>Stack</h2>
+  <p>
+    <span class="tag">Next.js 16</span><span class="tag">React 19</span
+    ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
+    ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
+    ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
+    ><span class="tag">Zod 4</span><span class="tag">Vitest</span
+    ><span class="tag">Playwright</span><span class="tag">Python</span>
+  </p>
+</section>
+
+<section>
+  <h2>How I work</h2>
+  <ol>
+    <li><b>Validation at the edges.</b> Zod on all external input,
+        <code>unknown</code> instead of <code>any</code>, parameterised queries,
+        transactions when an operation touches multiple tables.</li>
+    <li><b>Verified multi-tenant isolation.</b> Per-domain routing, resolution middleware and an explicit fail-closed
+        fallback. A tenant is not a column: it is a boundary.</li>
+    <li><b>Every finding becomes a test.</b> The bug does not come back.</li>
+    <li><b>Operational security.</b> Two-factor on the root account, audit trail for critical operations, rate
+        limiting, brute-force detection and session blacklisting on Redis.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Hardware</h2>
+  <ul>
+    <li><b>Protections before performance.</b> A cryogenic rig without alarms is a
+        risk, not an experiment.</li>
+    <li><b>No signal is trusted.</b> Multiple independent sensors with upstream
+        validation: an out-of-range value is usually an acquisition problem,
+        not a machine problem.</li>
+    <li><b>Cold is a system.</b> Peltier, CPU, RAM, GPU and PSU have different thermal
+        limits.</li>
+    <li><b>Documentation from day one.</b> Schematics, components, boot curves and
+        measured values.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Contact</h2>
+  <p>ShipExpress source code is private. For a demo, an integration, or to
+     discuss a hardware project:</p>
+  <div class="links">
+    <a href="https://shipexpress.it">shipexpress.it</a>
+    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+  </div>
+</section>
 
 <footer>
-  <div class="wrap">
-    Stargate Labs, private lab. Numbers come from the project repositories.
-    <a href="#main">Back to top</a>
-  </div>
+  Stargate Labs — private lab.
 </footer>
+
+</div>
 </body>
 </html>
