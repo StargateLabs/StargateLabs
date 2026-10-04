@@ -10,6 +10,16 @@
 <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
 </p>
 
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&width=480&lines=Software+in+produzione;Hardware+che+non+perdona;Ogni+difetto+diventa+un+test" alt="Software in produzione, hardware che non perdona, ogni difetto diventa un test">
+</p>
+
+<p align="center">
+  <a href="https://shipexpress.it"><img src="https://img.shields.io/badge/shipexpress.it-0A0A0A?logo=googlechrome&logoColor=white" alt="shipexpress.it"></a>
+  <a href="mailto:info@shipexpress.it"><img src="https://img.shields.io/badge/info%40shipexpress.it-D14836?logo=gmail&logoColor=white" alt="info@shipexpress.it"></a>
+  <a href="https://github.com/StargateLabs"><img src="https://img.shields.io/badge/StargateLabs-181717?logo=github&logoColor=white" alt="StargateLabs su GitHub"></a>
+</p>
+
 ---
 
 ## Stargate Labs
@@ -161,6 +171,19 @@ il motivo per cui esistono scritto accanto, perché il bug torna se non le vedi.
 
 </details>
 
+<details>
+<summary><b>TechDash: monitoraggio hardware del rig</b></summary>
+<br>
+
+Dashboard single-page con backend Python che legge i sensori della macchina:
+temperature CPU e GPU, carico, ventole, pompe e stato dei dischi, con avvisi su
+condensazione e gestione termica.
+
+Pensata per un impianto che gira sotto carico costante: priorizza la lettura
+rapida e gli allarmi, non i grafici.
+
+</details>
+
 ## ShipExpress
 
 <p align="center">
@@ -243,6 +266,10 @@ fra sei mesi non lo capisco da solo, ho sbagliato il progetto.
 </tr>
 </table>
 
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=nextjs,react,ts,postgres,prisma,redis,tailwind,py,linux,docker,git&theme=dark" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Python, Linux, Docker, Git">
+</p>
+
 <details>
 <summary><b>Dettaglio dello stack</b></summary>
 <br>
@@ -257,6 +284,18 @@ fra sei mesi non lo capisco da solo, ho sbagliato il progetto.
 <tr><td>Hardware e sensori</td><td>Python</td></tr>
 </table>
 </details>
+
+## GitHub Stats
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=StargateLabs&show_icons=true&hide_border=true" alt="Statistiche GitHub StargateLabs" height="160">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=StargateLabs&layout=compact&hide_border=true" alt="Linguaggi principali StargateLabs" height="160">
+</p>
+
+<p align="center">
+  <img src="https://streak-stats.demolab.com?user=StargateLabs&hide_border=true" alt="Serie contributi StargateLabs" height="160">
+  <img src="https://komarev.com/ghpvc/?username=StargateLabs" alt="Visite profilo StargateLabs">
+</p>
 
 ## Contatti
 
