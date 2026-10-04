@@ -102,10 +102,9 @@
   <p class="term"><b>guest@stargatelabs</b>:~$ whoami<br>laboratorio privato — infrastruttura, sicurezza, sistemi</p>
   <h1>STARGATE <span class="c">LABS</span><span class="cursor"></span></h1>
   <p class="lede">
-    La stessa mania sui componenti e sul codice: loop ad acqua su misura,
-    impianti criogenici che non dovrebbero esistere, e il software che li fa
-    girare. <b>Niente si dà per scontato: ogni numero lo misuro, ogni difetto
-    diventa un test.</b>
+    Loop ad acqua su misura, impianti criogenici che non dovrebbero esistere, e
+    il software che li tiene in piedi. <b>Qui niente si dà per scontato: ogni
+    numero lo misuro, ogni difetto diventa un test.</b>
   </p>
 </header>
 
@@ -125,42 +124,27 @@
   <div class="grid">
     <div class="card">
       <h3><span class="n">[01]</span>ARGUS</h3>
-      <p><span class="st">[security]</span> Orchestratore di security testing
-         continuo: <b>6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API,
-         1 fuzz</b>. Docker image pinned, solo target autorizzati.
-         Agent AI a due modelli: uno pianifica, uno esegue. <code>v0.2.0</code>.</p>
+      <p><span class="st">[security]</span> Diciassette scanner, un solo verdetto: <b>6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API, 1 fuzz</b>. Image pinned, solo target autorizzati. Due modelli AI: uno pianifica, uno esegue. <code>v0.2.0</code>.</p>
     </div>
     <div class="card">
       <h3><span class="n">[02]</span>ARA</h3>
-      <p><span class="st">[voice]</span> Assistente vocale: Whisper in ingresso,
-         Kokoro in uscita, router task-vs-conversazione sotto i
-         <b>5 millisecondi</b>. <b>7 azioni distruttive</b> con conferma umana.
-         Memoria RAG locale, zero API esterne.</p>
+      <p><span class="st">[voice]</span> Voce in, voce fuori, senza cloud: Whisper trascrive, Kokoro risponde, il router decide in meno di <b>5 millisecondi</b>. <b>Sette azioni distruttive</b> chiedono conferma. Memoria RAG in locale.</p>
     </div>
     <div class="card">
       <h3><span class="n">[03]</span>StargateCryo</h3>
-      <p><span class="st">[thermal]</span> Controller TEC per cryocooling: sensori
-         da HWiNFO64 e AIDA64, PID su seriale, margine di condensa.
-         <b>6 canali di allarme, 5 regole, 3 profili PID.</b> Se la pompa si
-         ferma, il TEC scala da solo al 50%.</p>
+      <p><span class="st">[thermal]</span> Il freddo con i numeri: PID su seriale, condensa misurata, <b>6 canali di allarme e 3 profili</b>. Se la pompa si ferma, il TEC scala da solo al 50%. Niente socket nel codice: gira dove il controller arriva.</p>
     </div>
     <div class="card">
       <h3><span class="n">[04]</span>TechDash</h3>
-      <p><span class="st">[monitor]</span> Dashboard single-page con backend
-         Python: temperature CPU/GPU, carico, ventole, pompe, dischi. Allarmi su
-         condensazione e gestione termica. Lettura rapida, non grafici.</p>
+      <p><span class="st">[monitor]</span> Il rig sotto gli occhi: temperature CPU/GPU, carico, ventole, pompe, dischi. Allarmi su condensazione e termica. Legge in fretta, non fa grafici belli.</p>
     </div>
     <div class="card">
       <h3><span class="n">[05]</span>Setup criogenici</h3>
-      <p><span class="st">[hardware]</span> Raffreddamento TEC su CPU Intel di
-         10a e 13a generazione: gestione condensazione, curve di avvio sicuro,
-         monitoraggio. Protezioni prima delle prestazioni.</p>
+      <p><span class="st">[hardware]</span> Sotto zero senza morire: TEC su Intel di 10a e 13a generazione, condensazione gestita, curve di avvio sicuro. Prima le protezioni, poi i record.</p>
     </div>
     <div class="card">
       <h3><span class="n">[06]</span>Plugin SignalRGB</h3>
-      <p><span class="st">[reverse]</span> Protocollo Loupedeck riscritto pixel
-         per pixel in RGB565 per il Razer Stream Controller X: 480 × 288 puliti
-         dove l'overlay standard mette il logo al centro.</p>
+      <p><span class="st">[reverse]</span> Pixel veri su un deck che mente: protocollo Loupedeck riscritto in RGB565, 480 × 288 puliti dove l'overlay standard stampa il logo in mezzo.</p>
     </div>
   </div>
   <p class="muted">[i] ShipExpress, il gestionale in produzione, vive sul suo sito:

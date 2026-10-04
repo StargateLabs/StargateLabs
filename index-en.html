@@ -3,204 +3,240 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stargate Labs — presentation</title>
+<meta name="description" content="Stargate Labs — private lab: infrastructure, security, systems.">
+<title>stargatelabs:~$</title>
 <style>
   :root{
-    --bg:#080b0e; --bg2:#0d1117; --panel:#11161c; --line:#1e262f;
-    --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
+    --bg:#050805; --bg2:#090d09; --panel:#0b100b; --line:#1c2b1c;
+    --ink:#c8f0c8; --dim:#6f8f6f; --grn:#00ff66; --grn2:#00cc52; --amb:#ffb000; --red:#ff3355;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{
     margin:0; background:var(--bg); color:var(--ink);
-    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font:16px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px}
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:50;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.11) 0 1px,transparent 1px 3px);
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px;position:relative;z-index:1}
 
-  header{padding:96px 0 64px;border-bottom:1px solid var(--line)}
-  .kicker{
-    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
-    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
-  }
-  h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:0 0 20px;letter-spacing:-.02em}
-  h1 span{color:var(--green)}
-  .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
+  nav{position:sticky;top:0;z-index:10;background:rgba(5,8,5,.9);border-bottom:1px solid var(--line)}
+  nav .in{max-width:960px;margin:0 auto;padding:12px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:14px}
+  nav .brand{color:var(--grn);font-weight:700;margin-right:auto}
+  nav a{color:var(--dim);text-decoration:none}
+  nav a:hover{color:var(--grn)}
+  nav a.it{border:1px solid var(--line);border-radius:4px;padding:4px 10px;color:var(--amb)}
 
-  section{padding:64px 0;border-bottom:1px solid var(--line)}
-  h2{
-    font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--cyan);margin:0 0 32px
-  }
-  h3{font-size:21px;margin:0 0 10px}
-  p{margin:0 0 16px}
+  header{padding:88px 0 56px;border-bottom:1px solid var(--line)}
+  .term{color:var(--dim);font-size:14px;margin:0 0 18px}
+  .term b{color:var(--grn)}
+  h1{font-size:clamp(34px,6vw,58px);line-height:1.05;margin:0 0 18px;letter-spacing:-.01em;color:var(--ink)}
+  h1 .c{color:var(--grn)}
+  .cursor{display:inline-block;width:.6em;height:1.1em;background:var(--grn);vertical-align:-.15em;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .lede{color:var(--dim);max-width:64ch;margin:0}
+  .lede b{color:var(--ink)}
+
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin:0 0 28px}
+  h2::before{content:"$ ";color:var(--dim)}
+  h3{font-size:18px;margin:0 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
   .muted{color:var(--dim)}
+  a{color:var(--grn)}
 
-  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-  /* l'ultima card non resta isolata: l'ultima occupa tutta la riga */
-  .card:last-child:nth-child(odd){grid-column:1/-1}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
-  .card h3{font-size:18px}
-  .card p{font-size:15px;color:var(--dim);margin:0}
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:24px 18px}
+  .stat b{display:block;font-size:30px;color:var(--grn);letter-spacing:-.01em}
+  .stat span{display:block;margin-top:8px;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
 
-  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-  .stat{background:var(--bg2);padding:26px 20px}
-  .stat b{display:block;font:700 32px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--green);letter-spacing:-.02em}
-  .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px}
+  .card:hover{border-color:var(--grn2)}
+  .card h3{font-size:16px}
+  .card h3 .n{color:var(--amb);font-size:12px;display:block;margin-bottom:6px;letter-spacing:.12em}
+  .card p{font-size:14px;color:var(--dim);margin:0}
+  .card p b{color:var(--ink)}
+  .card .st{color:var(--grn);font-size:12px;letter-spacing:.08em}
 
-  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
-  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-  td:first-child{color:var(--ink);font-weight:600;width:34%}
+  ol,ul{margin:0 0 14px;padding-left:22px}
+  li{margin:0 0 8px}
+  li::marker{color:var(--grn)}
+  li b{color:var(--ink)}
+  code{font-size:13px;background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:2px 6px;color:var(--amb)}
 
-  ol,ul{margin:0 0 16px;padding-left:22px}
-  li{margin:0 0 10px}
-  li::marker{color:var(--green)}
+  .tag{display:inline-block;font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:3px;padding:4px 9px;margin:0 6px 8px 0}
+  .tag:hover{color:var(--grn);border-color:var(--grn2)}
+  .skills{text-align:center;margin:22px 0 4px}
+  .skills img{max-width:100%;filter:saturate(.85)}
 
-  code{
-    font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg2);
-    border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--amber)
-  }
-  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
-  .links a{
-    color:var(--cyan);text-decoration:none;border:1px solid var(--line);
-    border-radius:6px;padding:10px 16px;font-size:14px
-  }
-  .links a:hover{border-color:var(--cyan)}
+  .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .links a{color:var(--grn);text-decoration:none;border:1px solid var(--line);border-radius:4px;padding:10px 18px;font-size:14px}
+  .links a:hover{border-color:var(--grn);background:rgba(0,255,102,.06)}
+  footer{padding:48px 0 0;color:var(--dim);font-size:13px}
+  footer .ok{color:var(--grn)}
 
-  .tag{
-    display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
-    border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
-  }
-  footer{padding:56px 0 0;color:var(--dim);font-size:14px}
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+  .rv.on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.cursor{animation:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
+<nav>
+  <div class="in">
+    <span class="brand">stargatelabs:~$</span>
+    <a href="#systems">systems</a>
+    <a href="#projects">projects</a>
+    <a href="#stack">stack</a>
+    <a href="#method">method</a>
+    <a href="#contact">contact</a>
+    <a class="it" href="index.html">IT</a>
+  </div>
+</nav>
+
 <header>
-  <p class="kicker">Private lab</p>
-  <h1>Stargate <span>Labs</span></h1>
+  <p class="term"><b>guest@stargatelabs</b>:~$ whoami<br>private lab — infrastructure, security, systems</p>
+  <h1>STARGATE <span class="c">LABS</span><span class="cursor"></span></h1>
   <p class="lede">
-    Production operations software, custom hardware builds and security tooling.
-    The same technical curiosity on every layer: from a rig's refrigeration
-    cycle to an API request cycle.
+    Custom water loops, cryogenic rigs that should not exist, and the software
+    that keeps them alive. <b>Nothing taken for granted here: every number gets
+    measured, every defect becomes a test.</b>
   </p>
 </header>
 
-<section>
-  <h2>Numbers</h2>
+<section id="systems" class="rv">
+  <h2>./systems --live</h2>
   <div class="stats">
-    <div class="stat"><b>36</b><span>Carriers integrated</span></div>
-    <div class="stat"><b>1.234</b><span>Automated tests</span></div>
-    <div class="stat"><b>67</b><span>Production dependencies</span></div>
-    <div class="stat"><b>13</b><span>Native providers</span></div>
+    <div class="stat"><b>17</b><span>Orchestrated scanners</span></div>
+    <div class="stat"><b>14,071</b><span>TypeScript lines, ARGUS</span></div>
+    <div class="stat"><b>29,537</b><span>Python lines, ARA</span></div>
+    <div class="stat"><b>23,286</b><span>Rust lines, StargateCryo</span></div>
   </div>
+  <p class="muted">[i] Measured from the code, not declared.</p>
 </section>
 
-<section>
-  <h2>Projects</h2>
+<section id="projects" class="rv">
+  <h2>./projects --all</h2>
   <div class="grid">
     <div class="card">
-      <h3>ShipExpress</h3>
-      <p>Production multi-tenant shipment management platform. Each customer gets
-         its own domain, its own database and a role-based permission tree.</p>
+      <h3><span class="n">[01]</span>ARGUS</h3>
+      <p><span class="st">[security]</span> Seventeen scanners, one verdict:
+         <b>6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API, 1 fuzz</b>. Pinned
+         images, authorised targets only. Two AI models: one plans, one executes.
+         <code>v0.2.0</code>.</p>
     </div>
     <div class="card">
-      <h3>ARGUS</h3>
-      <p>Continuous security testing orchestrator: reconnaissance, DAST, SAST,
-         dependency analysis, secret scanning and fuzzing on authorised targets. <code>v0.2.0</code>.</p>
+      <h3><span class="n">[02]</span>ARA</h3>
+      <p><span class="st">[voice]</span> Voice in, voice out, no cloud: Whisper
+         transcribes, Kokoro answers, the router decides in under
+         <b>5 milliseconds</b>. <b>Seven destructive actions</b> ask for
+         confirmation. Local RAG memory.</p>
     </div>
     <div class="card">
-      <h3>TechDash</h3>
-      <p>Rig hardware monitoring: CPU and GPU temperatures, load, fans, pumps and
-         disks, with condensation alerts and thermal management.</p>
+      <h3><span class="n">[03]</span>StargateCryo</h3>
+      <p><span class="st">[thermal]</span> Cold with numbers: serial PID,
+         measured condensation margin, <b>6 alarm channels and 3 profiles</b>.
+         If the pump stops, the TEC scales itself down to 50%. No sockets in the
+         code: it runs wherever the controller reaches.</p>
     </div>
     <div class="card">
-      <h3>Setup criogenici</h3>
-      <p>TEC cooling on 10th and 13th generation Intel CPUs, with condensation
-         handling, safe boot curves and monitoring.</p>
+      <h3><span class="n">[04]</span>TechDash</h3>
+      <p><span class="st">[monitor]</span> The rig under your eyes: CPU/GPU
+         temperatures, load, fans, pumps, disks. Condensation and thermal alarms.
+         Reads fast, does not do pretty charts.</p>
     </div>
     <div class="card">
-      <h3>SignalRGB plugin</h3>
-      <p>RGB lighting plugin with a bridge to the controller and automatic device
-         configuration.</p>
+      <h3><span class="n">[05]</span>Cryogenic setups</h3>
+      <p><span class="st">[hardware]</span> Sub-zero without dying: TEC cooling
+         on 10th and 13th gen Intel, managed condensation, safe boot curves.
+         Protections first, records later.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">[06]</span>SignalRGB plugin</h3>
+      <p><span class="st">[reverse]</span> Real pixels on a lying deck: Loupedeck
+         protocol rewritten in RGB565, clean 480 × 288 where the stock overlay
+         stamps its logo in the middle.</p>
     </div>
   </div>
+  <p class="muted">[i] ShipExpress, the production ERP, lives on its own site:
+     <a href="https://shipexpress.it">shipexpress.it</a>. Not here: this page is
+     about the lab, not shipping.</p>
 </section>
 
-<section>
-  <h2>ShipExpress — detail</h2>
-  <table>
-    <tr><th>Area</th><th>What it does</th></tr>
-    <tr><td>Shipments</td><td>Rate comparison across carriers, creation, tracking, cash on delivery,
-             delivery with photo and signature</td></tr>
-    <tr><td>Warehouse</td><td>Products, categories, stock, locations, movements, counts, packaging</td></tr>
-    <tr><td>Orders</td><td>Customer orders, status flow, picklists with barcode scanning</td></tr>
-    <tr><td>Documents</td><td>DDT and electronic invoicing</td></tr>
-    <tr><td>Integrations</td><td>Carriers, marketplaces and external ERPs</td></tr>
-  </table>
-  <p class="muted">
-    13 native providers with dedicated adapters — BRT, DHL, DPD, GLS, UPS, FedEx,
-    TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline —
-    plus 24 generic REST adapters. Tracking uses webhooks where the carrier exposes
-    them, and periodic polling for the rest.
-  </p>
-</section>
-
-<section>
-  <h2>Stack</h2>
+<section id="stack" class="rv">
+  <h2>./stack --list</h2>
   <p>
     <span class="tag">Next.js 16</span><span class="tag">React 19</span
     ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
     ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
     ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
     ><span class="tag">Zod 4</span><span class="tag">Vitest</span
-    ><span class="tag">Playwright</span><span class="tag">Python</span>
+    ><span class="tag">Playwright</span><span class="tag">Python</span
+    ><span class="tag">Rust</span>
+  </p>
+  <p class="skills">
+    <img src="https://skillicons.dev/icons?i=nextjs,react,ts,postgres,prisma,redis,tailwind,py,rust,linux,docker,git&theme=dark" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Python, Rust, Linux, Docker, Git">
   </p>
 </section>
 
-<section>
-  <h2>How I work</h2>
+<section id="method" class="rv">
+  <h2>./method --show</h2>
   <ol>
     <li><b>Validation at the edges.</b> Zod on all external input,
-        <code>unknown</code> instead of <code>any</code>, parameterised queries,
-        transactions when an operation touches multiple tables.</li>
-    <li><b>Verified multi-tenant isolation.</b> Per-domain routing, resolution middleware and an explicit fail-closed
-        fallback. A tenant is not a column: it is a boundary.</li>
-    <li><b>Every finding becomes a test.</b> The bug does not come back.</li>
-    <li><b>Operational security.</b> Two-factor on the root account, audit trail for critical operations, rate
-        limiting, brute-force detection and session blacklisting on Redis.</li>
+        <code>unknown</code> never <code>any</code>, parameterised queries,
+        transactions on multi-table operations.</li>
+    <li><b>Verified isolation.</b> Wherever there is a boundary — tenant,
+        network, process — I test it, I do not declare it.</li>
+    <li><b>Every finding becomes a test.</b> The defect does not come back. <code>exit 0</code>.</li>
+    <li><b>Operational security.</b> 2FA on root, audit trail on critical ops,
+        rate limits, brute-force detection, session blacklist on Redis.</li>
   </ol>
 </section>
 
-<section>
-  <h2>Hardware</h2>
+<section id="hardware" class="rv">
+  <h2>./hardware --rules</h2>
   <ul>
-    <li><b>Protections before performance.</b> A cryogenic rig without alarms is a
+    <li><b>Protections before performance.</b> A cryo rig without alarms is a
         risk, not an experiment.</li>
-    <li><b>No signal is trusted.</b> Multiple independent sensors with upstream
-        validation: an out-of-range value is usually an acquisition problem,
-        not a machine problem.</li>
-    <li><b>Cold is a system.</b> Peltier, CPU, RAM, GPU and PSU have different thermal
-        limits.</li>
-    <li><b>Documentation from day one.</b> Schematics, components, boot curves and
-        measured values.</li>
+    <li><b>No signal is trusted.</b> Independent sensors, upstream validation:
+        out-of-range almost always means acquisition trouble.</li>
+    <li><b>Cold is a system.</b> Peltier, CPU, RAM, GPU and PSU have different
+        limits: cooling one of them just moves the damage.</li>
+    <li><b>Documentation from day zero.</b> Schematics, components, boot curves,
+        measured values. If I cannot understand it in six months, I built it wrong.</li>
   </ul>
 </section>
 
-<section>
-  <h2>Contact</h2>
-  <p>ShipExpress source code is private. For a demo, an integration, or to
-     discuss a hardware project:</p>
+<section id="contact" class="rv">
+  <h2>./contact --open</h2>
+  <p>Private lab. For a hardware project, an audit, or a question worth
+     measuring:</p>
   <div class="links">
     <a href="https://shipexpress.it">shipexpress.it</a>
     <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+    <a href="https://github.com/StargateLabs">github.com/StargateLabs</a>
   </div>
 </section>
 
 <footer>
-  Stargate Labs — private lab.
+  <span><span class="ok">[ok]</span> Stargate Labs — private lab. No trackers, no cookies, just HTML.</span>
 </footer>
 
 </div>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}});
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
 </body>
 </html>
