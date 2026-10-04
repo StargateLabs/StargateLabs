@@ -104,7 +104,7 @@ Lavora sul controller, non sul processore: nessun socket, nessun chipset, nessun
 <br>
 
 Il plugin standard di SignalRGB per display non regge lo schermo di questo
-deck: passa dall'overlay composited e ci mette il logo al centro. Il percorlo
+deck: passa dall'overlay composited e ci mette il logo al centro. Il percorso
 riscritto legge il canvas dell'effetto e scrive pixel per pixel in RGB565,
 quindi l'immagine arriva pulita a 480 × 288.
 
@@ -308,8 +308,8 @@ fra sei mesi non lo capisco da solo, ho sbagliato il progetto.
 ## GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=StargateLabs&show_icons=true&hide_border=true" alt="Statistiche GitHub StargateLabs" height="160">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=StargateLabs&layout=compact&hide_border=true" alt="Linguaggi principali StargateLabs" height="160">
+  <img src="https://github-readme-stats.vercel.app/api?username=StargateLabs&show_icons=true&hide_border=true&theme=transparent" alt="Statistiche GitHub StargateLabs" height="160">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=StargateLabs&layout=compact&hide_border=true&theme=transparent" alt="Linguaggi principali StargateLabs" height="160">
 </p>
 
 <p align="center">
