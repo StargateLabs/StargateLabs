@@ -20,6 +20,26 @@
   <a href="https://github.com/StargateLabs"><img src="https://img.shields.io/badge/StargateLabs-181717?logo=github&logoColor=white" alt="StargateLabs su GitHub"></a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/StargateLabs?tab=followers"><img src="https://img.shields.io/github/followers/StargateLabs?label=Followers&logo=github" alt="Follower GitHub"></a>
+  <img src="https://komarev.com/ghpvc/?username=StargateLabs&label=Visite+profilo" alt="Visite profilo">
+</p>
+
+<details>
+<summary><b>Indice</b></summary>
+<br>
+
+- [Stargate Labs](#stargate-labs)
+- [Progetti](#progetti)
+- [ShipExpress](#shipexpress)
+- [Sul codice](#sul-codice)
+- [Sull'hardware](#sullhardware)
+- [Stack](#stack)
+- [GitHub Stats](#github-stats)
+- [Contatti](#contatti)
+
+</details>
+
 ---
 
 ## Stargate Labs
