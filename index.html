@@ -3,29 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stargate Labs — presentazione</title>
+<meta name="description" content="Stargate Labs — laboratorio privato: software gestionale in produzione, impianti hardware su misura, strumenti di sicurezza.">
+<title>Stargate Labs — laboratorio privato</title>
 <style>
   :root{
-    --bg:#080b0e; --bg2:#0d1117; --panel:#11161c; --line:#1e262f;
+    --bg:#06090c; --bg2:#0b0f14; --panel:rgba(17,22,28,.72); --line:#1e262f;
     --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
+    --violet:#7c5cff;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    overflow-x:hidden;
   }
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px}
+  .glow{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(560px 380px at 12% -4%, rgba(0,229,160,.14), transparent 65%),
+      radial-gradient(640px 420px at 88% 6%, rgba(124,92,255,.13), transparent 65%),
+      radial-gradient(720px 520px at 50% 110%, rgba(0,180,216,.10), transparent 65%);
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px 96px;position:relative;z-index:1}
 
-  header{padding:96px 0 64px;border-bottom:1px solid var(--line)}
+  nav{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    background:rgba(6,9,12,.78); border-bottom:1px solid var(--line);
+  }
+  nav .in{max-width:1020px;margin:0 auto;padding:14px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  nav .brand{font-weight:700;letter-spacing:-.01em;margin-right:auto}
+  nav .brand span{color:var(--green)}
+  nav a{color:var(--dim);text-decoration:none;font-size:14px}
+  nav a:hover{color:var(--ink)}
+  nav a.en{border:1px solid var(--line);border-radius:6px;padding:6px 12px;color:var(--cyan)}
+
+  header{padding:110px 0 72px;border-bottom:1px solid var(--line)}
   .kicker{
     font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
     letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
   }
-  h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:0 0 20px;letter-spacing:-.02em}
-  h1 span{color:var(--green)}
+  h1{font-size:clamp(44px,8vw,76px);line-height:1.02;margin:0 0 22px;letter-spacing:-.03em}
+  h1 span{
+    background:linear-gradient(92deg,var(--green),var(--cyan) 60%,var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
   .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+  .cta a{
+    text-decoration:none;font-size:15px;font-weight:600;border-radius:8px;padding:13px 24px;
+    border:1px solid var(--line);color:var(--ink);background:var(--panel);
+  }
+  .cta a:hover{border-color:var(--green)}
+  .cta a.hot{background:linear-gradient(92deg,#00c98a,#00a8c8);border:0;color:#04110c}
 
-  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
   h2{
     font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
     color:var(--cyan);margin:0 0 32px
@@ -35,15 +68,20 @@
   .muted{color:var(--dim)}
 
   .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-  /* l'ultima card non resta isolata: l'ultima occupa tutta la riga */
-  .card:last-child:nth-child(odd){grid-column:1/-1}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:0 18px 44px rgba(0,229,160,.10)}
   .card h3{font-size:18px}
+  .card h3 .n{color:var(--green);font-family:ui-monospace,Menlo,monospace;font-size:13px;display:block;margin-bottom:8px;letter-spacing:.1em}
   .card p{font-size:15px;color:var(--dim);margin:0}
 
-  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-  .stat{background:var(--bg2);padding:26px 20px}
-  .stat b{display:block;font:700 32px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--green);letter-spacing:-.02em}
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:28px 20px}
+  .stat b{display:block;font:700 34px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.02em;
+    background:linear-gradient(92deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
   .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
 
   table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
@@ -62,18 +100,38 @@
   .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
   .links a{
     color:var(--cyan);text-decoration:none;border:1px solid var(--line);
-    border-radius:6px;padding:10px 16px;font-size:14px
+    border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600
   }
   .links a:hover{border-color:var(--cyan)}
-
+  .skills{text-align:center;margin:26px 0 6px}
+  .skills img{max-width:100%}
   .tag{
     display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
     border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
   }
-  footer{padding:56px 0 0;color:var(--dim);font-size:14px}
+  footer{padding:56px 0 0;color:var(--dim);font-size:14px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--cyan);text-decoration:none}
+
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .rv.on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<div class="glow"></div>
+
+<nav>
+  <div class="in">
+    <span class="brand">Stargate <span>Labs</span></span>
+    <a href="#numeri">Numeri</a>
+    <a href="#progetti">Progetti</a>
+    <a href="#shipexpress">ShipExpress</a>
+    <a href="#stack">Stack</a>
+    <a href="#contatti">Contatti</a>
+    <a class="en" href="index-en.html">EN</a>
+  </div>
+</nav>
+
 <div class="wrap">
 
 <header>
@@ -84,52 +142,69 @@
     di sicurezza. La stessa curiosità tecnica su ogni strato: dal ciclo di
     refrigerazione di un rig al ciclo di richiesta di un'API.
   </p>
+  <div class="cta">
+    <a class="hot" href="https://shipexpress.it">shipexpress.it</a>
+    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+    <a href="https://github.com/StargateLabs">GitHub</a>
+  </div>
 </header>
 
-<section>
+<section id="numeri" class="rv">
   <h2>Numeri</h2>
   <div class="stats">
-    <div class="stat"><b>36</b><span>Corrieri integrati</span></div>
-    <div class="stat"><b>1.234</b><span>Test automatici</span></div>
+    <div class="stat"><b>42</b><span>Corrieri integrati</span></div>
+    <div class="stat"><b>8.896</b><span>Test automatici</span></div>
     <div class="stat"><b>67</b><span>Dipendenze di produzione</span></div>
     <div class="stat"><b>13</b><span>Provider nativi</span></div>
   </div>
 </section>
 
-<section>
+<section id="progetti" class="rv">
   <h2>Progetti</h2>
   <div class="grid">
     <div class="card">
-      <h3>ShipExpress</h3>
+      <h3><span class="n">01</span>ShipExpress</h3>
       <p>Gestionale operativo per spedizioni, multi-tenant, in produzione.
          Ogni cliente ha dominio proprio, database separato e gerarchia di
          permessi per ruolo.</p>
     </div>
     <div class="card">
-      <h3>ARGUS</h3>
+      <h3><span class="n">02</span>ARGUS</h3>
       <p>Orchestratore di security testing continuo: ricognizione, DAST, SAST,
          analisi delle dipendenze, scansione dei segreti e fuzzing su target
          autorizzati. <code>v0.2.0</code>.</p>
     </div>
     <div class="card">
-      <h3>TechDash</h3>
+      <h3><span class="n">03</span>ARA</h3>
+      <p>Assistente vocale in Python: trascrizione, sintesi e router che distingue
+         task da conversazione, con memoria locale e conferma umana sulle azioni
+         distruttive.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">04</span>StargateCryo</h3>
+      <p>Controller TEC per cryocooling in Rust: legge i sensori, pilota il TEC
+         via seriale con PID e misura il margine di condensa. Lavora sul
+         controller, non sul processore.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">05</span>TechDash</h3>
       <p>Monitoraggio hardware del rig: temperature CPU e GPU, carico, ventole,
          pompe e dischi, con allarmi su condensazione e gestione termica.</p>
     </div>
     <div class="card">
-      <h3>Setup criogenici</h3>
+      <h3><span class="n">06</span>Setup criogenici</h3>
       <p>Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione
          della condensazione, curve di avvio sicuro e monitoraggio.</p>
     </div>
     <div class="card">
-      <h3>Plugin SignalRGB</h3>
+      <h3><span class="n">07</span>Plugin SignalRGB</h3>
       <p>Plugin di illuminazione RGB con bridge verso il controller e
          configurazione automatica dei dispositivi.</p>
     </div>
   </div>
 </section>
 
-<section>
+<section id="shipexpress" class="rv">
   <h2>ShipExpress — dettaglio</h2>
   <table>
     <tr><th>Area</th><th>Cosa fa</th></tr>
@@ -147,7 +222,7 @@
   </p>
 </section>
 
-<section>
+<section id="stack" class="rv">
   <h2>Stack</h2>
   <p>
     <span class="tag">Next.js 16</span><span class="tag">React 19</span
@@ -155,11 +230,15 @@
     ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
     ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
     ><span class="tag">Zod 4</span><span class="tag">Vitest</span
-    ><span class="tag">Playwright</span><span class="tag">Python</span>
+    ><span class="tag">Playwright</span><span class="tag">Python</span
+    ><span class="tag">Rust</span>
+  </p>
+  <p class="skills">
+    <img src="https://skillicons.dev/icons?i=nextjs,react,ts,postgres,prisma,redis,tailwind,py,rust,linux,docker,git&theme=dark" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Python, Rust, Linux, Docker, Git">
   </p>
 </section>
 
-<section>
+<section id="metodo" class="rv">
   <h2>Come lavoro</h2>
   <ol>
     <li><b>Validazione ai bordi.</b> Zod su tutto l'input esterno,
@@ -175,7 +254,7 @@
   </ol>
 </section>
 
-<section>
+<section id="hardware" class="rv">
   <h2>Hardware</h2>
   <ul>
     <li><b>Protezioni prima delle prestazioni.</b> Un impianto criogenico senza
@@ -190,20 +269,32 @@
   </ul>
 </section>
 
-<section>
+<section id="contatti" class="rv">
   <h2>Contatti</h2>
   <p>Il codice di ShipExpress è privato. Per una demo, per un'integrazione
      o per parlare di un progetto hardware:</p>
   <div class="links">
     <a href="https://shipexpress.it">shipexpress.it</a>
     <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+    <a href="https://github.com/StargateLabs">GitHub</a>
   </div>
 </section>
 
 <footer>
-  Stargate Labs — laboratorio privato.
+  <span>Stargate Labs — laboratorio privato.</span>
 </footer>
 
 </div>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}});
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
 </body>
 </html>
