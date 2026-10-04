@@ -21,8 +21,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/StargateLabs?tab=followers"><img src="https://img.shields.io/github/followers/StargateLabs?label=Followers&logo=github" alt="Follower GitHub"></a>
-  <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FStargateLabs&label=Visite+profilo&countColor=%2300e5a0" alt="Visite profilo">
+  <a href="https://github.com/StargateLabs?tab=followers"><img src="https://img.shields.io/github/followers/StargateLabs?label=Followers&labelColor=0b100b&color=00e5a0&logo=github&style=flat-square" alt="Follower GitHub"></a>
+  <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FStargateLabs&label=VISITE+PROFILO&labelColor=0b100b&countColor=00e5a0&style=flat-square" alt="Visite profilo">
 </p>
 
 <details>
@@ -314,7 +314,7 @@ fra sei mesi non lo capisco da solo, ho sbagliato il progetto.
 
 <p align="center">
   <img src="https://streak-stats.demolab.com?user=StargateLabs&hide_border=true" alt="Serie contributi StargateLabs" height="160">
-  <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FStargateLabs&label=Visite+profilo&countColor=%2300e5a0" alt="Visite profilo StargateLabs">
+  <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FStargateLabs&label=VISITE+PROFILO&labelColor=0b100b&countColor=00e5a0&style=flat-square" alt="Visite profilo StargateLabs">
 </p>
 
 ## Contatti
