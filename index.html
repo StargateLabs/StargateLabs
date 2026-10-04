@@ -3,227 +3,173 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Stargate Labs — laboratorio privato: software gestionale in produzione, impianti hardware su misura, strumenti di sicurezza.">
-<title>Stargate Labs — laboratorio privato</title>
+<meta name="description" content="Stargate Labs — laboratorio privato: infrastruttura, sicurezza, sistemi.">
+<title>stargatelabs:~$</title>
 <style>
   :root{
-    --bg:#06090c; --bg2:#0b0f14; --panel:rgba(17,22,28,.72); --line:#1e262f;
-    --ink:#e6edf3; --dim:#8b98a5; --green:#00e5a0; --cyan:#00b4d8; --amber:#f5a623;
-    --violet:#7c5cff;
+    --bg:#050805; --bg2:#090d09; --panel:#0b100b; --line:#1c2b1c;
+    --ink:#c8f0c8; --dim:#6f8f6f; --grn:#00ff66; --grn2:#00cc52; --amb:#ffb000; --red:#ff3355;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
     margin:0; background:var(--bg); color:var(--ink);
-    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    overflow-x:hidden;
+    font:16px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
-  .glow{
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:
-      radial-gradient(560px 380px at 12% -4%, rgba(0,229,160,.14), transparent 65%),
-      radial-gradient(640px 420px at 88% 6%, rgba(124,92,255,.13), transparent 65%),
-      radial-gradient(720px 520px at 50% 110%, rgba(0,180,216,.10), transparent 65%);
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:50;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.11) 0 1px,transparent 1px 3px);
   }
-  .wrap{max-width:1020px;margin:0 auto;padding:0 24px 96px;position:relative;z-index:1}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px;position:relative;z-index:1}
 
-  nav{
-    position:sticky; top:0; z-index:10;
-    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-    background:rgba(6,9,12,.78); border-bottom:1px solid var(--line);
-  }
-  nav .in{max-width:1020px;margin:0 auto;padding:14px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-  nav .brand{font-weight:700;letter-spacing:-.01em;margin-right:auto}
-  nav .brand span{color:var(--green)}
-  nav a{color:var(--dim);text-decoration:none;font-size:14px}
-  nav a:hover{color:var(--ink)}
-  nav a.en{border:1px solid var(--line);border-radius:6px;padding:6px 12px;color:var(--cyan)}
+  nav{position:sticky;top:0;z-index:10;background:rgba(5,8,5,.9);border-bottom:1px solid var(--line)}
+  nav .in{max-width:960px;margin:0 auto;padding:12px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:14px}
+  nav .brand{color:var(--grn);font-weight:700;margin-right:auto}
+  nav a{color:var(--dim);text-decoration:none}
+  nav a:hover{color:var(--grn)}
+  nav a.en{border:1px solid var(--line);border-radius:4px;padding:4px 10px;color:var(--amb)}
 
-  header{padding:110px 0 72px;border-bottom:1px solid var(--line)}
-  .kicker{
-    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
-    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin:0 0 20px
-  }
-  h1{font-size:clamp(44px,8vw,76px);line-height:1.02;margin:0 0 22px;letter-spacing:-.03em}
-  h1 span{
-    background:linear-gradient(92deg,var(--green),var(--cyan) 60%,var(--violet));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .lede{font-size:19px;color:var(--dim);max-width:62ch;margin:0}
-  .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
-  .cta a{
-    text-decoration:none;font-size:15px;font-weight:600;border-radius:8px;padding:13px 24px;
-    border:1px solid var(--line);color:var(--ink);background:var(--panel);
-  }
-  .cta a:hover{border-color:var(--green)}
-  .cta a.hot{background:linear-gradient(92deg,#00c98a,#00a8c8);border:0;color:#04110c}
+  header{padding:88px 0 56px;border-bottom:1px solid var(--line)}
+  .term{color:var(--dim);font-size:14px;margin:0 0 18px}
+  .term b{color:var(--grn)}
+  h1{font-size:clamp(34px,6vw,58px);line-height:1.05;margin:0 0 18px;letter-spacing:-.01em;color:var(--ink)}
+  h1 .c{color:var(--grn)}
+  .cursor{display:inline-block;width:.6em;height:1.1em;background:var(--grn);vertical-align:-.15em;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .lede{color:var(--dim);max-width:64ch;margin:0}
+  .lede b{color:var(--ink)}
 
-  section{padding:72px 0;border-bottom:1px solid var(--line)}
-  h2{
-    font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--cyan);margin:0 0 32px
-  }
-  h3{font-size:21px;margin:0 0 10px}
-  p{margin:0 0 16px}
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin:0 0 28px}
+  h2::before{content:"$ ";color:var(--dim)}
+  h3{font-size:18px;margin:0 0 10px;color:var(--ink)}
+  p{margin:0 0 14px}
   .muted{color:var(--dim)}
+  a{color:var(--grn)}
 
-  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-  .card{
-    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;
-    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-    transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
-  }
-  .card:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:0 18px 44px rgba(0,229,160,.10)}
-  .card h3{font-size:18px}
-  .card h3 .n{color:var(--green);font-family:ui-monospace,Menlo,monospace;font-size:13px;display:block;margin-bottom:8px;letter-spacing:.1em}
-  .card p{font-size:15px;color:var(--dim);margin:0}
+  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .stat{background:var(--bg2);padding:24px 18px}
+  .stat b{display:block;font-size:30px;color:var(--grn);letter-spacing:-.01em}
+  .stat span{display:block;margin-top:8px;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
 
-  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-  .stat{background:var(--bg2);padding:28px 20px}
-  .stat b{display:block;font:700 34px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.02em;
-    background:linear-gradient(92deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat span{display:block;margin-top:9px;font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px}
+  .card:hover{border-color:var(--grn2)}
+  .card h3{font-size:16px}
+  .card h3 .n{color:var(--amb);font-size:12px;display:block;margin-bottom:6px;letter-spacing:.12em}
+  .card p{font-size:14px;color:var(--dim);margin:0}
+  .card p b{color:var(--ink)}
+  .card .st{color:var(--grn);font-size:12px;letter-spacing:.08em}
 
-  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
-  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-  td:first-child{color:var(--ink);font-weight:600;width:34%}
+  ol,ul{margin:0 0 14px;padding-left:22px}
+  li{margin:0 0 8px}
+  li::marker{color:var(--grn)}
+  li b{color:var(--ink)}
+  code{font-size:13px;background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:2px 6px;color:var(--amb)}
 
-  ol,ul{margin:0 0 16px;padding-left:22px}
-  li{margin:0 0 10px}
-  li::marker{color:var(--green)}
+  .tag{display:inline-block;font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:3px;padding:4px 9px;margin:0 6px 8px 0}
+  .tag:hover{color:var(--grn);border-color:var(--grn2)}
+  .skills{text-align:center;margin:22px 0 4px}
+  .skills img{max-width:100%;filter:saturate(.85)}
 
-  code{
-    font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg2);
-    border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--amber)
-  }
-  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
-  .links a{
-    color:var(--cyan);text-decoration:none;border:1px solid var(--line);
-    border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600
-  }
-  .links a:hover{border-color:var(--cyan)}
-  .skills{text-align:center;margin:26px 0 6px}
-  .skills img{max-width:100%}
-  .tag{
-    display:inline-block;font:12px ui-monospace,Menlo,monospace;color:var(--dim);
-    border:1px solid var(--line);border-radius:4px;padding:5px 10px;margin:0 6px 8px 0
-  }
-  footer{padding:56px 0 0;color:var(--dim);font-size:14px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-  footer a{color:var(--cyan);text-decoration:none}
+  .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .links a{color:var(--grn);text-decoration:none;border:1px solid var(--line);border-radius:4px;padding:10px 18px;font-size:14px}
+  .links a:hover{border-color:var(--grn);background:rgba(0,255,102,.06)}
+  footer{padding:48px 0 0;color:var(--dim);font-size:13px}
+  footer .ok{color:var(--grn)}
 
-  .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
   .rv.on{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.cursor{animation:none}}
 </style>
 </head>
 <body>
-<div class="glow"></div>
+<div class="wrap">
 
 <nav>
   <div class="in">
-    <span class="brand">Stargate <span>Labs</span></span>
-    <a href="#numeri">Numeri</a>
-    <a href="#progetti">Progetti</a>
-    <a href="#shipexpress">ShipExpress</a>
-    <a href="#stack">Stack</a>
-    <a href="#contatti">Contatti</a>
+    <span class="brand">stargatelabs:~$</span>
+    <a href="#sistemi">sistemi</a>
+    <a href="#progetti">progetti</a>
+    <a href="#stack">stack</a>
+    <a href="#metodo">metodo</a>
+    <a href="#contatti">contatti</a>
     <a class="en" href="index-en.html">EN</a>
   </div>
 </nav>
 
-<div class="wrap">
-
 <header>
-  <p class="kicker">Laboratorio privato</p>
-  <h1>Stargate <span>Labs</span></h1>
+  <p class="term"><b>guest@stargatelabs</b>:~$ whoami<br>laboratorio privato — infrastruttura, sicurezza, sistemi</p>
+  <h1>STARGATE <span class="c">LABS</span><span class="cursor"></span></h1>
   <p class="lede">
-    Software di gestione in produzione, impianti hardware su misura e strumenti
-    di sicurezza. La stessa curiosità tecnica su ogni strato: dal ciclo di
-    refrigerazione di un rig al ciclo di richiesta di un'API.
+    La stessa mania sui componenti e sul codice: loop ad acqua su misura,
+    impianti criogenici che non dovrebbero esistere, e il software che li fa
+    girare. <b>Niente si dà per scontato: ogni numero lo misuro, ogni difetto
+    diventa un test.</b>
   </p>
-  <div class="cta">
-    <a class="hot" href="https://shipexpress.it">shipexpress.it</a>
-    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
-    <a href="https://github.com/StargateLabs">GitHub</a>
-  </div>
 </header>
 
-<section id="numeri" class="rv">
-  <h2>Numeri</h2>
+<section id="sistemi" class="rv">
+  <h2>./sistemi --live</h2>
   <div class="stats">
-    <div class="stat"><b>42</b><span>Corrieri integrati</span></div>
-    <div class="stat"><b>8.896</b><span>Test automatici</span></div>
-    <div class="stat"><b>67</b><span>Dipendenze di produzione</span></div>
-    <div class="stat"><b>13</b><span>Provider nativi</span></div>
+    <div class="stat"><b>17</b><span>Scanner orchestrati</span></div>
+    <div class="stat"><b>14.071</b><span>Righe TypeScript ARGUS</span></div>
+    <div class="stat"><b>29.537</b><span>Righe Python ARA</span></div>
+    <div class="stat"><b>23.286</b><span>Righe Rust StargateCryo</span></div>
   </div>
+  <p class="muted">[i] Numeri misurati dal codice, non dichiarazioni.</p>
 </section>
 
 <section id="progetti" class="rv">
-  <h2>Progetti</h2>
+  <h2>./progetti --all</h2>
   <div class="grid">
     <div class="card">
-      <h3><span class="n">01</span>ShipExpress</h3>
-      <p>Gestionale operativo per spedizioni, multi-tenant, in produzione.
-         Ogni cliente ha dominio proprio, database separato e gerarchia di
-         permessi per ruolo.</p>
+      <h3><span class="n">[01]</span>ARGUS</h3>
+      <p><span class="st">[security]</span> Orchestratore di security testing
+         continuo: <b>6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API,
+         1 fuzz</b>. Docker image pinned, solo target autorizzati.
+         Agent AI a due modelli: uno pianifica, uno esegue. <code>v0.2.0</code>.</p>
     </div>
     <div class="card">
-      <h3><span class="n">02</span>ARGUS</h3>
-      <p>Orchestratore di security testing continuo: ricognizione, DAST, SAST,
-         analisi delle dipendenze, scansione dei segreti e fuzzing su target
-         autorizzati. <code>v0.2.0</code>.</p>
+      <h3><span class="n">[02]</span>ARA</h3>
+      <p><span class="st">[voice]</span> Assistente vocale: Whisper in ingresso,
+         Kokoro in uscita, router task-vs-conversazione sotto i
+         <b>5 millisecondi</b>. <b>7 azioni distruttive</b> con conferma umana.
+         Memoria RAG locale, zero API esterne.</p>
     </div>
     <div class="card">
-      <h3><span class="n">03</span>ARA</h3>
-      <p>Assistente vocale in Python: trascrizione, sintesi e router che distingue
-         task da conversazione, con memoria locale e conferma umana sulle azioni
-         distruttive.</p>
+      <h3><span class="n">[03]</span>StargateCryo</h3>
+      <p><span class="st">[thermal]</span> Controller TEC per cryocooling: sensori
+         da HWiNFO64 e AIDA64, PID su seriale, margine di condensa.
+         <b>6 canali di allarme, 5 regole, 3 profili PID.</b> Se la pompa si
+         ferma, il TEC scala da solo al 50%.</p>
     </div>
     <div class="card">
-      <h3><span class="n">04</span>StargateCryo</h3>
-      <p>Controller TEC per cryocooling in Rust: legge i sensori, pilota il TEC
-         via seriale con PID e misura il margine di condensa. Lavora sul
-         controller, non sul processore.</p>
+      <h3><span class="n">[04]</span>TechDash</h3>
+      <p><span class="st">[monitor]</span> Dashboard single-page con backend
+         Python: temperature CPU/GPU, carico, ventole, pompe, dischi. Allarmi su
+         condensazione e gestione termica. Lettura rapida, non grafici.</p>
     </div>
     <div class="card">
-      <h3><span class="n">05</span>TechDash</h3>
-      <p>Monitoraggio hardware del rig: temperature CPU e GPU, carico, ventole,
-         pompe e dischi, con allarmi su condensazione e gestione termica.</p>
+      <h3><span class="n">[05]</span>Setup criogenici</h3>
+      <p><span class="st">[hardware]</span> Raffreddamento TEC su CPU Intel di
+         10a e 13a generazione: gestione condensazione, curve di avvio sicuro,
+         monitoraggio. Protezioni prima delle prestazioni.</p>
     </div>
     <div class="card">
-      <h3><span class="n">06</span>Setup criogenici</h3>
-      <p>Raffreddamento TEC su CPU Intel di 10a e 13a generazione, con gestione
-         della condensazione, curve di avvio sicuro e monitoraggio.</p>
-    </div>
-    <div class="card">
-      <h3><span class="n">07</span>Plugin SignalRGB</h3>
-      <p>Plugin di illuminazione RGB con bridge verso il controller e
-         configurazione automatica dei dispositivi.</p>
+      <h3><span class="n">[06]</span>Plugin SignalRGB</h3>
+      <p><span class="st">[reverse]</span> Protocollo Loupedeck riscritto pixel
+         per pixel in RGB565 per il Razer Stream Controller X: 480 × 288 puliti
+         dove l'overlay standard mette il logo al centro.</p>
     </div>
   </div>
-</section>
-
-<section id="shipexpress" class="rv">
-  <h2>ShipExpress — dettaglio</h2>
-  <table>
-    <tr><th>Area</th><th>Cosa fa</th></tr>
-    <tr><td>Spedizioni</td><td>Confronto tariffe tra corrieri, creazione, tracciamento, contrassegno, consegna con foto e firma</td></tr>
-    <tr><td>Magazzino</td><td>Prodotti, categorie, giacenze, ubicazioni, movimenti, conteggi, imballaggi</td></tr>
-    <tr><td>Ordini</td><td>Ordini cliente, flusso di stato, picklist con lettura dei codici a barre</td></tr>
-    <tr><td>Documenti</td><td>DDT e fatturazione elettronica</td></tr>
-    <tr><td>Integrazioni</td><td>Corrieri, marketplace e gestionali esterni</td></tr>
-  </table>
-  <p class="muted">
-    13 provider nativi con adapter dedicato — BRT, DHL, DPD, GLS, UPS, FedEx,
-    TNT, SDA, Poste Italiane, InPost, EasyParcel, SpediamoPro, SpedisciOnline —
-    e 24 adapter REST generici. Il tracciamento usa i webhook quando il corriere
-    li espone e polling periodico per gli altri.
-  </p>
+  <p class="muted">[i] ShipExpress, il gestionale in produzione, vive sul suo sito:
+     <a href="https://shipexpress.it">shipexpress.it</a>. Qui non c'è: questa pagina
+     parla del laboratorio, non delle spedizioni.</p>
 </section>
 
 <section id="stack" class="rv">
-  <h2>Stack</h2>
+  <h2>./stack --list</h2>
   <p>
     <span class="tag">Next.js 16</span><span class="tag">React 19</span
     ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
@@ -239,49 +185,46 @@
 </section>
 
 <section id="metodo" class="rv">
-  <h2>Come lavoro</h2>
+  <h2>./metodo --show</h2>
   <ol>
     <li><b>Validazione ai bordi.</b> Zod su tutto l'input esterno,
-        <code>unknown</code> al posto di <code>any</code>, query parametrizzate,
-        transazioni quando un'operazione tocca più tabelle.</li>
-    <li><b>Isolamento multi-tenant verificato.</b> Routing per dominio,
-        middleware di risoluzione e fallback esplicito a chiusura. Il tenant
-        non è un campo su una tabella: è un confine.</li>
-    <li><b>Ogni finding diventa un test.</b> Il difetto non torna.</li>
-    <li><b>Sicurezza operativa.</b> Due fattori sull'account root, audit delle
-        operazioni critiche, rate limit, rilevamento brute-force e blacklist
-        sessioni su Redis.</li>
+        <code>unknown</code> mai <code>any</code>, query parametrizzate,
+        transazioni sulle operazioni multi-tabella.</li>
+    <li><b>Isolamento verificato.</b> Dove c'è un confine — tenant, rete,
+        processo — lo testo, non lo dichiaro.</li>
+    <li><b>Ogni finding diventa un test.</b> Il difetto non torna. <code>exit 0</code>.</li>
+    <li><b>Sicurezza operativa.</b> 2FA sul root, audit delle operazioni critiche,
+        rate limit, brute-force detection, blacklist sessioni su Redis.</li>
   </ol>
 </section>
 
 <section id="hardware" class="rv">
-  <h2>Hardware</h2>
+  <h2>./hardware --rules</h2>
   <ul>
-    <li><b>Protezioni prima delle prestazioni.</b> Un impianto criogenico senza
-        allarmi è un rischio, non un esperimento.</li>
-    <li><b>Nessun segnale è attendibile.</b> Più sensori indipendenti,
-        validazione a monte: un valore fuori scala è spesso un problema di
-        acquisizione, non della macchina.</li>
+    <li><b>Protezioni prima delle prestazioni.</b> Un criogenico senza allarmi è
+        un rischio, non un esperimento.</li>
+    <li><b>Nessun segnale è attendibile.</b> Sensori indipendenti, validazione a
+        monte: fuori scala quasi sempre uguale problema di acquisizione.</li>
     <li><b>Il freddo è un sistema.</b> Peltier, CPU, RAM, GPU e alimentatore
-        hanno limiti termici diversi.</li>
-    <li><b>Documentazione dal giorno zero.</b> Schema, componenti, curve di
-        avvio e valori misurati.</li>
+        hanno limiti diversi: raffreddarne uno solo sposta il danno.</li>
+    <li><b>Documentazione dal giorno zero.</b> Schema, componenti, curve di avvio,
+        valori misurati. Se fra sei mesi non lo capisco, ho sbagliato io.</li>
   </ul>
 </section>
 
 <section id="contatti" class="rv">
-  <h2>Contatti</h2>
-  <p>Il codice di ShipExpress è privato. Per una demo, per un'integrazione
-     o per parlare di un progetto hardware:</p>
+  <h2>./contatti --open</h2>
+  <p>Laboratorio privato. Per un progetto hardware, un audit, o una domanda
+     che merita una misura:</p>
   <div class="links">
     <a href="https://shipexpress.it">shipexpress.it</a>
     <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
-    <a href="https://github.com/StargateLabs">GitHub</a>
+    <a href="https://github.com/StargateLabs">github.com/StargateLabs</a>
   </div>
 </section>
 
 <footer>
-  <span>Stargate Labs — laboratorio privato.</span>
+  <span><span class="ok">[ok]</span> Stargate Labs — laboratorio privato. Nessun tracker, nessun cookie, solo HTML.</span>
 </footer>
 
 </div>
