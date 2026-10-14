@@ -496,12 +496,12 @@ main{counter-reset:sec}
 <p>public repository data</p>
 </div>
 <div class="stats" id="stats">
-<div class="stat"><span class="stat-k">stars</span><span class="stat-v" data-k="stargazers_count">&mdash;</span></div>
-<div class="stat"><span class="stat-k">fork</span><span class="stat-v" data-k="forks_count">&mdash;</span></div>
-<div class="stat"><span class="stat-k">watchers</span><span class="stat-v" data-k="subscribers_count">&mdash;</span></div>
-<div class="stat"><span class="stat-k">open issues</span><span class="stat-v" data-k="open_issues_count">&mdash;</span></div>
+<div class="stat"><span class="stat-k">stars</span><span class="stat-v" data-k="stargazers_count">2</span></div>
+<div class="stat"><span class="stat-k">fork</span><span class="stat-v" data-k="forks_count">0</span></div>
+<div class="stat"><span class="stat-k">watchers</span><span class="stat-v" data-k="subscribers_count">0</span></div>
+<div class="stat"><span class="stat-k">open issues</span><span class="stat-v" data-k="open_issues_count">0</span></div>
 </div>
-<p class="stat-foot"><span class="dot"></span><span id="statPush">reading last push&hellip;</span></p>
+<p class="stat-foot"><span class="dot"></span><span id="statPush">snapshot 14 Oct 2026</span></p>
 </div>
 </section>
 <section id="contatti">
@@ -526,7 +526,7 @@ main{counter-reset:sec}
 <div class="ctr"><span class="ctr-k">utc</span><span class="ctr-v" id="fClock">--:--:--</span></div>
 <div class="ctr"><span class="ctr-k">session</span><span class="ctr-v" id="fUp">00:00</span></div>
 <div class="ctr"><span class="ctr-k">visits here</span><span class="ctr-v" id="fVisits">1</span></div>
-<div class="ctr"><span class="ctr-k">last push</span><span class="ctr-v" id="fPush">--</span></div>
+<div class="ctr"><span class="ctr-k">last push</span><span class="ctr-v" id="fPush">14 Oct 26</span></div>
 </div>
 <div class="foot-links">
 <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
@@ -635,14 +635,11 @@ if("IntersectionObserver" in window && !reduce){
     push.textContent=d.pushed_at
       ? "last push " + new Date(d.pushed_at).toLocaleDateString("en-US",{day:"2-digit",month:"short",year:"numeric"})
       : "dati non disponibili";
-    foot.classList.toggle("off",!live);
+    if(live) foot.classList.remove("off");
   }
   function fail(){
-    grid.querySelectorAll(".stat-v").forEach(function(el){ el.textContent="n/a"; });
-    grid.classList.add("err");
-    var fp=doc.getElementById("fPush"); if(fp) fp.textContent="n/a";
-    push.textContent="statistics unavailable";
-    foot.classList.add("off");
+    /* niente dati live: restano i valori statici, nessun n/d */
+    foot.classList.remove('off');
   }
   var raw=null;
   try{ raw=localStorage.getItem(KEY); }catch(e){}
