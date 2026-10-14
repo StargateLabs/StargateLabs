@@ -321,6 +321,8 @@ main{counter-reset:sec}
 .tech-i span{font-family:"Fira Code",monospace;font-size:.66rem;line-height:1.4;
   letter-spacing:.03em;color:var(--ink-dim);text-align:center}
 .tech-i.noico img{display:none}
+
+.stat-v.sm{font-size:clamp(1.15rem,2.2vw,1.5rem);text-shadow:0 0 14px rgba(52,197,213,.3)}
 </style>
 </head>
 <body class="booting">
@@ -509,10 +511,10 @@ Se fra sei mesi non lo capisco, ho sbagliato io.</p></li>
 <p>dati pubblici del repository</p>
 </div>
 <div class="stats" id="stats">
-<div class="stat"><span class="stat-k">stelle</span><span class="stat-v" data-k="stargazers_count">2</span></div>
-<div class="stat"><span class="stat-k">fork</span><span class="stat-v" data-k="forks_count">0</span></div>
-<div class="stat"><span class="stat-k">watcher</span><span class="stat-v" data-k="subscribers_count">0</span></div>
-<div class="stat"><span class="stat-k">issue aperte</span><span class="stat-v" data-k="open_issues_count">0</span></div>
+<div class="stat"><span class="stat-k">stelle</span><span class="stat-v" data-k="stars">2</span></div>
+<div class="stat"><span class="stat-k">fork</span><span class="stat-v" data-k="forks">0</span></div>
+<div class="stat"><span class="stat-k">issue aperte</span><span class="stat-v" data-k="issues">0</span></div>
+<div class="stat"><span class="stat-k">ultimo commit</span><span class="stat-v sm" data-k="commit">--</span></div>
 </div>
 <p class="stat-foot"><span class="dot"></span><span id="statPush">dati al 14 ott 2026</span></p>
 </div>
@@ -630,38 +632,34 @@ if("IntersectionObserver" in window && !reduce){
 
 })();
 
-/* statistiche: dati reali dal repository pubblico, cache 30 min, nessun dato finto */
+/* statistiche: dati reali via shields.io (nessun rate limit lato browser).
+   I valori nell'HTML sono gia' veri: se la chiamata fallisce restano quelli. */
 (function(){
   var doc=document;
-  var REPO="https://api.github.com/repos/StargateLabs/StargateLabs";
-  var KEY="stg-stats-v1", TTL=30*60*1000;
-  var grid=doc.getElementById("stats"), foot=doc.querySelector(".stat-foot"), push=doc.getElementById("statPush");
-  function paint(d,live){
-    grid.querySelectorAll(".stat-v").forEach(function(el){
-      var v=d[el.getAttribute("data-k")];
-      el.textContent=(typeof v==="number")?v.toLocaleString("it-IT"):"—";
-    });
-    grid.classList.toggle("err",!live);
-    var fp=doc.getElementById("fPush");
-    if(fp) fp.textContent=d.pushed_at
-      ? new Date(d.pushed_at).toLocaleDateString("it-IT",{day:"2-digit",month:"short",year:"2-digit"})
-      : "--";
-    push.textContent=d.pushed_at
-      ? "ultimo push " + new Date(d.pushed_at).toLocaleDateString("it-IT",{day:"2-digit",month:"short",year:"numeric"})
-      : "dati non disponibili";
-    if(live) foot.classList.remove("off");
+  var SH="https://img.shields.io/github/";
+  var R="StargateLabs/StargateLabs.json";
+  var grid=doc.getElementById("stats"), foot=doc.querySelector(".stat-foot"),
+      push=doc.getElementById("statPush"), fp=doc.getElementById("fPush");
+  var REL={today:"oggi",yesterday:"ieri","1 day ago":"1 giorno fa",
+    "2 days ago":"2 giorni fa","3 days ago":"3 giorni fa","4 days ago":"4 giorni fa",
+    "1 week ago":"1 settimana fa","2 weeks ago":"2 settimane fa",
+    "1 month ago":"1 mese fa","2 months ago":"2 mesi fa","3 months ago":"3 mesi fa",
+    "1 year ago":"1 anno fa"};
+  function put(k,val){
+    var el=grid.querySelector('[data-k="'+k+'"]');
+    if(el) el.textContent=val;
   }
-  function fail(){
-    /* niente dati live: restano i valori statici, nessun n/d */
-    foot.classList.remove('off');
-  }
-  var raw=null;
-  try{ raw=localStorage.getItem(KEY); }catch(e){}
-  if(raw){ try{ var c=JSON.parse(raw); if(c&&Date.now()-c.t<TTL){ paint(c.d,false===c.live?false:true); } }catch(e){} }
-  fetch(REPO,{headers:{Accept:"application/vnd.github+json"}})
-    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function(d){ paint(d,true); try{ localStorage.setItem(KEY,JSON.stringify({t:Date.now(),d:d})); }catch(e){} })
-    .catch(fail);
+  function get(url){ return fetch(url).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
+  Promise.all([get(SH+"stars/"+R),get(SH+"forks/"+R),get(SH+"issues/"+R),get(SH+"last-commit/"+R)])
+    .then(function(d){
+      put("stars",d[0].value); put("forks",d[1].value);
+      put("issues",(d[2].value||"0").split(" ")[0]);
+      var rel=d[3].value||""; put("commit",REL[rel]||rel);
+      if(push) push.textContent="dati live";
+      if(fp) fp.textContent=rel;
+      if(foot) foot.classList.remove("off");
+    })
+    .catch(function(){ /* silenzio: restano i valori statici gia' presenti */ });
 })();
 
 /* footer: orologio UTC, sessione e visite, tutti calcolati sul dispositivo */
