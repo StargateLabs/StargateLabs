@@ -1,241 +1,715 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Stargate Labs — private lab: infrastructure, security, systems.">
-<title>stargatelabs:~$</title>
+<meta name="description" content="Stargate Labs: private laboratory. Application security, embedded systems and operational tooling.">
+<title>Stargate Labs: private laboratory</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#050805; --bg2:#090d09; --panel:#0b100b; --line:#1c2b1c;
-    --ink:#c8f0c8; --dim:#6f8f6f; --grn:#00ff66; --grn2:#00cc52; --amb:#ffb000; --red:#ff3355;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font:16px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  }
-  body::after{
-    content:""; position:fixed; inset:0; pointer-events:none; z-index:50;
-    background:repeating-linear-gradient(0deg,rgba(0,0,0,.11) 0 1px,transparent 1px 3px);
-  }
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px 96px;position:relative;z-index:1}
+:root{
+  --bg:#03080E; --panel:#08161F; --line:#17323D;
+  --cyan:#34C5D5; --cyan-lit:#7FE8F5; --cyan-dim:#1C6C7D;
+  --ink:#E8F7FB; --muted:#7C9AA6; --max:72rem;
+  --fw:230px; --fh:230px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink); overflow-x:hidden;
+  font-family:"Fira Code",ui-monospace,Menlo,Consolas,monospace; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(60rem 40rem at 18% -10%, rgba(52,197,213,.14), transparent 60%),
+    radial-gradient(50rem 36rem at 92% 8%, rgba(52,197,213,.08), transparent 60%);
+}
+a{color:var(--cyan);text-decoration:none}
+::selection{background:var(--cyan);color:#03080E}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--cyan);color:#03080E;padding:.7rem 1.2rem;font-weight:700;z-index:200}
+.skip:focus{left:1rem;top:1rem}
 
-  nav{position:sticky;top:0;z-index:10;background:rgba(5,8,5,.9);border-bottom:1px solid var(--line)}
-  nav .in{max-width:960px;margin:0 auto;padding:12px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:14px}
-  nav .brand{color:var(--grn);font-weight:700;margin-right:auto}
-  nav a{color:var(--dim);text-decoration:none}
-  nav a:hover{color:var(--grn)}
-  nav a.it{border:1px solid var(--line);border-radius:4px;padding:4px 10px;color:var(--amb)}
+/* boot */
+#boot{position:fixed;inset:0;background:var(--bg);z-index:150;display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  animation:bootout .5s linear 2.15s forwards}
+@keyframes bootout{to{opacity:0;visibility:hidden}}
+#boot .log{width:min(30rem,100%);font-size:.8rem;line-height:2}
+#boot .log div{opacity:0;animation:bootline .3s forwards}
+#boot .log div:nth-child(1){animation-delay:.05s}
+#boot .log div:nth-child(2){animation-delay:.28s}
+#boot .log div:nth-child(3){animation-delay:.52s}
+#boot .log div:nth-child(4){animation-delay:.82s}
+#boot .log div:nth-child(5){animation-delay:1.12s}
+#boot .log div:nth-child(6){animation-delay:1.45s}
+@keyframes bootline{to{opacity:1}}
+#boot .c{color:var(--cyan)}
+#boot .d{color:var(--muted)}
+#boot .bar{display:inline-block;width:10rem;height:7px;background:var(--line);position:relative;overflow:hidden;vertical-align:middle}
+#boot .bar::after{content:"";position:absolute;inset:0;width:36%;background:var(--cyan);animation:load 1.3s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(278%)}}
+body.booting .stage{opacity:0}
+.stage{transition:opacity .6s ease;position:relative;z-index:1}
 
-  header{padding:88px 0 56px;border-bottom:1px solid var(--line)}
-  .term{color:var(--dim);font-size:14px;margin:0 0 18px}
-  .term b{color:var(--grn)}
-  h1{font-size:clamp(34px,6vw,58px);line-height:1.05;margin:0 0 18px;letter-spacing:-.01em;color:var(--ink)}
-  h1 .c{color:var(--grn)}
-  .cursor{display:inline-block;width:.6em;height:1.1em;background:var(--grn);vertical-align:-.15em;animation:blink 1.1s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-  .lede{color:var(--dim);max-width:64ch;margin:0}
-  .lede b{color:var(--ink)}
+/* cursor scanner */
+#beam,#ring{position:fixed;left:0;top:0;pointer-events:none;z-index:95;border-radius:50%}
+#beam{width:5px;height:5px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+#ring{width:44px;height:44px;border:1px solid var(--cyan);opacity:.5;
+  box-shadow:0 0 16px rgba(52,197,213,.3),inset 0 0 12px rgba(52,197,213,.16);
+  transition:width .3s cubic-bezier(.2,.7,.3,1),height .3s cubic-bezier(.2,.7,.3,1),opacity .3s}
+body.hot #ring{width:84px;height:84px;opacity:.95}
+.hud{position:fixed;inset:0;pointer-events:none;z-index:90}
+.hud i{position:absolute;width:24px;height:24px;border:2px solid var(--cyan);opacity:.4}
+.hud i:nth-child(1){top:13px;left:13px;border-right:0;border-bottom:0}
+.hud i:nth-child(2){top:13px;right:13px;border-left:0;border-bottom:0}
+.hud i:nth-child(3){bottom:13px;left:13px;border-right:0;border-top:0}
+.hud i:nth-child(4){bottom:13px;right:13px;border-left:0;border-top:0}
+@media (pointer:coarse),(max-width:820px){#beam,#ring,.hud{display:none}}
 
-  section{padding:56px 0;border-bottom:1px solid var(--line)}
-  h2{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin:0 0 28px}
-  h2::before{content:"$ ";color:var(--dim)}
-  h3{font-size:18px;margin:0 0 10px;color:var(--ink)}
-  p{margin:0 0 14px}
-  .muted{color:var(--dim)}
-  a{color:var(--grn)}
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:80;padding:.85rem 1.25rem;border-bottom:1px solid transparent;
+  transition:background .3s,backdrop-filter .3s,border-color .3s}
+header.sticky{background:rgba(3,8,14,.92);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.nav{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:1rem}
+.brand{font-weight:700;white-space:nowrap;letter-spacing:.01em}
+.brand .g{color:var(--cyan)}
+.brand .u{color:var(--muted);font-weight:400}
+nav.links{display:flex;gap:.3rem;margin-left:auto;align-items:center}
+nav.links a{position:relative;color:var(--muted);font-size:.88rem;padding:.4rem .75rem;border-radius:6px;transition:color .2s}
+nav.links a:hover{color:var(--ink)}
+nav.links a.active{color:var(--cyan)}
+nav.links a.active::after{content:"";position:absolute;left:.75rem;right:.75rem;bottom:.12rem;height:1px;background:var(--cyan)}
+#menuBtn{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:.45rem .75rem;font:inherit;cursor:pointer}
+@media (max-width:860px){
+  #menuBtn{display:block}
+  nav.links{display:none;position:absolute;top:100%;left:1.25rem;right:1.25rem;flex-direction:column;gap:0;
+    background:rgba(3,8,14,.98);border:1px solid var(--line);border-radius:12px;padding:.5rem;backdrop-filter:blur(10px)}
+  nav.links.open{display:flex}
+  nav.links a{padding:.7rem .85rem;font-size:1rem}
+  nav.links a.active::after{display:none}
+  nav.links a.active{background:rgba(52,197,213,.1)}
+}
 
-  .stats{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-  .stat{background:var(--bg2);padding:24px 18px}
-  .stat b{display:block;font-size:30px;color:var(--grn);letter-spacing:-.01em}
-  .stat span{display:block;margin-top:8px;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+section{padding:5.5rem 0}
+section+section{border-top:1px solid var(--line)}
 
-  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px}
-  .card:hover{border-color:var(--grn2)}
-  .card h3{font-size:16px}
-  .card h3 .n{color:var(--amb);font-size:12px;display:block;margin-bottom:6px;letter-spacing:.12em}
-  .card p{font-size:14px;color:var(--dim);margin:0}
-  .card p b{color:var(--ink)}
-  .card .st{color:var(--grn);font-size:12px;letter-spacing:.08em}
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:5rem;padding-bottom:3rem}
+.hero-logo{position:relative;width:min(52rem,100%);aspect-ratio:1400/894;margin:0 auto 2.8rem}
+.hero-logo img{width:100%;height:100%;display:block;border-radius:22px;
+  box-shadow:0 0 90px rgba(52,197,213,.22)}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:.6rem;color:var(--cyan);
+  font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.4rem;max-width:52rem;margin-left:auto;margin-right:auto}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-family:Poppins,system-ui,sans-serif;font-weight:800;font-size:clamp(2.4rem,6.6vw,4.4rem);
+  line-height:1.02;letter-spacing:-.035em;text-align:center;position:relative}
+.reveal{position:relative;display:inline-block}
+.reveal > i{position:absolute;inset:0;background:var(--bg);z-index:5;
+  animation:wipe .8s cubic-bezier(.76,0,.24,1) forwards;animation-delay:calc(.28s*var(--i,0))}
+@keyframes wipe{to{transform:scaleY(0)}}
+.sweep{position:relative;display:block;margin:1.2rem auto 0;width:max-content;max-width:100%;
+  color:transparent;-webkit-text-stroke:1px var(--cyan);
+  background-image:linear-gradient(var(--cyan),var(--cyan));background-repeat:no-repeat;
+  -webkit-background-clip:text;background-clip:text;background-position:-30rem 0;
+  caret-color:var(--cyan);
+  font-family:"Fira Code",monospace;font-size:clamp(.85rem,2.2vw,1.35rem);letter-spacing:.06em;text-align:center}
+.sweep::after{content:"";position:absolute;left:100%;top:14%;width:2px;height:72%;margin-left:9px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.sweep.run{animation:fill 2.2s linear 1 forwards}
 
-  ol,ul{margin:0 0 14px;padding-left:22px}
-  li{margin:0 0 8px}
-  li::marker{color:var(--grn)}
-  li b{color:var(--ink)}
-  code{font-size:13px;background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:2px 6px;color:var(--amb)}
+@keyframes fill{0%,10%,100%{background-position:-30rem 0}65%,85%{background-position:0 0}}
+@keyframes cursor{0%,10%,100%{width:0}65%,78%,85%{width:100%;opacity:1}75%,81%{opacity:0}}
+.lede{margin:1.5rem auto 0;max-width:42rem;text-align:center;color:var(--ink-dim);
+  font-size:1.06rem;line-height:1.72;letter-spacing:.005em}
+.lede b{color:var(--ink);font-weight:500}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:2.2rem 0 0}
+.btn{position:relative;z-index:0;overflow:hidden;border:1px solid var(--cyan);color:var(--cyan);
+  border-radius:9px;padding:.78rem 1.5rem;font:inherit;font-size:.92rem;transition:color .28s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--cyan);transform:translateY(101%);
+  transition:transform .3s cubic-bezier(.76,0,.24,1);z-index:-1}
+.btn:hover,.btn:focus-visible{color:var(--bg);font-weight:500}
+.btn:hover::before{transform:translateY(0)}
+.btn.ghost{border-color:var(--line);color:var(--muted)}
+.btn.ghost::before{background:var(--ink)}
+.btn.ghost:hover{color:var(--bg)}
+.ticks{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:2.4rem 0 0;padding:0;list-style:none;
+  font-size:.8rem;color:var(--muted)}
+.ticks li{border:1px solid var(--line);border-radius:999px;padding:.25rem .9rem}
+.ticks li b{color:var(--cyan);font-weight:500}
 
-  .tag{display:inline-block;font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:3px;padding:4px 9px;margin:0 6px 8px 0}
-  .tag:hover{color:var(--grn);border-color:var(--grn2)}
-  .skills{text-align:center;margin:22px 0 4px}
-  .skills img{max-width:100%;filter:saturate(.85)}
+/* sections */
+.cmd{display:inline-block;color:var(--cyan);font-size:.84rem;border:1px solid rgba(52,197,213,.3);
+  background:rgba(52,197,213,.07);border-radius:999px;padding:.25rem .95rem}
+h2{font-family:Poppins,system-ui,sans-serif;font-weight:700;font-size:clamp(1.7rem,3.6vw,2.4rem);
+  letter-spacing:-.025em;margin:1rem 0 .6rem}
+.sub{color:var(--muted);max-width:34rem;margin:1.35rem auto 0;font-size:.8rem;line-height:1.8;
+  text-align:center;opacity:.8;position:relative;padding-top:1.5rem}
+.sub::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:3.5rem;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.in{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.3,1)}
+.in.seen{opacity:1;transform:none}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.metric{background:var(--panel);padding:1.4rem 1.3rem;transition:background .25s}
+.metric:hover{background:#0C1F2B}
+.metric b{display:block;font-family:Poppins,sans-serif;font-size:1.95rem;color:var(--cyan);line-height:1.15}
+.metric span{color:var(--muted);font-size:.82rem}
+@media (max-width:860px){.metrics{grid-template-columns:repeat(2,1fr)}}
+.proj{border-top:1px solid var(--line);padding:1.8rem 0;display:grid;grid-template-columns:3rem 1fr;gap:1rem;
+  transition:background .25s}
+.proj:last-child{border-bottom:1px solid var(--line)}
+.proj:hover{background:rgba(8,22,31,.6)}
+.proj .n{color:var(--cyan);font-weight:700;font-size:.9rem;padding-top:.35rem}
+.proj h3{font-family:Poppins,sans-serif;font-size:1.3rem;margin-bottom:.35rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.proj h3 small{font-family:"Fira Code",monospace;font-size:.78rem;color:var(--cyan);font-weight:400;
+  border:1px solid rgba(52,197,213,.3);border-radius:5px;padding:.1rem .5rem}
+.proj p{color:var(--muted);max-width:48rem}
+.proj .meta{color:var(--muted);font-size:.82rem;margin-top:.6rem;display:flex;flex-wrap:wrap;gap:1.2rem}
+.proj:hover h3{color:var(--cyan)}
+@media (max-width:620px){.proj{grid-template-columns:1fr;gap:.3rem}}
+.chips{display:flex;flex-wrap:wrap;gap:.55rem;list-style:none;padding:0;max-width:48rem}
+.chips li{border:1px solid var(--line);border-radius:8px;padding:.35rem .95rem;font-size:.88rem;
+  color:var(--muted);transition:.22s}
+.chips li:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
+ol.method{list-style:none;counter-reset:m;max-width:48rem}
+ol.method li{counter-increment:m;position:relative;padding:1rem 0 1rem 3.2rem;border-top:1px solid var(--line)}
+ol.method li:last-child{border-bottom:1px solid var(--line)}
+ol.method li::before{content:counter(m,decimal-leading-zero);position:absolute;left:0;top:1.1rem;color:var(--cyan);font-weight:700;font-size:.88rem}
+ol.method b{color:var(--ink);font-weight:500}
+ol.method p{color:var(--muted);font-size:.92rem}
+.note{border-left:2px solid var(--cyan);padding:.2rem 0 .2rem 1.1rem;color:var(--muted);max-width:48rem;margin-top:2rem}
 
-  .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-  .links a{color:var(--grn);text-decoration:none;border:1px solid var(--line);border-radius:4px;padding:10px 18px;font-size:14px}
-  .links a:hover{border-color:var(--grn);background:rgba(0,255,102,.06)}
-  footer{padding:48px 0 0;color:var(--dim);font-size:13px}
-  footer .ok{color:var(--grn)}
+/* footer with the mask, as in the reference */
+footer{border-top:1px solid var(--line);padding:3.4rem 0 3rem}
+.foot-grid{display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.foot-note{font-size:.84rem;color:var(--muted)}
+.foot-note b{color:var(--cyan);font-weight:500}
+.readout{display:flex;gap:1.5rem;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-top:1rem}
+.tiny{color:var(--line);font-size:.78rem;margin-top:1.6rem}
 
-  .rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-  .rv.on{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.cursor{animation:none}}
+@media (max-width:860px){:root{--fw:178px;--fh:178px}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .sweep,.sweep::after,.eyebrow .dot{animation:none}
+  .sweep{background-position:0 0}
+
+  .reveal > i{animation:none;transform:scaleY(0)}
+  .in{opacity:1;transform:none}
+  #ring,#beam{display:none}
+}
+
+/* numerazione sezioni */
+main{counter-reset:sec}
+.sec-head{counter-increment:sec}
+.sec-head h2::before{content:counter(sec,decimal-leading-zero);display:block;font-family:"Fira Code",monospace;
+  font-size:.66rem;letter-spacing:.24em;color:var(--cyan);opacity:.8;margin-bottom:.55rem}
+
+/* grafica: hairline con nodo */
+.rule{display:flex;align-items:center;gap:1rem;margin:2.6rem 0 0}
+.rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.rule i{width:5px;height:5px;border:1px solid var(--cyan);transform:rotate(45deg);opacity:.7}
+
+/* statistiche */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:.5rem;position:relative}
+.stats::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:repeating-linear-gradient(180deg,rgba(127,232,245,.05) 0 1px,transparent 1px 3px);
+  opacity:.5;animation:scan 7s linear infinite}
+@keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(3px)}}
+.stat{background:linear-gradient(180deg,rgba(8,22,31,.92),rgba(6,16,23,.92));padding:1.6rem 1.3rem;
+  position:relative;transition:background .25s ease}
+.stat:hover{background:linear-gradient(180deg,rgba(12,34,45,.96),rgba(8,24,33,.96))}
+.stat::before,.stat::after{content:"";position:absolute;width:7px;height:7px;border:1px solid var(--cyan);opacity:.55;transition:opacity .25s}
+.stat::before{top:8px;left:8px;border-right:0;border-bottom:0}
+.stat::after{bottom:8px;right:8px;border-left:0;border-top:0}
+.stat:hover::before,.stat:hover::after{opacity:1}
+.stat-k{display:block;font-family:"Fira Code",monospace;font-size:.64rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
+.stat-v{display:block;font-family:"Fira Code",monospace;font-size:clamp(1.7rem,3.4vw,2.3rem);
+  font-weight:700;color:var(--cyan);text-shadow:0 0 18px rgba(52,197,213,.45);line-height:1;
+  font-variant-numeric:tabular-nums}
+.stat.err .stat-v{color:var(--muted);text-shadow:none}
+.stat-foot{display:flex;align-items:center;gap:.6rem;justify-content:center;margin:1.4rem 0 0;
+  font-family:"Fira Code",monospace;font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+.stat-foot .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);animation:pulse 2.4s ease-in-out infinite;flex:0 0 auto}
+.stat-foot.off .dot{background:var(--muted);box-shadow:none;animation:none}
+
+@media(max-width:760px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat{padding:1.25rem 1rem}
+}
+
+/* ---------- footer ---------- */
+.foot-grid{display:grid;grid-template-columns:1.1fr .82fr .78fr;gap:2.6rem;align-items:center}
+.foot-note{color:var(--ink-dim);font-size:.92rem;line-height:1.85;max-width:26rem}
+.counters{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:1.6rem 0;max-width:24rem}
+.ctr{background:rgba(8,22,31,.82);padding:.85rem .9rem}
+.ctr-k{display:block;font-family:"Fira Code",monospace;font-size:.58rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.ctr-v{display:block;font-family:"Fira Code",monospace;font-size:1rem;color:var(--cyan);
+  font-variant-numeric:tabular-nums;text-shadow:0 0 12px rgba(52,197,213,.35)}
+.foot-links{display:flex;flex-direction:column;gap:.45rem;font-family:"Fira Code",monospace;font-size:.78rem}
+.foot-links a{color:var(--ink-dim)}
+.foot-links a:hover{color:var(--cyan)}
+
+.panel{border:1px solid var(--line);border-radius:16px;padding:1.1rem;
+  background:linear-gradient(180deg,rgba(8,22,31,.9),rgba(5,14,20,.9));position:relative}
+.panel::before{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(127,232,245,.04) 0 1px,transparent 1px 3px)}
+.panel-head{display:flex;align-items:center;gap:.55rem;font-family:"Fira Code",monospace;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem}
+.panel-head .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);animation:pulse 2.4s ease-in-out infinite}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:.42rem}
+.key{aspect-ratio:1.55;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;
+  background:rgba(6,18,26,.85);font-family:"Fira Code",monospace;font-size:.72rem;color:var(--muted);
+  transition:border-color .2s,color .2s,box-shadow .2s,transform .12s}
+.key:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px rgba(52,197,213,.28) inset}
+.key:active{transform:translateY(1px)}
+.key.fn{color:var(--muted);opacity:.7;font-size:.6rem;letter-spacing:.12em}
+.readout{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.9rem;
+  padding:.7rem;border:1px solid var(--line);border-radius:10px;background:rgba(3,10,15,.9)}
+.readout span{font-family:"Fira Code",monospace;font-size:1.5rem;font-weight:700;color:var(--cyan);
+  letter-spacing:.1em;font-variant-numeric:tabular-nums;text-shadow:0 0 16px rgba(52,197,213,.5)}
+.readout i{width:2px;height:1.1rem;background:var(--cyan);box-shadow:0 0 10px var(--cyan);
+  animation:blink 1.05s steps(1,end) infinite}
+.panel-sub{margin:.7rem 0 0;font-family:"Fira Code",monospace;font-size:.6rem;color:var(--muted);
+  text-align:center;opacity:.75}
+
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+.strip{display:flex;align-items:center;justify-content:center;gap:1.1rem;flex-wrap:wrap;
+  margin-top:2.6rem;padding:1rem 0;border-top:1px solid var(--line);
+  font-family:"Fira Code",monospace;font-size:.64rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);text-align:center}
+.strip .sep{width:4px;height:4px;background:var(--cyan);transform:rotate(45deg);opacity:.7;flex:0 0 auto}
+
+@media(max-width:900px){
+  .foot-grid{grid-template-columns:1fr;gap:2.2rem}
+  .counters{max-width:none}
+}
+
+/* oscilloscopio: canvas puro, nessun file esterno */
+.scope-wrap{border:1px solid var(--line);border-radius:16px;padding:1.1rem;
+  background:linear-gradient(180deg,rgba(8,22,31,.9),rgba(5,14,20,.9))}
+.scope-head{display:flex;align-items:center;gap:.55rem;font-family:"Fira Code",monospace;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem}
+.scope-head .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);animation:pulse 2.4s ease-in-out infinite}
+#scope{display:block;width:100%;height:150px}
+.scope-foot{display:flex;align-items:center;gap:.6rem;margin-top:.7rem;
+  font-family:"Fira Code",monospace;font-size:.58rem;letter-spacing:.16em;color:var(--muted)}
+.scope-bar{flex:1;height:1px;background:linear-gradient(90deg,var(--line),var(--cyan),var(--line))}
+
+.tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:0;
+  background:var(--bg);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  list-style:none;padding:0;margin:0}
+.tech-i{min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.75rem;padding:1.3rem .7rem;background:rgba(7,20,29,.72);
+  box-shadow:0 0 0 1px var(--line);transition:background .22s ease}
+.tech-i:hover{background:rgba(14,38,50,.88)}
+.tech-i img{width:32px;height:32px;object-fit:contain;display:block}
+.tech-i span{font-family:"Fira Code",monospace;font-size:.66rem;line-height:1.4;
+  letter-spacing:.03em;color:var(--ink-dim);text-align:center}
+.tech-i.noico img{display:none}
 </style>
 </head>
-<body>
-<div class="wrap">
+<body class="booting">
 
-<nav>
-  <div class="in">
-    <span class="brand">stargatelabs:~$</span>
-    <a href="#systems">systems</a>
-    <a href="#projects">projects</a>
-    <a href="#stack">stack</a>
-    <a href="#method">method</a>
-    <a href="#contact">contact</a>
-    <a class="it" href="index.html">IT</a>
-  </div>
+<div id="boot" role="status" aria-live="polite">
+<div class="log">
+<div><span class="c">STARGATE LABS</span> <span class="d">// cold boot</span></div>
+<div class="d">mount /proc <span class="c">ok</span></div>
+<div class="d">load toolchain <span class="bar"></span></div>
+<div class="d">verify signatures <span class="c">ok</span></div>
+<div class="d">scanner ARGUS <span class="c">17 modules online</span></div>
+<div><span class="c">signal stable. access granted.</span></div>
+</div>
+</div>
+
+<div class="hud" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div id="beam" aria-hidden="true"></div>
+<div id="ring" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header id="hdr">
+<div class="nav">
+<a class="brand" href="#top"><span class="g">stargatelabs</span><span class="u">:~$</span></a>
+<button id="menuBtn" aria-expanded="false" aria-controls="navLinks">menu</button>
+<nav class="links" id="navLinks" aria-label="Sections">
+<a href="#sistemi">systems</a>
+<a href="#progetti">projects</a>
+<a href="#stack">stack</a>
+<a href="#metodo">method</a>
+<a href="#statistiche">statistics</a>
+<a href="#contatti">contact</a>
+<a href="index.html" hreflang="it">IT</a>
 </nav>
-
-<header>
-  <p class="term"><b>guest@stargatelabs</b>:~$ whoami<br>private lab — infrastructure, security, systems</p>
-  <h1>STARGATE <span class="c">LABS</span><span class="cursor"></span></h1>
-  <p class="lede">
-    Custom water loops, cryogenic rigs that should not exist, and the software
-    that keeps them alive. <b>Nothing taken for granted here: every number gets
-    measured, every defect becomes a test.</b>
-  </p>
+</div>
 </header>
 
-<section id="systems" class="rv">
-  <h2>./systems --live</h2>
-  <div class="stats">
-    <div class="stat"><b>17</b><span>Orchestrated scanners</span></div>
-    <div class="stat"><b>14,071</b><span>TypeScript lines, ARGUS</span></div>
-    <div class="stat"><b>29,537</b><span>Python lines, ARA</span></div>
-    <div class="stat"><b>23,286</b><span>Rust lines, StargateCryo</span></div>
-  </div>
-  <p class="muted">[i] Measured from the code, not declared.</p>
+<main id="main" class="stage">
+<span id="top"></span>
+
+<section class="hero">
+<div class="wrap">
+<div class="hero-logo">
+<img src="assets/logo.png" width="1400" height="894" alt="Stargate Labs" decoding="async">
+</div>
+<p class="eyebrow"><span class="dot"></span> infrastructure, security, systems</p>
+<p class="sweep" id="sweep">cryogenics</p>
+<p class="lede">Water loops built to measure, cryogenic plants that should not exist, and the software that keeps them standing.</p>
+<p class="sub">Nothing here is taken on faith: every number is measured, every defect becomes a test.</p>
+<div class="cta">
+<a class="btn" href="#progetti">projects</a>
+<a class="btn ghost" href="#contatti">contact</a>
+</div>
 </section>
 
-<section id="projects" class="rv">
-  <h2>./projects --all</h2>
-  <div class="grid">
-    <div class="card">
-      <h3><span class="n">[01]</span>ARGUS</h3>
-      <p><span class="st">[security]</span> Seventeen scanners, one verdict:
-         <b>6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API, 1 fuzz</b>. Pinned
-         images, authorised targets only. Two AI models: one plans, one executes.
-         <code>v0.2.0</code>.</p>
-    </div>
-    <div class="card">
-      <h3><span class="n">[02]</span>ARA</h3>
-      <p><span class="st">[voice]</span> Voice in, voice out, no cloud: Whisper
-         transcribes, Kokoro answers, the router decides in under
-         <b>5 milliseconds</b>. <b>Seven destructive actions</b> ask for
-         confirmation. Local RAG memory.</p>
-    </div>
-    <div class="card">
-      <h3><span class="n">[03]</span>StargateCryo</h3>
-      <p><span class="st">[thermal]</span> Cold with numbers: serial PID,
-         measured condensation margin, <b>6 alarm channels and 3 profiles</b>.
-         If the pump stops, the TEC scales itself down to 50%. No sockets in the
-         code: it runs wherever the controller reaches.</p>
-    </div>
-    <div class="card">
-      <h3><span class="n">[04]</span>TechDash</h3>
-      <p><span class="st">[monitor]</span> The rig under your eyes: CPU/GPU
-         temperatures, load, fans, pumps, disks. Condensation and thermal alarms.
-         Reads fast, does not do pretty charts.</p>
-    </div>
-    <div class="card">
-      <h3><span class="n">[05]</span>Cryogenic setups</h3>
-      <p><span class="st">[hardware]</span> Sub-zero without dying: TEC cooling
-         on 10th and 13th gen Intel, managed condensation, safe boot curves.
-         Protections first, records later.</p>
-    </div>
-    <div class="card">
-      <h3><span class="n">[06]</span>SignalRGB plugin</h3>
-      <p><span class="st">[reverse]</span> Real pixels on a lying deck: Loupedeck
-         protocol rewritten in RGB565, clean 480 × 288 where the stock overlay
-         stamps its logo in the middle.</p>
-    </div>
-  </div>
-  <p class="muted">[i] ShipExpress, the production ERP, lives on its own site:
-     <a href="https://shipexpress.it">shipexpress.it</a>. Not here: this page is
-     about the lab, not shipping.</p>
+<div class="wrap">
+
+<section id="sistemi">
+<p class="cmd">./systems --live</p>
+<h2>Systems</h2>
+<div class="metrics in">
+<div class="metric"><b>17</b><span>orchestrated scanners</span></div>
+<div class="metric"><b>14,071</b><span>lines of TypeScript &mdash; ARGUS</span></div>
+<div class="metric"><b>29,537</b><span>lines of Python &mdash; ARA</span></div>
+<div class="metric"><b>23,286</b><span>lines of Rust &mdash; StargateCryo</span></div>
+</div>
+<p class="note">Numbers measured from the code, not declared.</p>
 </section>
 
-<section id="stack" class="rv">
-  <h2>./stack --list</h2>
-  <p>
-    <span class="tag">Next.js 16</span><span class="tag">React 19</span
-    ><span class="tag">TypeScript strict</span><span class="tag">PostgreSQL 17</span
-    ><span class="tag">Prisma 6</span><span class="tag">Redis 8</span
-    ><span class="tag">BullMQ</span><span class="tag">Tailwind CSS 4</span
-    ><span class="tag">Zod 4</span><span class="tag">Vitest</span
-    ><span class="tag">Playwright</span><span class="tag">Python</span
-    ><span class="tag">Rust</span>
-  </p>
-  <p class="skills">
-    <img src="https://skillicons.dev/icons?i=nextjs,react,ts,postgres,prisma,redis,tailwind,py,rust,linux,docker,git&theme=dark" alt="Next.js, React, TypeScript, PostgreSQL, Prisma, Redis, Tailwind CSS, Python, Rust, Linux, Docker, Git">
-  </p>
+<section id="progetti">
+<p class="cmd">./projects --all</p>
+<h2>Projects</h2>
+
+<article class="proj in">
+<div class="n">01</div>
+<div>
+<h3>ARGUS <span class="tag">security</span> <small>v0.2.0</small></h3>
+<p>Seventeen scanners, one verdict: 6 recon, 4 DAST, 1 SAST, 2 SCA, 2 secrets, 1 API, 1 fuzz. Pinned images, authorised targets only. Two AI models: one plans, one executes.</p>
+</div>
+</article>
+
+<article class="proj in">
+<div class="n">02</div>
+<div>
+<h3>ARA <span class="tag">voice</span></h3>
+<p>Voice in, voice out, no cloud: Whisper transcribes, Kokoro answers, the router decides in under 5 milliseconds. Seven destructive actions require confirmation. RAG memory stays local.</p>
+</div>
+</article>
+
+<article class="proj in">
+<div class="n">03</div>
+<div>
+<h3>StargateCryo <span class="tag">thermal</span></h3>
+<p>Cold with numbers: PID over serial, measured condensation, 6 alarm channels and 3 profiles. If the pump stops, the TEC ramps to 50% on its own. No sockets in the code: it runs where the controller reaches.</p>
+</div>
+</article>
+
+<article class="proj in">
+<div class="n">04</div>
+<div>
+<h3>TechDash <span class="tag">monitor</span></h3>
+<p>The rig under your eyes: CPU/GPU temperatures, load, fans, pumps, disks. Condensation and thermal alarms. Reads fast, does not draw pretty charts.</p>
+</div>
+</article>
+
+<article class="proj in">
+<div class="n">05</div>
+<div>
+<h3>Cryogenic setups <span class="tag">hardware</span></h3>
+<p>Below zero without dying: TEC on 10th and 13th generation Intel, managed condensation, safe warm-up curves. Protections first, then records.</p>
+</div>
+</article>
+
+<article class="proj in">
+<div class="n">06</div>
+<div>
+<h3>Plugin SignalRGB <span class="tag">reverse</span></h3>
+<p>Real pixels on a deck that lies: Loupedeck protocol rewritten in RGB565, 480 &times; 288 clean where the standard overlay prints the logo in the middle.</p>
+</div>
+</article>
+
+<p class="note">ShipExpress, the production back-office, lives on its own site:
+<a href="https://shipexpress.it">shipexpress.it</a>. Not here: this page talks about the laboratory, not about shipping.</p>
 </section>
 
-<section id="method" class="rv">
-  <h2>./method --show</h2>
-  <ol>
-    <li><b>Validation at the edges.</b> Zod on all external input,
-        <code>unknown</code> never <code>any</code>, parameterised queries,
-        transactions on multi-table operations.</li>
-    <li><b>Verified isolation.</b> Wherever there is a boundary — tenant,
-        network, process — I test it, I do not declare it.</li>
-    <li><b>Every finding becomes a test.</b> The defect does not come back. <code>exit 0</code>.</li>
-    <li><b>Operational security.</b> 2FA on root, audit trail on critical ops,
-        rate limits, brute-force detection, session blacklist on Redis.</li>
-  </ol>
+<section id="stack">
+<p class="cmd">./stack --list</p>
+<h2>Stack</h2>
+<ul class="tech in">
+<li class="tech-i"><img src="assets/favicon.png" alt="Stargate Labs" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Stargate Labs</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/nextdotjs/E8F7FB" alt="Next.js 16" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Next.js 16</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React 19" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>React 19</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript strict" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>TypeScript strict</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL 17" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>PostgreSQL 17</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/prisma/A7B6C4" alt="Prisma 6" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Prisma 6</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/redis/DC382D" alt="Redis 8" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Redis 8</span></li>
+<li class="tech-i noico"><span>BullMQ</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS 4" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Tailwind CSS 4</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/zod/E8F7FB" alt="Zod 4" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Zod 4</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/vitest/729B1B" alt="Vitest" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Vitest</span></li>
+<li class="tech-i noico"><span>Playwright</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Python</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/rust/E8F7FB" alt="Rust" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Rust</span></li>
+</ul>
 </section>
 
-<section id="hardware" class="rv">
-  <h2>./hardware --rules</h2>
-  <ul>
-    <li><b>Protections before performance.</b> A cryo rig without alarms is a
-        risk, not an experiment.</li>
-    <li><b>No signal is trusted.</b> Independent sensors, upstream validation:
-        out-of-range almost always means acquisition trouble.</li>
-    <li><b>Cold is a system.</b> Peltier, CPU, RAM, GPU and PSU have different
-        limits: cooling one of them just moves the damage.</li>
-    <li><b>Documentation from day zero.</b> Schematics, components, boot curves,
-        measured values. If I cannot understand it in six months, I built it wrong.</li>
-  </ul>
+<section id="metodo">
+<p class="cmd">./method --show</p>
+<h2>Method</h2>
+<ol class="method in">
+<li><b>Validation at the edges.</b><p>Zod on every piece of external input, <code>unknown</code> never <code>any</code>, parameterised queries, transactions across multi-table operations.</p></li>
+<li><b>Isolation verified.</b><p>Where there is a boundary &mdash; tenant, network, process &mdash; I test it, I do not declare it.</p></li>
+<li><b>Every finding becomes a test.</b><p>The bug does not come back. <code>exit 0</code></p></li>
+<li><b>Operational security.</b><p>2FA on root, audit trail for critical operations, rate limiting, brute-force detection, session blacklist on Redis.</p></li>
+</ol>
 </section>
 
-<section id="contact" class="rv">
-  <h2>./contact --open</h2>
-  <p>Private lab. For a hardware project, an audit, or a question worth
-     measuring:</p>
-  <div class="links">
-    <a href="https://shipexpress.it">shipexpress.it</a>
-    <a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
-    <a href="https://github.com/StargateLabs">github.com/StargateLabs</a>
-  </div>
+<section id="hardware">
+<p class="cmd">./hardware --rules</p>
+<h2>Hardware</h2>
+<ol class="method in">
+<li><b>Protections before performance.</b><p>A cryogenic unit without alarms is a hazard, not an experiment.</p></li>
+<li><b>No signal is trustworthy.</b><p>Independent sensors, upstream validation: out of scale is almost always an acquisition problem.</p></li>
+<li><b>Cold is a system.</b><p>Peltier, CPU, RAM, GPU and power supply have different limits: cooling only one of them just moves the damage.</p></li>
+<li><b>Documentation from day zero.</b><p>Schematics, components, warm-up curves, measured values. If I cannot understand it in six months, I got it wrong.</p></li>
+</ol>
 </section>
 
-<footer>
-  <span><span class="ok">[ok]</span> Stargate Labs — private lab. No trackers, no cookies, just HTML.</span>
-</footer>
+<section id="statistiche">
+<div class="wrap">
+<div class="sec-head">
+<span class="cmd">./stats --live</span>
+<h2>Statistics</h2>
+<p>public repository data</p>
+</div>
+<div class="stats" id="stats">
+<div class="stat"><span class="stat-k">stars</span><span class="stat-v" data-k="stargazers_count">&mdash;</span></div>
+<div class="stat"><span class="stat-k">fork</span><span class="stat-v" data-k="forks_count">&mdash;</span></div>
+<div class="stat"><span class="stat-k">watchers</span><span class="stat-v" data-k="subscribers_count">&mdash;</span></div>
+<div class="stat"><span class="stat-k">open issues</span><span class="stat-v" data-k="open_issues_count">&mdash;</span></div>
+</div>
+<p class="stat-foot"><span class="dot"></span><span id="statPush">reading last push&hellip;</span></p>
+</div>
+</section>
+<section id="contatti">
+<p class="cmd">./contact --open</p>
+<h2>Contact</h2>
+<p class="sub">Private laboratory. For a hardware project, an audit, or a question that deserves a measurement:</p>
+<div class="cta">
+<a class="btn" href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+<a class="btn ghost" href="https://github.com/StargateLabs">github.com/StargateLabs</a>
+</div>
+</section>
 
 </div>
+</main>
+
+<footer>
+<div class="wrap foot-grid">
+
+<div class="foot-id">
+<p class="foot-note">Stargate Labs &mdash; private laboratory.<br>No tracker, no cookies, plain HTML.</p>
+<div class="counters">
+<div class="ctr"><span class="ctr-k">utc</span><span class="ctr-v" id="fClock">--:--:--</span></div>
+<div class="ctr"><span class="ctr-k">session</span><span class="ctr-v" id="fUp">00:00</span></div>
+<div class="ctr"><span class="ctr-k">visits here</span><span class="ctr-v" id="fVisits">1</span></div>
+<div class="ctr"><span class="ctr-k">last push</span><span class="ctr-v" id="fPush">--</span></div>
+</div>
+<div class="foot-links">
+<a href="mailto:info@shipexpress.it">info@shipexpress.it</a>
+<a href="https://github.com/StargateLabs" target="_blank" rel="noopener noreferrer">github.com/StargateLabs</a>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><span class="dot"></span>laboratory keypad</div>
+<div class="keys" aria-hidden="true">
+<span class="key">1</span><span class="key">2</span><span class="key">3</span>
+<span class="key">4</span><span class="key">5</span><span class="key">6</span>
+<span class="key">7</span><span class="key">8</span><span class="key">9</span>
+<span class="key fn">esc</span><span class="key">0</span><span class="key fn">ent</span>
+</div>
+<div class="readout"><span id="readout">--:--:--</span><i></i></div>
+<p class="panel-sub">press: none. the keypad is not a command.</p>
+</div>
+
+<div class="scope-wrap">
+<div class="scope-head"><span class="dot"></span>signal</div>
+<canvas id="scope" aria-hidden="true"></canvas>
+<div class="scope-foot"><span>idle</span><span class="scope-bar"></span><span>full</span></div>
+</div>
+
+</div>
+<div class="wrap"><div class="strip">
+<span>available for hardware projects, audits and collaborations</span>
+<span class="sep"></span>
+<span>argus &middot; ara &middot; stargatecryo</span>
+</div></div>
+</footer>
 
 <script>
 (function(){
-  var els = document.querySelectorAll('.rv');
-  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}});
-  },{threshold:.12});
-  els.forEach(function(e){io.observe(e)});
+"use strict";
+var doc=document;
+var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* boot: CSS fades the overlay on its own, this is the hard fallback */
+function bootOff(){
+  var b=doc.getElementById("boot");
+  doc.body.classList.remove("booting");
+  if(b&&b.parentNode) b.parentNode.removeChild(b);
+}
+if(doc.readyState==="complete"){setTimeout(bootOff,2800)}
+else{window.addEventListener("load",function(){setTimeout(bootOff,2800)})}
+setTimeout(bootOff,3600);
+
+var words=["crio-termica"];
+var sweep=doc.getElementById("sweep"), wi=0;
+if(!reduce){
+  sweep.classList.add("run");
+  setInterval(function(){
+    wi=(wi+1)%words.length;
+    sweep.textContent=words[wi];
+    sweep.style.animation="none"; void sweep.offsetWidth; sweep.style.animation="";
+    sweep.classList.remove("run"); void sweep.offsetWidth; sweep.classList.add("run");
+  },6000);
+}
+
+var hdr=doc.getElementById("hdr"),
+    navA=[].slice.call(doc.querySelectorAll("nav.links a[href^='#']")),
+    secs=[].slice.call(doc.querySelectorAll("main section[id]"));
+function onScroll(){
+  var y=window.scrollY||doc.documentElement.scrollTop;
+  hdr.classList.toggle("sticky",y>100);
+  var cur="";
+  for(var i=0;i<secs.length;i++){ if(y>=secs[i].offsetTop-140) cur=secs[i].id }
+  for(var j=0;j<navA.length;j++){ navA[j].classList.toggle("active", navA[j].getAttribute("href")==="#"+cur) }
+}
+var tick=false;
+window.addEventListener("scroll",function(){ if(!tick){tick=true;requestAnimationFrame(function(){onScroll();tick=false})} },{passive:true});
+onScroll();
+
+var mb=doc.getElementById("menuBtn"), nl=doc.getElementById("navLinks");
+mb.addEventListener("click",function(){ var o=nl.classList.toggle("open"); mb.setAttribute("aria-expanded",o?"true":"false") });
+nl.addEventListener("click",function(e){ if(e.target.tagName==="A"){nl.classList.remove("open");mb.setAttribute("aria-expanded","false")} });
+
+var items=[].slice.call(doc.querySelectorAll(".in"));
+if("IntersectionObserver" in window && !reduce){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("seen"); io.unobserve(en.target) } });
+  },{threshold:.12,rootMargin:"0px 0px -60px 0px"});
+  items.forEach(function(el){io.observe(el)});
+} else { items.forEach(function(el){el.classList.add("seen")}) }
+
+})();
+
+/* statistiche: dati reali dal repository pubblico, cache 30 min, nessun dato finto */
+(function(){
+  var doc=document;
+  var REPO="https://api.github.com/repos/StargateLabs/StargateLabs";
+  var KEY="stg-stats-v1", TTL=30*60*1000;
+  var grid=doc.getElementById("stats"), foot=doc.querySelector(".stat-foot"), push=doc.getElementById("statPush");
+  function paint(d,live){
+    grid.querySelectorAll(".stat-v").forEach(function(el){
+      var v=d[el.getAttribute("data-k")];
+      el.textContent=(typeof v==="number")?v.toLocaleString("en-US"):"—";
+    });
+    grid.classList.toggle("err",!live);
+    var fp=doc.getElementById("fPush");
+    if(fp) fp.textContent=d.pushed_at
+      ? new Date(d.pushed_at).toLocaleDateString("en-US",{day:"2-digit",month:"short",year:"2-digit"})
+      : "--";
+    push.textContent=d.pushed_at
+      ? "last push " + new Date(d.pushed_at).toLocaleDateString("en-US",{day:"2-digit",month:"short",year:"numeric"})
+      : "dati non disponibili";
+    foot.classList.toggle("off",!live);
+  }
+  function fail(){
+    grid.querySelectorAll(".stat-v").forEach(function(el){ el.textContent="n/a"; });
+    grid.classList.add("err");
+    var fp=doc.getElementById("fPush"); if(fp) fp.textContent="n/a";
+    push.textContent="statistics unavailable";
+    foot.classList.add("off");
+  }
+  var raw=null;
+  try{ raw=localStorage.getItem(KEY); }catch(e){}
+  if(raw){ try{ var c=JSON.parse(raw); if(c&&Date.now()-c.t<TTL){ paint(c.d,false===c.live?false:true); } }catch(e){} }
+  fetch(REPO,{headers:{Accept:"application/vnd.github+json"}})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){ paint(d,true); try{ localStorage.setItem(KEY,JSON.stringify({t:Date.now(),d:d})); }catch(e){} })
+    .catch(fail);
+})();
+
+/* footer: orologio UTC, sessione e visite, tutti calcolati sul dispositivo */
+(function(){
+  var doc=document;
+  var two=function(n){return n<10?"0"+n:String(n)};
+  var ro=doc.getElementById("readout"), fc=doc.getElementById("fClock"),
+      fu=doc.getElementById("fUp"), fv=doc.getElementById("fVisits");
+  var t0=Date.now();
+  function tick(){
+    var d=new Date(), h=two(d.getUTCHours()), m=two(d.getUTCMinutes()), q=two(d.getUTCSeconds());
+    if(ro) ro.textContent=h+":"+m+":"+q;
+    if(fc) fc.textContent=h+":"+m+":"+q;
+    var el=(Date.now()-t0)/1000, hh=two(Math.floor(el/3600)), mm=two(Math.floor(el/60)%60), ss=two(el%60);
+    if(fu) fu.textContent=hh+":"+mm+":"+ss;
+  }
+  tick(); setInterval(tick,1000);
+  var KEYV="stg-views-v1", n=1;
+  try{ n=(parseInt(localStorage.getItem(KEYV),10)||0)+1; localStorage.setItem(KEYV,String(n)); }catch(e){}
+  if(fv) fv.textContent=n.toLocaleString("en-US");
+})();
+
+/* oscilloscopio: forma d'onda generata in tempo reale, nessun dato esterno */
+(function(){
+  var doc=document, cv=doc.getElementById("scope");
+  if(!cv) return;
+  var g=cv.getContext("2d"), N=44, reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var w=0,h=0,t=0;
+  function size(){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    w=cv.clientWidth; h=cv.clientHeight;
+    cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
+    g.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function wave(i,n,t){
+    return (Math.sin(n*.55+t*1.6)*.45 + Math.sin(n*1.9-t*2.3)*.28
+          + Math.sin(n*3.7+t*.9)*.15 + (Math.random()-.5)*.10);
+  }
+  function draw(){
+    g.clearRect(0,0,w,h);
+    g.strokeStyle="rgba(23,50,61,.9)"; g.lineWidth=1;
+    g.beginPath(); g.moveTo(0,h/2); g.lineTo(w,h/2); g.stroke();
+    var pad=6, bw=(w-pad*2)/N;
+    for(var i=0;i<N;i++){
+      var v=reduce?0:wave(i,N,t);
+      var bh=Math.max(3,Math.abs(v)*(h/2-pad));
+      var x=pad+i*bw, y=h/2-bh;
+      var grd=g.createLinearGradient(0,y,0,y+bh*2);
+      grd.addColorStop(0,"rgba(127,232,245,.95)");
+      grd.addColorStop(1,"rgba(52,197,213,.28)");
+      g.fillStyle=grd;
+      g.fillRect(x,y,Math.max(1.5,bw-2),bh*2);
+      g.fillStyle="rgba(127,232,245,.9)";
+      g.fillRect(x,y+bh-Math.max(1,bw/3),Math.max(1.5,bw-2),Math.max(1,bw/3));
+    }
+  }
+  size(); draw();
+  if(!reduce){ (function loop(){ t+=.045; draw(); requestAnimationFrame(loop); })(); }
+  window.addEventListener("resize",function(){ size(); draw(); });
 })();
 </script>
 </body>
