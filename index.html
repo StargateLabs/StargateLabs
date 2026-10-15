@@ -467,13 +467,15 @@ parla del laboratorio, non delle spedizioni.</p>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL 17" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>PostgreSQL 17</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/prisma/A7B6C4" alt="Prisma 6" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Prisma 6</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/redis/DC382D" alt="Redis 8" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Redis 8</span></li>
-<li class="tech-i"><img src="assets/bullmq.png" alt="BullMQ" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>BullMQ</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Linux</span></li>
+<li class="tech-i"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Docker</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS 4" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Tailwind CSS 4</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/zod/E8F7FB" alt="Zod 4" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Zod 4</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/vitest/729B1B" alt="Vitest" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Vitest</span></li>
 <li class="tech-i"><img src="https://api.iconify.design/devicon-plain/playwright.svg?color=%2334C5D5" alt="Playwright" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Playwright</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Python</span></li>
 <li class="tech-i"><img src="https://cdn.simpleicons.org/rust/E8F7FB" alt="Rust" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>Rust</span></li>
+<li class="tech-i"><img src="assets/bullmq.png" alt="BullMQ" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noico')"><span>BullMQ</span></li>
 </ul>
 </section>
 
@@ -542,7 +544,7 @@ che merita una misura:</p>
 <div class="counters">
 <div class="ctr"><span class="ctr-k">utc</span><span class="ctr-v" id="fClock">--:--:--</span></div>
 <div class="ctr"><span class="ctr-k">sessione</span><span class="ctr-v" id="fUp">00:00</span></div>
-<div class="ctr"><span class="ctr-k">visite qui</span><span class="ctr-v" id="fVisits">1</span></div>
+<div class="ctr"><span class="ctr-k">visite</span><span class="ctr-v" id="fVisits">1</span></div>
 <div class="ctr"><span class="ctr-k">ultimo push</span><span class="ctr-v" id="fPush">14 ott 26</span></div>
 </div>
 <div class="foot-links">
@@ -678,9 +680,23 @@ if("IntersectionObserver" in window && !reduce){
     if(fu) fu.textContent=hh+":"+mm+":"+ss;
   }
   tick(); setInterval(tick,1000);
-  var KEYV="stg-views-v1", n=1;
-  try{ n=(parseInt(localStorage.getItem(KEYV),10)||0)+1; localStorage.setItem(KEYV,String(n)); }catch(e){}
-  if(fv) fv.textContent=n.toLocaleString("it-IT");
+  var KEYV="stg-views-v1", LOCALE="it-IT";
+  var ENDPOINT="https://shipexpress.it/api/pageview";
+  function localFallback(){
+    var n=1;
+    try{ n=(parseInt(localStorage.getItem(KEYV),10)||0)+1; localStorage.setItem(KEYV,String(n)); }catch(e){}
+    return n;
+  }
+  if(fv){
+    fetch(ENDPOINT,{method:"POST"})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(d){
+        fv.textContent=(typeof d.total==="number" && d.total>0)
+          ? d.total.toLocaleString(LOCALE)
+          : localFallback().toLocaleString(LOCALE);
+      })
+      .catch(function(){ fv.textContent=localFallback().toLocaleString(LOCALE); });
+  }
 })();
 
 /* oscilloscopio: forma d'onda generata in tempo reale, nessun dato esterno */
