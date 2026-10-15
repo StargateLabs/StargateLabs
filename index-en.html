@@ -61,8 +61,9 @@ body.booting .stage{opacity:0}
 #beam{width:5px;height:5px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
 #ring{width:44px;height:44px;border:1px solid var(--cyan);opacity:.5;
   box-shadow:0 0 16px rgba(52,197,213,.3),inset 0 0 12px rgba(52,197,213,.16);
-  transition:width .3s cubic-bezier(.2,.7,.3,1),height .3s cubic-bezier(.2,.7,.3,1),opacity .3s}
-body.hot #ring{width:84px;height:84px;opacity:.95}
+  transition:opacity .25s ease,box-shadow .3s ease}
+body.hot #ring{border-color:var(--cyan);opacity:.95;
+  box-shadow:0 0 26px rgba(52,197,213,.45),inset 0 0 14px rgba(52,197,213,.24)}
 .hud{position:fixed;inset:0;pointer-events:none;z-index:90}
 .hud i{position:absolute;width:24px;height:24px;border:2px solid var(--cyan);opacity:.4}
 .hud i:nth-child(1){top:13px;left:13px;border-right:0;border-bottom:0}
@@ -701,6 +702,57 @@ if("IntersectionObserver" in window && !reduce){
   size(); draw();
   if(!reduce){ (function loop(){ t+=.045; draw(); requestAnimationFrame(loop); })(); }
   window.addEventListener("resize",function(){ size(); draw(); });
+})();
+/* cursore scanner: beam segue il puntatore, ring insegue con easing.
+   Prima il markup e i CSS c'erano ma non il JS: restavano a top:0;left:0. */
+(function(){
+  var doc=document;
+  var beam=doc.getElementById("beam"), ring=doc.getElementById("ring");
+  if(!beam||!ring) return;
+  if(window.matchMedia("(pointer:coarse)").matches) return;
+
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var HOT="a,button,.tech-i,.stat,.btn,.key";
+  var tx=0, ty=0, rx=0, ry=0, vivo=false;
+
+  function dims(){
+    var hot=doc.body.classList.contains("hot");
+    return hot ? 84 : 44;
+  }
+  function paint(){
+    var half=dims()/2;
+    ring.style.transform="translate("+(rx-half)+"px,"+(ry-half)+"px)";
+  }
+  function loop(){
+    if(!reduce){ rx+=(tx-rx)*0.18; ry+=(ty-ry)*0.18; }
+    else { rx=tx; ry=ty; }
+    paint();
+    requestAnimationFrame(loop);
+  }
+
+  doc.addEventListener("mousemove",function(e){
+    tx=e.clientX; ty=e.clientY;
+    if(!vivo){
+      vivo=true; rx=tx; ry=ty;
+      beam.style.opacity="1"; ring.style.opacity="";
+      loop();
+    }
+    beam.style.transform="translate("+(tx-2.5)+"px,"+(ty-2.5)+"px)";
+  },{passive:true});
+
+  doc.addEventListener("mouseleave",function(){
+    beam.style.opacity="0"; ring.style.opacity="0";
+  });
+  doc.addEventListener("mouseenter",function(){
+    if(vivo){ beam.style.opacity="1"; ring.style.opacity=""; }
+  });
+
+  doc.addEventListener("mouseover",function(e){
+    if(e.target.closest && e.target.closest(HOT)) doc.body.classList.add("hot");
+  });
+  doc.addEventListener("mouseout",function(e){
+    if(e.target.closest && e.target.closest(HOT)) doc.body.classList.remove("hot");
+  });
 })();
 </script>
 </body>
