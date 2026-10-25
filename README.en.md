@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/lab-rounded.svg" alt="Stargate Labs" width="760"></p>
+<p align="center"><img src="assets/hero.svg" alt="Stargate Labs — laboratorio e ricerca hardware" width="100%"></p>
 
 # Software, security and hardware. Engineered together.
 
