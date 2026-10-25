@@ -61,6 +61,46 @@ Rust · Python · TypeScript · React / Next.js · PostgreSQL · Redis / BullMQ 
 [Le informazioni tecniche precedenti sono conservate nell’archivio](docs/PROJECT-NOTES-2026-10.md): numeri di versione, funzionalità e misure mantengono il loro contesto storico. Le release recenti e i risultati verificati sono descritti nelle singole repository.
 
 
+## Dettagli dei progetti già documentati
+
+<details>
+<summary><b>ShipExpress</b></summary>
+
+Gestionale multi-tenant per spedizioni, magazzino, ordini, documenti e CRM. Ogni cliente dispone di dominio, database e ruoli separati. Le integrazioni comprendono confronto tariffe, creazione e tracciamento spedizioni, contrassegno, documenti di trasporto e fatturazione elettronica. Il magazzino gestisce giacenze, ubicazioni, movimenti, conteggi e imballaggi; gli ordini includono flussi di stato e picklist con lettura barcode. La ricerca documentale usa RAG e interrogazioni in linguaggio naturale.
+
+Snapshot documentato 2026.2.5: 1.462 endpoint API, 357 modelli dati, 42 corrieri, 74 servizi, 8.896 test su 1.059 file. Sono i conteggi già pubblicati per quella versione, non una nuova misura della build attuale.
+
+</details>
+
+<details>
+<summary><b>ARGUS</b></summary>
+
+Il flusso di analisi coordina 17 scanner: 6 per ricognizione, 4 DAST, 1 SAST, 2 SCA, 2 per credenziali esposte, 1 per API e 1 per fuzzing. Le immagini degli strumenti sono fissate a versioni specifiche. Il sistema di agenti separa pianificazione ed esecuzione delle attività sui target autorizzati.
+
+Snapshot già documentato v0.2.0: 14.071 righe TypeScript, 42 file di test, 71 endpoint API e 11 tabelle. I conteggi descrivono quella versione.
+
+</details>
+
+<details>
+<summary><b>ARA</b></summary>
+
+Assistente vocale con Whisper per la trascrizione, Kokoro per la sintesi e memoria documentale locale basata su TF-IDF. Il routing seleziona il percorso di gestione della richiesta; sette operazioni distruttive richiedono conferma. Nella descrizione originale il funzionamento è interamente locale, senza API esterne.
+
+Snapshot già documentato: 29.537 righe Python. La latenza inferiore a 5 ms riportata nella presentazione precedente riguarda il router, non l’intera risposta vocale; non è stata rimisurata in questo aggiornamento.
+
+</details>
+
+<details>
+<summary><b>StargateCryo e hardware</b></summary>
+
+Il progetto documenta un controller Intel Cryo Gen 1 modificato abbinato a una cella TEC Gen 2. La versione desktop pubblicata integra Core Temp e sensori Thermaltake TF2/TF3. Configurazione, profili, log, storico, diagnostica e report restano descritti nella repository dedicata. I sorgenti e l’eseguibile desktop hanno provenienza e limiti dichiarati; durante la pubblicazione non sono state modificate le impostazioni del controller attivo.
+
+Verifica di pubblicazione: 322 test dell’applicazione e 28 della libreria passati. Le vecchie conversioni percentuale/watt e le precedenti descrizioni OCP sono superate dalle note della release v2.9.0; non vengono riproposte come dati attuali.
+
+</details>
+
+**Stack della versione documentata:** Next.js 16, React 19, TypeScript strict, PostgreSQL 17, Prisma 6, Redis 8, BullMQ, Tailwind CSS 4, Zod 4, Vitest e Playwright. Rust e Python sono usati nei progetti hardware e negli strumenti di laboratorio.
+
 ## Statistiche GitHub e visite
 
 <img src="assets/github-stats.svg" alt="GitHub public statistics — snapshot 25 October 2026" width="100%">

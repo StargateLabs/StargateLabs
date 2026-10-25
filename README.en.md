@@ -61,6 +61,46 @@ Rust · Python · TypeScript · React / Next.js · PostgreSQL · Redis / BullMQ 
 [Previous technical information remains available in the archive](docs/PROJECT-NOTES-2026-10.md): versions, capabilities and measurements retain their historical context. Current releases and verification results are described in the individual repositories.
 
 
+## Previously documented project details
+
+<details>
+<summary><b>ShipExpress</b></summary>
+
+A multi-tenant management platform for shipping, inventory, orders, documents and CRM. Each customer has a separate domain, database and role hierarchy. Integrations cover rate comparison, shipment creation and tracking, cash on delivery, delivery documents and electronic invoicing. Inventory includes stock, locations, movements, counts and packaging; orders include status workflows and barcode picklists. Document search uses RAG and natural-language queries.
+
+Documented 2026.2.5 snapshot: 1,462 API endpoints, 357 data models, 42 carriers, 74 services and 8,896 tests across 1,059 files. These retain the previously published version context; they are not fresh measurements of the current build.
+
+</details>
+
+<details>
+<summary><b>ARGUS</b></summary>
+
+The analysis workflow coordinates 17 scanners: 6 reconnaissance, 4 DAST, 1 SAST, 2 SCA, 2 exposed-credential scanners, 1 API scanner and 1 fuzzing tool. Tool images are pinned to specific versions. The agent workflow separates planning from execution on authorized targets.
+
+Previously documented v0.2.0 snapshot: 14,071 TypeScript lines, 42 test files, 71 API endpoints and 11 tables. Counts describe that version.
+
+</details>
+
+<details>
+<summary><b>ARA</b></summary>
+
+A voice assistant with Whisper transcription, Kokoro speech synthesis and local TF-IDF document memory. Routing selects the request-handling path; seven destructive operations require confirmation. The original project description specifies local execution without external APIs.
+
+Previously documented snapshot: 29,537 Python lines. The sub-5 ms figure in the previous presentation concerns routing, not the complete voice response; it was not remeasured in this update.
+
+</details>
+
+<details>
+<summary><b>StargateCryo and hardware</b></summary>
+
+The project documents a modified Intel Cryo Gen 1 controller paired with a Gen 2 TEC assembly. The published desktop version integrates Core Temp and Thermaltake TF2/TF3 sensors. Configuration, profiles, logs, history, diagnostics and reporting remain documented in its repository. Source and desktop binary provenance and limits are explicit; publication did not change the active controller settings.
+
+Publication verification: 322 application tests and 28 library tests passed. Earlier percentage-to-watt conversions and OCP descriptions are superseded by the v2.9.0 release notes and are not presented as current facts.
+
+</details>
+
+**Documented version stack:** Next.js 16, React 19, strict TypeScript, PostgreSQL 17, Prisma 6, Redis 8, BullMQ, Tailwind CSS 4, Zod 4, Vitest and Playwright. Rust and Python support hardware projects and lab tooling.
+
 ## GitHub statistics and visits
 
 <img src="assets/github-stats.svg" alt="GitHub public statistics — snapshot 25 October 2026" width="100%">
