@@ -42,9 +42,6 @@ Dashboard per controller Intel Cryo: regolazione, telemetria, diagnostica e stor
 
 [Progetto](https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology)
 
-### TechDash
-
-Monitoraggio di temperature CPU/GPU, carico, ventole, pompe e dischi. Una vista operativa dei sensori per correlare il comportamento del sistema con gli eventi termici e le condizioni del circuito.
 
 ### Sistemi di raffreddamento
 
@@ -63,9 +60,33 @@ Rust · Python · TypeScript · React / Next.js · PostgreSQL · Redis / BullMQ 
 
 [Le informazioni tecniche precedenti sono conservate nell’archivio](docs/PROJECT-NOTES-2026-10.md): numeri di versione, funzionalità e misure mantengono il loro contesto storico. Le release recenti e i risultati verificati sono descritti nelle singole repository.
 
-## Ricerca in corso
 
-LotusLamp Bluetooth e gateway WB3S: analisi del protocollo e valutazione del firmware. Non sono ancora compatibilità rilasciate. I progetti privati sono descritti a livello funzionale; i relativi sorgenti non vengono pubblicati.
+## Statistiche GitHub e visite
+
+<img src="assets/github-stats.svg" alt="GitHub public statistics — snapshot 25 October 2026" width="100%">
+
+<p align="center"><a href="https://github.com/StargateLabs?tab=followers"><img src="https://img.shields.io/github/followers/StargateLabs?label=Followers&labelColor=0b100b&color=00e5a0&logo=github&style=flat-square" alt="GitHub followers"></a> &nbsp; <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FStargateLabs&label=VISITE+PROFILO&labelColor=0b100b&countColor=00e5a0&style=flat-square" alt="Visite profilo StargateLabs"></p>
+
+Il contatore visite mantiene l’identificativo già utilizzato dal profilo. La scheda numerica è uno snapshot datato; i badge delle repository sono aggiornati dai rispettivi servizi. Il portfolio aggiorna i riepiloghi tramite l’API pubblica GitHub.
+
+| Repository | Stars | Forks | Issue e PR aperte |
+|---|---:|---:|---:|
+| [dashboard-for-intel-cryo-cooling-technology](https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology) | ![Stars](https://img.shields.io/github/stars/StargateLabs/dashboard-for-intel-cryo-cooling-technology?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/dashboard-for-intel-cryo-cooling-technology?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology/issues) |
+| [signalrgb-lsc-battletron-bridge](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge) | ![Stars](https://img.shields.io/github/stars/StargateLabs/signalrgb-lsc-battletron-bridge?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/signalrgb-lsc-battletron-bridge?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge/issues) |
+| [signalrgb-razer-key-light-chroma](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma) | ![Stars](https://img.shields.io/github/stars/StargateLabs/signalrgb-razer-key-light-chroma?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/signalrgb-razer-key-light-chroma?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma/issues) |
+| [signalrgb-razer-stream-controller-x](https://github.com/StargateLabs/signalrgb-razer-stream-controller-x) | ![Stars](https://img.shields.io/github/stars/StargateLabs/signalrgb-razer-stream-controller-x?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/signalrgb-razer-stream-controller-x?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/signalrgb-razer-stream-controller-x/issues) |
+| [StargateLabs](https://github.com/StargateLabs/StargateLabs) | ![Stars](https://img.shields.io/github/stars/StargateLabs/StargateLabs?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/StargateLabs?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/StargateLabs/issues) |
+
+
+<details><summary><b>Contributi, linguaggi e continuità delle contribuzioni</b></summary>
+
+<p><img src="https://github-readme-stats.vercel.app/api?username=StargateLabs&show_icons=true&hide_border=true&theme=transparent" alt="GitHub contribution statistics" height="160"> <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=StargateLabs&layout=compact&hide_border=true&theme=transparent" alt="Public repository languages" height="160"></p>
+
+<p><img src="https://streak-stats.demolab.com?user=StargateLabs&hide_border=true" alt="GitHub contribution streak" height="160"></p>
+
+[Grafico ufficiale delle contribuzioni](https://github.com/StargateLabs#year-list-container)
+
+</details>
 
 ## Contatti
 

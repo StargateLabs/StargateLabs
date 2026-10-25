@@ -113,7 +113,7 @@ Lavora sul controller, non sul processore: nessun socket, nessun chipset, nessun
 | [Key Light Chroma](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma) | TCP setup + original UDP Chroma reports, 77 automated checks | [IT](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma/blob/main/docs/INSTALL-IT.md) · [EN](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma/blob/main/docs/INSTALL-EN.md) |
 | [LSC / Battletron](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge) | Rust LAN bridge, AES-GCM, recovery and device management | [IT](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge/blob/main/docs/INSTALL-IT.md) · [EN](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge/blob/main/docs/INSTALL-EN.md) |
 
-**Stato / Status:** Stream X uses the accepted lab build. Key Light packet/state tests do not certify optical synchronization. LSC was observed receiving changing frames on eight lab lights. LotusLamp BLE and the WB3S gateway remain research work, not released compatibility.
+**Stato / Status:** Stream X uses the accepted lab build. Key Light packet/state tests do not certify optical synchronization. LSC was observed receiving changing frames on eight lab lights. 
 
 
 
@@ -163,18 +163,7 @@ il motivo per cui esistono scritto accanto, perché il bug torna se non le vedi.
 
 </details>
 
-<details>
-<summary><b>TechDash: monitoraggio hardware del rig</b></summary>
-<br>
 
-Dashboard single-page con backend Python che legge i sensori della macchina:
-temperature CPU e GPU, carico, ventole, pompe e stato dei dischi, con avvisi su
-condensazione e gestione termica.
-
-Pensata per un impianto che gira sotto carico costante: priorizza la lettura
-rapida e gli allarmi, non i grafici.
-
-</details>
 
 ## ShipExpress
 
