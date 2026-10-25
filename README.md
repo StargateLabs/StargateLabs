@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/lab.png" alt="Stargate Labs" width="760"></p>
+<p align="center"><img src="assets/lab-rounded.svg" alt="Stargate Labs" width="760"></p>
 
 # Software, sicurezza e hardware. Progettati insieme.
 
