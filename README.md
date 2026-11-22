@@ -28,13 +28,25 @@ Piattaforma gestionale per spedizioni, ordini, magazzino e documenti. Architettu
 
 [Progetto](https://shipexpress.it)
 
+### Hydra One
+
+<p><img src="assets/hydra-one.webp" alt="Hydra One" width="160"></p>
+
+Workspace sperimentale per modelli locali, documenti, agenti e osservazione dei runtime, sviluppato a partire da Strata. Prerequisiti e limiti dei singoli percorsi sono documentati nella repository.
+
+[Repository Hydra One](https://github.com/StargateLabs/Hydra-One)
+
 ### ARGUS
 
 Orchestrazione di verifiche di sicurezza su target autorizzati: ricognizione, analisi statica e dinamica, dipendenze, credenziali esposte e API. I risultati dei diversi strumenti confluiscono in un flusso di analisi comune.
 
 ### ARA
 
-Assistente vocale con trascrizione Whisper, sintesi Kokoro e memoria documentale locale. Il routing delle richieste e le conferme sulle operazioni sensibili mantengono esplicito il confine tra conversazione ed esecuzione.
+<p><img src="assets/ara-wordmark.svg" alt="ARA" width="180"></p>
+
+ARA è il mio sistema personale per voce e avatar, memoria, computer e progetti, dispositivi, musica e comunicazioni. Collega strumenti come Codex e OpenCode, Android, TV, domotica, Spotify e SignalRGB secondo configurazione e permessi. Le operazioni sensibili seguono le conferme previste.
+
+[Le funzioni di ARA](https://stargatelabs.github.io/StargateLabs/#ara)
 
 ### StargateCryo
 
@@ -84,7 +96,7 @@ Snapshot già documentato v0.2.0: 14.071 righe TypeScript, 42 file di test, 71 e
 <details>
 <summary><b>ARA</b></summary>
 
-Assistente vocale con Whisper per la trascrizione, Kokoro per la sintesi e memoria documentale locale basata su TF-IDF. Il routing seleziona il percorso di gestione della richiesta; sette operazioni distruttive richiedono conferma. Nella descrizione originale il funzionamento è interamente locale, senza API esterne.
+ARA integra conversazione, memoria e documenti, strumenti per computer e progetti, dispositivi, musica e comunicazioni. Le integrazioni dipendono da servizi, compatibilità, account e permessi. La precedente descrizione con Whisper, Kokoro e TF-IDF si riferiva a una configurazione storica.
 
 Snapshot già documentato: 29.537 righe Python. La latenza inferiore a 5 ms riportata nella presentazione precedente riguarda il router, non l’intera risposta vocale; non è stata rimisurata in questo aggiornamento.
 
@@ -112,6 +124,7 @@ Il contatore visite mantiene l’identificativo già utilizzato dal profilo. La 
 | Repository | Stars | Forks | Issue e PR aperte |
 |---|---:|---:|---:|
 | [dashboard-for-intel-cryo-cooling-technology](https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology) | ![Stars](https://img.shields.io/github/stars/StargateLabs/dashboard-for-intel-cryo-cooling-technology?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/dashboard-for-intel-cryo-cooling-technology?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/dashboard-for-intel-cryo-cooling-technology/issues) |
+| [Hydra-One](https://github.com/StargateLabs/Hydra-One) | ![Stars](https://img.shields.io/github/stars/StargateLabs/Hydra-One?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/Hydra-One?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/Hydra-One/issues) |
 | [signalrgb-lsc-battletron-bridge](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge) | ![Stars](https://img.shields.io/github/stars/StargateLabs/signalrgb-lsc-battletron-bridge?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/signalrgb-lsc-battletron-bridge?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/signalrgb-lsc-battletron-bridge/issues) |
 | [signalrgb-razer-key-light-chroma](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma) | ![Stars](https://img.shields.io/github/stars/StargateLabs/signalrgb-razer-key-light-chroma?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/signalrgb-razer-key-light-chroma?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/signalrgb-razer-key-light-chroma/issues) |
 | [signalrgb-razer-stream-controller-x](https://github.com/StargateLabs/signalrgb-razer-stream-controller-x) | ![Stars](https://img.shields.io/github/stars/StargateLabs/signalrgb-razer-stream-controller-x?style=flat-square&label=stars&color=7fe8f5) | ![Forks](https://img.shields.io/github/forks/StargateLabs/signalrgb-razer-stream-controller-x?style=flat-square&label=forks&color=b3f67c) | [GitHub](https://github.com/StargateLabs/signalrgb-razer-stream-controller-x/issues) |
