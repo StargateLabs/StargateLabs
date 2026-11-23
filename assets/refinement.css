@@ -149,3 +149,4 @@ html{overflow-x:clip}
 .lab-photo:focus-visible{outline:3px solid #c3f58e;outline-offset:3px}
 @media(max-width:600px){.lab-gallery{gap:8px}.lab-photo span{padding:10px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){.lab-photo img,.lab-photo:after{transition:none}.lab-photo:hover img,.lab-photo:focus-visible img{transform:none}}
+.lab-image-note{grid-column:1/-1;margin:3px 2px 0;color:#a8c1c7;font-size:12px;line-height:1.5}
