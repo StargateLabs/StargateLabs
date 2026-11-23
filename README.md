@@ -24,7 +24,13 @@ Un metodo da laboratorio: osservazione, analisi del protocollo, implementazione 
 
 ### ShipExpress
 
-Piattaforma gestionale per spedizioni, ordini, magazzino e documenti. Architettura multi-tenant con database separati e integrazioni con i corrieri; strumenti di ricerca per consultare la documentazione operativa.
+Piattaforma logistica multi-tenant che collega confronto corrieri, spedizioni e tracking a magazzino, ordini, picking e documenti. Integra DDT e fatturazione elettronica, marketplace ed ERP, workflow automatici, dashboard e assistente AI sui dati autorizzati. Ambienti e database dei clienti sono separati, con ruoli e controlli di accesso dedicati.
+
+La piattaforma parte da un piano gratuito con strumenti essenziali e offre livelli successivi per venditori online, team con magazzino e aziende con volumi elevati. [Confronta i piani](https://shipexpress.it/prezzi).
+
+**Growth OS** è l’ambiente amministrativo di ricerca per agenti specializzati, collaborazione, analisi e proposte da sottoporre a revisione. Comprende un laboratorio di esperimenti su scenari sintetici e una vista dell’ufficio virtuale 3D. Funzioni, autonomia e accesso dipendono dalla configurazione e dallo stato di sviluppo.
+
+[Growth OS e funzioni ShipExpress](https://stargatelabs.github.io/StargateLabs/#growth-os)
 
 [Progetto](https://shipexpress.it)
 
