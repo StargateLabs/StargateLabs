@@ -28,7 +28,7 @@ Piattaforma logistica multi-tenant che collega confronto corrieri, spedizioni e 
 
 La piattaforma parte da un piano gratuito con strumenti essenziali e offre livelli successivi per venditori online, team con magazzino e aziende con volumi elevati. [Confronta i piani](https://shipexpress.it/prezzi).
 
-**Growth OS** è l’ambiente amministrativo di ricerca per agenti specializzati, collaborazione, analisi e proposte da sottoporre a revisione. Comprende un laboratorio di esperimenti su scenari sintetici e una vista dell’ufficio virtuale 3D. Funzioni, autonomia e accesso dipendono dalla configurazione e dallo stato di sviluppo.
+**Growth OS** è l’ambiente amministrativo di ricerca per agenti specializzati, collaborazione, analisi e proposte soggette a controlli e revisione secondo il livello di autonomia configurato. Comprende un laboratorio di esperimenti su scenari sintetici e una mappa dell’ufficio operativo. Funzioni, autonomia e accesso dipendono dalla configurazione e dallo stato di sviluppo.
 
 [Growth OS e funzioni ShipExpress](https://stargatelabs.github.io/StargateLabs/#growth-os)
 
